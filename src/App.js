@@ -1,5 +1,3 @@
-/* import { Room } from './library/multiparty-sdk.umd'; */
-
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -15,7 +13,7 @@ function App() {
           {/* <Route path="/about">
             <About />
           </Route> */}
-          <Route path="/video-room">
+          <Route path="/room/:roomName">
             <VideoRoom />
           </Route>
         </Switch>
