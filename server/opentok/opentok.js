@@ -2,6 +2,11 @@ const OpenTok = require('opentok');
 require('dotenv').config();
 const apiKey = process.env.apiKey;
 const apiSecret = process.env.apiSecret;
+if (!apiKey || !apiSecret) {
+  throw new Error(
+    'Missing config values for env params OT_API_KEY and OT_API_SECRET'
+  );
+}
 let sessionId;
 let sessions = [];
 
@@ -69,10 +74,23 @@ const getCredentials = async (session = null) => {
   return { sessionId: sessionId, token: token, apiKey: apiKey };
   console.log(`sessionId:${sessionId}, token : ${token}`);
 };
+const listArchives = async sessionId => {
+  return new Promise((resolve, reject) => {
+    const options = { sessionId };
+    opentok.listArchives(options, (error, archives) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(archives);
+      }
+    });
+  });
+};
 
 module.exports = {
   getCredentials,
   generateToken,
   initiateArchiving,
-  stopArchiving
+  stopArchiving,
+  listArchives
 };

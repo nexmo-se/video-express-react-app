@@ -15,8 +15,6 @@ app.use(bodyParser.json());
 
 let sessions = [];
 
-// res.send('hello');
-
 app.get('/session/:room', async (req, res) => {
   try {
     const { room: roomName } = req.params;
@@ -27,7 +25,6 @@ app.get('/session/:room', async (req, res) => {
         return false;
       }
     });
-
     if (!sessionDB) {
       const data = await opentok.getCredentials();
       sessions.push({
@@ -54,37 +51,45 @@ app.get('/session/:room', async (req, res) => {
 });
 
 app.post('/archive/start', async (req, res) => {
-  console.log(req.body);
-  const session_id = req.body.sessionId;
-  console.log(session_id);
+  const { session_id } = req.body;
   try {
     const response = await opentok.initiateArchiving(session_id);
+    console.log(response);
     res.json({
       archiveId: response.id,
       status: response.status
     });
-  } catch (e) {
-    res.send(e);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
   }
 });
 
 app.get('/archive/stop/:archiveId', async (req, res) => {
-  const archiveId = req.params.archiveId;
+  const { archiveId } = req.params;
   try {
-    const response = await opentok.stopRecording(archiveId);
+    const response = await opentok.stopArchiving(archiveId);
     console.log(response);
     res.json({
       archiveId: response,
       status: 'stopped'
     });
-  } catch (e) {
-    res.send(e);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
   }
 });
 
-// app.use('/*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '..', 'client/build', 'index.html'));
-// });
+app.get('/archives/:sessionId', async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    const archives = await opentok.listArchives(sessionId);
+    res.json(archives);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
 
 // start express server on port 5000
 app.listen(process.env.PORT || 5000, () => {
