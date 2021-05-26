@@ -1,9 +1,4 @@
-// let env = process.env.NODE_ENV || 'development';
-// if (!env || env === 'development') {
 require('dotenv').config();
-// } else {
-//   require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
-// }
 
 const cors = require('cors');
 const express = require('express');
@@ -13,33 +8,23 @@ app.use(cors());
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-let sessions = [];
+const sessions = {};
 
 app.get('/session/:room', async (req, res) => {
   try {
     const { room: roomName } = req.params;
-    const sessionStorage = sessions.find(session => {
-      if (session.roomName === roomName) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-    if (!sessionStorage) {
-      const data = await opentok.getCredentials();
-      sessions.push({
-        sessionId: data.sessionId,
-        roomName
-      });
+    if (sessions[roomName]) {
+      const data = opentok.generateToken(sessions[roomName].sessionId);
       res.json({
-        sessionId: data.sessionId,
+        sessionId: sessions[roomName].sessionId,
         token: data.token,
         apiKey: data.apiKey
       });
     } else {
-      const data = opentok.generateToken(sessionDB.sessionId);
+      const data = await opentok.getCredentials();
+      sessions[roomName] = data;
       res.json({
-        sessionId: sessionDB.sessionId,
+        sessionId: data.sessionId,
         token: data.token,
         apiKey: data.apiKey
       });
