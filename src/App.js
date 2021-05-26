@@ -10,24 +10,25 @@ import EndCall from './components/EndCall';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { ThemeProvider } from '@material-ui/styles';
 
-const theme = createMuiTheme({
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#3c93cd',
+const theme = () => {
+  let primary = process.env.REACT_APP_PALETTE_PRIMARY || '#3c93cd';
+  let secondary = process.env.REACT_APP_PALETTE_SECONDARY || '#f0b34e';
+  return createMuiTheme({
+    palette: {
+      type: 'light',
+      primary: {
+        main: primary,
+      },
+      secondary: {
+        main: secondary,
+      },
     },
-    secondary: {
-      main: '#f0b34e',
-    },
-    info: {
-      main: '#973e76',
-    },
-  },
-});
+  });
+};
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme()}>
       <Router>
         <div>
           {/* A <Switch> looks through its children <Route>s and
