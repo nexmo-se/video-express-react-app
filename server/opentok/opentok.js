@@ -8,7 +8,6 @@ if (!apiKey || !apiSecret) {
   );
 }
 let sessionId;
-let sessions = [];
 
 opentok = new OpenTok(apiKey, apiSecret);
 
