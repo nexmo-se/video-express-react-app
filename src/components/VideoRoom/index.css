@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+}
+
+#roomContainer {
+  width: 100vw;
+  height: calc(100vh - 90px);
+  background-color: #ddd;
+  position: relative;
+}
+#roomContainer > .OT_publisher {
+  top: 25px;
+  right: 25px;
+  position: absolute;
+  border-radius: 10px;
+}
+#roomContainer > .OT_screenshare {
+  top: 25px;
+  left: 25px;
+  position: absolute;
+  border-radius: 10px;
+}
