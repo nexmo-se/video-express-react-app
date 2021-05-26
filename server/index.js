@@ -1,13 +1,9 @@
-require('dotenv').config();
-let env = process.env.NODE_ENV || 'development';
-if (!env || env === 'development') {
-  require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
-} else {
-  require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
-}
-
-const cors = require('cors');
 const path = require('path');
+let env = process.env.NODE_ENV || 'development';
+const envPath = path.join(__dirname, '..');
+require('dotenv').config({ path: `${envPath}/.env.${env}` });
+const cors = require('cors');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express(); // create express app
@@ -16,13 +12,15 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const sessions = {};
-const buildPath = path.join(__dirname, '..', 'build');
 
-app.use(express.static(buildPath));
+if (env === 'production') {
+  const buildPath = path.join(__dirname, '..', 'build');
+  app.use(express.static(buildPath));
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  });
+}
 
 app.get('/session/:room', async (req, res) => {
   try {

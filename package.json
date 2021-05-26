@@ -29,10 +29,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "heroku-postbuild": "npm run build",
-    "dev": "concurrently \"npm run server-dev\" \"npm run start\"",
+    "prod": "concurrently \"npm run server-prod\" \"npm run start\"",
     "server-prod": "node server/index.js",
-    "server-dev": "nodemon server/index.js"
+    "server-dev": "nodemon server/index.js",
+    "postinstall": "npm run build"
   },
+  "homepage": ".",
   "main": "server.js",
   "proxy": "http://localhost:5000",
   "eslintConfig": {

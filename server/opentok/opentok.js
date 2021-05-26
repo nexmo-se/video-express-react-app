@@ -1,5 +1,4 @@
 const OpenTok = require('opentok');
-require('dotenv').config();
 const apiKey = process.env.VIDEO_API_API_KEY;
 const apiSecret = process.env.VIDEO_API_API_SECRET;
 if (!apiKey || !apiSecret) {
