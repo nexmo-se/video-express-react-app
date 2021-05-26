@@ -13,16 +13,17 @@ const sessions = {};
 app.get('/session/:room', async (req, res) => {
   try {
     const { room: roomName } = req.params;
+    console.log(sessions);
     if (sessions[roomName]) {
-      const data = opentok.generateToken(sessions[roomName].sessionId);
+      const data = opentok.generateToken(sessions[roomName]);
       res.json({
-        sessionId: sessions[roomName].sessionId,
+        sessionId: sessions[roomName],
         token: data.token,
         apiKey: data.apiKey
       });
     } else {
       const data = await opentok.getCredentials();
-      sessions[roomName] = data;
+      sessions[roomName] = data.sessionId;
       res.json({
         sessionId: data.sessionId,
         token: data.token,
