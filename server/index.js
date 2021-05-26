@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const cors = require('cors');
+const path = require('path');
 const express = require('express');
 const app = express(); // create express app
 const opentok = require('./opentok/opentok');
@@ -9,6 +10,13 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 const sessions = {};
+const buildPath = path.join(__dirname, '..', 'build');
+
+app.use(express.static(buildPath));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
 
 app.get('/session/:room', async (req, res) => {
   try {
@@ -19,7 +27,7 @@ app.get('/session/:room', async (req, res) => {
       res.json({
         sessionId: sessions[roomName],
         token: data.token,
-        apiKey: data.apiKey
+        apiKey: data.apiKey,
       });
     } else {
       const data = await opentok.getCredentials();
@@ -27,7 +35,7 @@ app.get('/session/:room', async (req, res) => {
       res.json({
         sessionId: data.sessionId,
         token: data.token,
-        apiKey: data.apiKey
+        apiKey: data.apiKey,
       });
     }
   } catch (error) {
@@ -42,7 +50,7 @@ app.post('/archive/start', async (req, res) => {
     const response = await opentok.initiateArchiving(session_id);
     res.json({
       archiveId: response.id,
-      status: response.status
+      status: response.status,
     });
   } catch (error) {
     console.log(error.message);
@@ -56,7 +64,7 @@ app.get('/archive/stop/:archiveId', async (req, res) => {
     const response = await opentok.stopArchiving(archiveId);
     res.json({
       archiveId: response,
-      status: 'stopped'
+      status: 'stopped',
     });
   } catch (error) {
     console.log(error.message);
