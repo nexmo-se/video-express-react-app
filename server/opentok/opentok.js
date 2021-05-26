@@ -1,7 +1,7 @@
 const OpenTok = require('opentok');
 require('dotenv').config();
-const apiKey = process.env.apiKey;
-const apiSecret = process.env.apiSecret;
+const apiKey = process.env.VIDEO_API_API_KEY;
+const apiSecret = process.env.VIDEO_API_API_SECRET;
 if (!apiKey || !apiSecret) {
   throw new Error(
     'Missing config values for env params OT_API_KEY and OT_API_SECRET'
@@ -9,16 +9,16 @@ if (!apiKey || !apiSecret) {
 }
 let sessionId;
 
-opentok = new OpenTok(apiKey, apiSecret);
+const opentok = new OpenTok(apiKey, apiSecret);
 
 const createSessionandToken = () => {
   return new Promise((resolve, reject) => {
-    opentok.createSession({ mediaMode: 'routed' }, function(error, session) {
+    opentok.createSession({ mediaMode: 'routed' }, function (error, session) {
       if (error) {
         reject(error);
       } else {
         sessionId = session.sessionId;
-        token = opentok.generateToken(sessionId);
+        const token = opentok.generateToken(sessionId);
         resolve({ sessionId: sessionId, token: token });
         //console.log("Session ID: " + sessionId);
       }
@@ -26,9 +26,9 @@ const createSessionandToken = () => {
   });
 };
 
-const createArchive = session => {
+const createArchive = (session) => {
   return new Promise((resolve, reject) => {
-    opentok.startArchive(session, function(error, archive) {
+    opentok.startArchive(session, function (error, archive) {
       if (error) {
         reject(error);
       } else {
@@ -38,9 +38,9 @@ const createArchive = session => {
   });
 };
 
-const stopArchive = archive => {
+const stopArchive = (archive) => {
   return new Promise((resolve, reject) => {
-    opentok.stopArchive(archive, function(error, session) {
+    opentok.stopArchive(archive, function (error, session) {
       if (error) {
         reject(error);
       } else {
@@ -50,30 +50,29 @@ const stopArchive = archive => {
   });
 };
 
-const generateToken = sessionId => {
-  token = opentok.generateToken(sessionId);
+const generateToken = (sessionId) => {
+  const token = opentok.generateToken(sessionId);
   return { token: token, apiKey: apiKey };
 };
 
-const initiateArchiving = async sessionId => {
-  archive = await createArchive(sessionId);
+const initiateArchiving = async (sessionId) => {
+  const archive = await createArchive(sessionId);
   return archive;
 };
 
-const stopArchiving = async archiveId => {
+const stopArchiving = async (archiveId) => {
   console.log(archiveId);
   const response = await stopArchive(archiveId);
   return response;
 };
 
 const getCredentials = async (session = null) => {
-  data = await createSessionandToken(session);
+  const data = await createSessionandToken(session);
   sessionId = data.sessionId;
-  token = data.token;
+  const token = data.token;
   return { sessionId: sessionId, token: token, apiKey: apiKey };
-  console.log(`sessionId:${sessionId}, token : ${token}`);
 };
-const listArchives = async sessionId => {
+const listArchives = async (sessionId) => {
   return new Promise((resolve, reject) => {
     const options = { sessionId };
     opentok.listArchives(options, (error, archives) => {
@@ -91,5 +90,5 @@ module.exports = {
   generateToken,
   initiateArchiving,
   stopArchiving,
-  listArchives
+  listArchives,
 };

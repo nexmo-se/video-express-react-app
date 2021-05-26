@@ -1,12 +1,18 @@
 require('dotenv').config();
+let env = process.env.NODE_ENV || 'development';
+if (!env || env === 'development') {
+  require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
+} else {
+  require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
+}
 
 const cors = require('cors');
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express(); // create express app
 const opentok = require('./opentok/opentok');
 app.use(cors());
-const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 const sessions = {};
