@@ -28,7 +28,6 @@
     "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "PUBLIC_URL=/ react-scripts build",
     "test": "react-scripts test",
-    "heroku-postbuild": "npm run build",
     "prod": "concurrently \"npm run server-prod\" \"npm run start\"",
     "server-prod": "NODE_ENV=production node server/index.js",
     "server-dev": "nodemon server/index.js",
