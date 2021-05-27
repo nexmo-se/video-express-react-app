@@ -4,9 +4,11 @@ import { getCredentials } from '../../api/fetchCreds';
 import style from '../VideoRoom/index.css';
 import { useRoom } from '../../hooks/useRoom';
 
+import SingleParticipantView from '../SingleparticipantView/index';
+
 export default function VideoRoom() {
   const [credentials, setCredentials] = useState(null);
-  const { createCall } = useRoom({ credentials });
+  const { createCall, participantsCount, connected } = useRoom({ credentials });
   let { roomName } = useParams();
   useEffect(() => {
     getCredentials(roomName).then(({ apikey, sessionId, token }) => {
@@ -20,9 +22,15 @@ export default function VideoRoom() {
     }
   }, [createCall, credentials]);
 
+  useEffect(() => {}, [participantsCount]);
+
   return credentials ? (
     <div id="callContainer">
-      <div id="roomContainer"></div>
+      <div id="roomContainer">
+        {participantsCount === 0 ? (
+          <SingleParticipantView roomName={roomName} />
+        ) : null}
+      </div>
     </div>
   ) : null;
 }

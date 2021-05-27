@@ -1,0 +1,5 @@
+#banner {
+  border: 5px solid white;
+  display: flex;
+  justify-content: space-around;
+}

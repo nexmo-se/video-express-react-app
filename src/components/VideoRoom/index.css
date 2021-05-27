@@ -9,7 +9,7 @@ body {
   position: relative;
 }
 #roomContainer > .OT_publisher {
-  top: 25px;
+  bottom: 25px;
   right: 25px;
   position: absolute;
   border-radius: 10px;
