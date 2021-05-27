@@ -30,8 +30,7 @@
     "test": "react-scripts test",
     "prod": "concurrently \"npm run server-prod\" \"npm run start\"",
     "server-prod": "NODE_ENV=production node server/index.js",
-    "server-dev": "nodemon server/index.js",
-    "postinstall": "npm run build"
+    "server-dev": "nodemon server/index.js"
   },
   "homepage": ".",
   "main": "server/index.js",
