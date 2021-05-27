@@ -41,7 +41,7 @@ export default function VideoRoom() {
   return credentials ? (
     <div id="callContainer">
       <div id="roomContainer">
-        {subscribersCount === 0 ? (
+        {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
