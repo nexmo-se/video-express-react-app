@@ -50,11 +50,13 @@ export default function VideoRoom() {
           camera.disableVideo();
           await room.startScreensharing();
           setScreen(room.screen);
+          // room.setLayoutMode('active-speaker');
           // .then(() => console.log('sharing your screen'));
         }}
       >
         Mute me
       </button>
+      {/* Controller Component */}
     </div>
   ) : null;
 }
