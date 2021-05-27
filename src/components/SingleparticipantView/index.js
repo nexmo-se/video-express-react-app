@@ -82,21 +82,6 @@ export default function SingleParticipantView({ roomName }) {
               </Button>
             </div>
           </ClickAwayListener>
-          {/* <Button
-            edge="end"
-            color="primary"
-            variant="contained"
-            style={{ marginLeft: '50px' }}
-            onClick={copyUrl}
-          >
-            Copy link to meeting
-            <div
-              style={{ display: copiedMeetingUrl ? 'block' : 'none' }}
-              className="ac-copy-success"
-            >
-              Copied
-            </div>
-          </Button> */}
         </CardActions>
       </Card>
     </div>

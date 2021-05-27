@@ -6,13 +6,26 @@ export function useRoom({ apikey, sessionId, token }) {
   const [screen, setScreen] = useState(null);
   const [connected, setconnected] = useState(false);
   const [subscribersCount, setSubscribersCount] = useState(0);
+  const [participants, setParticipants] = useState([]);
 
-  //   const onConnected = useCallback(
-  //     // roomRef.current.on('connected', () => {
-  //     console.log('Room.CameraPublisher - connected'),
-  //     // }),
-  //     []
-  //   );
+  const addparticipants = ({ participant }) => {
+    setParticipants(prev => [...prev, participant]);
+  };
+
+  const removeparticipants = ({ participant }) => {
+    setParticipants(prev =>
+      prev.filter(prevparticipant => prevparticipant.id !== participant.id)
+    );
+  };
+
+  // const onConnected = useCallback(
+  //   // roomRef.current.on('connected', () => {
+  //   console.log(
+  //     'Room.CameraPublisher - connected viniendo de donde tiene que venir'
+  //   ),
+  //   // }),
+  //   []
+  // );
 
   //   const onParticipantJoined = useCallback(
   //     // roomRef.current.on('connected', () => {
@@ -53,12 +66,13 @@ export function useRoom({ apikey, sessionId, token }) {
       }
     });
 
-    //   const connectionEventHandlers = {
-    //     connected: onConnected,
-    //     // disconnected: onDisconnected,
-    //     participantJoined: onParticipantJoined
-    //     //streamDestroyed: onStreamDestroyed
-    //   };
+    // const connectionEventHandlers = {
+    //   connected: onConnected
+    //   // disconnected: onDisconnected,
+    //   // participantJoined: onParticipantJoined
+    //   //streamDestroyed: onStreamDestroyed
+    // };
+    // roomRef.current.on(connectionEventHandlers);
     //   const streamEventHandlers = {
     //     created: onStreamCreated
 
@@ -72,11 +86,12 @@ export function useRoom({ apikey, sessionId, token }) {
     });
     roomRef.current.on('participantJoined', participant => {
       //   addParticipant();
+      addparticipants({ participant: participant });
       setSubscribersCount(prevCount => prevCount + 1);
       console.log('Room: participant joined: ', participant);
-      console.log(subscribersCount);
     });
     roomRef.current.on('participantLeft', (participant, reason) => {
+      removeparticipants({ participant: participant });
       console.log('Room: participant left', participant, reason);
       setSubscribersCount(prevCount => prevCount - 1);
     });
@@ -97,6 +112,7 @@ export function useRoom({ apikey, sessionId, token }) {
     subscribersCount: subscribersCount,
     connected: connected,
     camera: camera,
-    room: roomRef.current
+    room: roomRef.current,
+    participants
   };
 }

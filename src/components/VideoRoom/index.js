@@ -8,7 +8,7 @@ import SingleParticipantView from '../SingleparticipantView/index';
 
 export default function VideoRoom() {
   const [credentials, setCredentials] = useState(null);
-  const { createCall, subscribersCount, camera, room } = useRoom({
+  const { createCall, subscribersCount, camera, room, participants } = useRoom({
     credentials
   });
   const [screen, setScreen] = useState(null);
@@ -26,17 +26,17 @@ export default function VideoRoom() {
     }
   }, [createCall, credentials]);
 
-  useEffect(() => {
-    if (camera) {
-      console.log(camera);
-    }
-    if (screen) {
-    }
-  }, [subscribersCount, camera, screen]);
-
   // useEffect(() => {
-  //   console.log(camera);
-  // }, [camera]);
+  //   if (camera) {
+  //   }
+  //   if (screen) {
+  //   }
+  // }, [subscribersCount, camera, screen]);
+  // [subscribersCount]
+
+  useEffect(() => {
+    if (participants) console.log(participants);
+  }, [participants]);
 
   return credentials ? (
     <div id="callContainer">
@@ -45,18 +45,29 @@ export default function VideoRoom() {
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
-      <button
-        onClick={async () => {
-          camera.disableVideo();
-          await room.startScreensharing();
-          setScreen(room.screen);
-          // room.setLayoutMode('active-speaker');
-          // .then(() => console.log('sharing your screen'));
-        }}
-      >
-        Mute me
-      </button>
+
       {/* Controller Component */}
+      {/* this will go on separate components */}
+      <div id="layoutcontrol">
+        <button
+          className="buttons"
+          onClick={() => {
+            const isVideoEnabled = camera.isVideoEnabled();
+            isVideoEnabled ? camera.disableVideo() : camera.enableVideo();
+          }}
+        >
+          Mute me
+        </button>
+        <button
+          className="buttons"
+          onClick={async () => {
+            await room.startScreensharing();
+            setScreen(room.screen);
+          }}
+        >
+          share screen
+        </button>
+      </div>
     </div>
   ) : null;
 }
