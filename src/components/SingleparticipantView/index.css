@@ -1,7 +1,8 @@
 #banner {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  z-index: 1;
+  position: fixed;
+  top: 200px;
+  left: 500px;
 }
 .ac-copy-success {
   position: absolute;
