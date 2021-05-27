@@ -1,7 +1,8 @@
 const path = require('path');
 let env = process.env.NODE_ENV || 'development';
-console.log('ENV', `${__dirname}.env.${env}`);
-require('dotenv').config({ path: `${__dirname}/.env.${env}` });
+const envPath = path.join(__dirname, '..');
+console.log('envPath', envPath);
+require('dotenv').config({ path: `${envPath}/.env.${env}` });
 const cors = require('cors');
 console.log('Node Running Environement:', env);
 const express = require('express');

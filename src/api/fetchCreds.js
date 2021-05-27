@@ -1,23 +1,28 @@
 import axios from 'axios';
 
-export const getCredentials = async roomName => {
+let API_URL = `${process.env.REACT_APP_API_URL_DEVELOPMENT}/auth/`;
+if (process.env.NODE_ENV === 'production') {
+  API_URL = `${process.env.REACT_APP_API_URL_PRODUCTION}${process.env.REACT_APP_BASENAME}/auth/`;
+}
+
+export const getCredentials = async (roomName) => {
   return axios
-    .get(`http://localhost:8000/session/${roomName}`)
-    .then(response => {
+    .get(`${API_URL}/session/${roomName}`)
+    .then((response) => {
       const { apiKey, sessionId, room, token } = response.data;
       return {
         apikey: apiKey,
         sessionId,
         token,
-        room
+        room,
       };
     })
-    .catch(err => {
+    .catch((err) => {
       return {
         apikey: '',
         sessionId: '',
         token: '',
-        room: ''
+        room: '',
       };
     });
 };
