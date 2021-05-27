@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const useStyles = makeStyles({
   root: {
@@ -27,9 +28,20 @@ const useStyles = makeStyles({
 
 export default function SingleParticipantView({ roomName }) {
   const urlRef = useRef();
+  const [copiedMeetingUrl, setCopiedMeetingUrl] = useState(false);
 
   const getMeetingUrl = () => {
     return window.location.href;
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(prev => !prev);
+  };
+
+  const handleClickAway = () => {
+    setOpen(false);
   };
 
   //Maybe use a ref instead
@@ -38,6 +50,7 @@ export default function SingleParticipantView({ roomName }) {
     const url = window.location.href;
     navigator.clipboard.writeText(url).then(
       () => {
+        setOpen(prev => !prev);
         console.log('Copy successfully');
       },
       () => {
@@ -54,15 +67,35 @@ export default function SingleParticipantView({ roomName }) {
           <p ref={urlRef}>{window.location.href}</p>
         </CardContent>
         <CardActions>
-          <Button
+          <ClickAwayListener onClickAway={handleClickAway}>
+            <div className={classes.root}>
+              <Button
+                edge="end"
+                color="primary"
+                variant="contained"
+                style={{ marginLeft: '50px' }}
+                onClick={copyUrl}
+              >
+                Copy link to meeting
+                {open ? <div className="ac-copy-success">Copied</div> : null}
+              </Button>
+            </div>
+          </ClickAwayListener>
+          {/* <Button
             edge="end"
             color="primary"
             variant="contained"
             style={{ marginLeft: '50px' }}
             onClick={copyUrl}
           >
-            Copy link to meeting{' '}
-          </Button>
+            Copy link to meeting
+            <div
+              style={{ display: copiedMeetingUrl ? 'block' : 'none' }}
+              className="ac-copy-success"
+            >
+              Copied
+            </div>
+          </Button> */}
         </CardActions>
       </Card>
     </div>
