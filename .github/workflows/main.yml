@@ -20,4 +20,4 @@ jobs:
           run: heroku config:set VIDEO_API_API_KEY=${{ secrets.VIDEO_API_API_KEY }} VIDEO_API_API_SECRET=${{ secrets.VIDEO_API_API_SECRET }} 
 
         - name: Deploy backend to heroku
-           un: git push --force heroku `git subtree split --prefix server HEAD`:master
+          run: git push --force heroku `git subtree split --prefix server HEAD`:master
