@@ -2,6 +2,7 @@ body {
   margin: 0;
 }
 
+/* Assuming the name of the Room's container is roomContainer */
 #roomContainer {
   width: 100vw;
   height: calc(100vh - 90px);

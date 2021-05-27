@@ -3,12 +3,9 @@ import React, { useState, useRef, useCallback } from 'react';
 export function useRoom({ apikey, sessionId, token }) {
   const roomRef = useRef(null);
   const [camera, setCamera] = useState(null);
+  const [screen, setScreen] = useState(null);
   const [connected, setconnected] = useState(false);
   const [participantsCount, setParticipantsCount] = useState(0);
-
-  //   const addParticipant = () => setParticipantsCount(participantsCount + 1);
-
-  const removeParticipant = () => setParticipantsCount(participantsCount - 1);
 
   //   const onConnected = useCallback(
   //     // roomRef.current.on('connected', () => {
@@ -83,17 +80,13 @@ export function useRoom({ apikey, sessionId, token }) {
       console.log('Room: participant left', participant, reason);
       setParticipantsCount(prevCount => prevCount - 1);
     });
-    // roomRef.current.on('connected', () => {
-    //         console.log('Room.CameraPublisher - participant joined'),
-    // })
 
     roomRef.current
       .join()
       .then(() => {
         setconnected(true);
-        // console.log(roomRef.current);
-        // roomRef.current.on(connectionEventHandlers);
         setCamera(roomRef.current.camera);
+        setScreen(roomRef.current.screen);
         //   camera.on(streamEventHandlers);
       })
       .catch(e => console.log(e));
@@ -102,6 +95,7 @@ export function useRoom({ apikey, sessionId, token }) {
   return {
     createCall,
     participantsCount: participantsCount,
-    connected: connected
+    connected: connected,
+    camera: camera
   };
 }

@@ -4,14 +4,6 @@
 
 Get `session/:roomName`
 
-Request body
-
-```
-{
-    "sessionId" : "1_MX40NjI2NDk1Mn5-MTYyMTk2ODg0MDIzOX5GZzhQY0pHY1hOOFcwT0ZPOEtQT3NpN2t-fg"
-}
-```
-
 Response body
 
 ```
@@ -25,6 +17,14 @@ Response body
 ### Start Recording
 
 POST `archive/start`
+
+Request body
+
+```
+{
+    "sessionId" : "1_MX40NjI2NDk1Mn5-MTYyMTk2ODg0MDIzOX5GZzhQY0pHY1hOOFcwT0ZPOEtQT3NpN2t-fg"
+}
+```
 
 Response body
 
@@ -50,7 +50,7 @@ Response body
 
 ### List Archives
 
-GET `archives/:sessionId`
+GET `archive/:sessionId`
 
 Response body
 

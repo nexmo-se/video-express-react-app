@@ -64,7 +64,7 @@ app.get('/archive/stop/:archiveId', async (req, res) => {
   }
 });
 
-app.get('/archives/:sessionId', async (req, res) => {
+app.get('/archive/:sessionId', async (req, res) => {
   try {
     const { sessionId } = req.params;
     const archives = await opentok.listArchives(sessionId);

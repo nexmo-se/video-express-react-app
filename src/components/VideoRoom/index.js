@@ -8,8 +8,11 @@ import SingleParticipantView from '../SingleparticipantView/index';
 
 export default function VideoRoom() {
   const [credentials, setCredentials] = useState(null);
-  const { createCall, participantsCount, connected } = useRoom({ credentials });
+  const { createCall, participantsCount, camera, screen } = useRoom({
+    credentials
+  });
   let { roomName } = useParams();
+
   useEffect(() => {
     getCredentials(roomName).then(({ apikey, sessionId, token }) => {
       setCredentials({ apikey, sessionId, token });
@@ -22,7 +25,18 @@ export default function VideoRoom() {
     }
   }, [createCall, credentials]);
 
-  useEffect(() => {}, [participantsCount]);
+  useEffect(() => {
+    if (camera) {
+      console.log(camera);
+    }
+    if (screen) {
+      console.log(screen);
+    }
+  }, [participantsCount, camera, screen]);
+
+  // useEffect(() => {
+  //   console.log(camera);
+  // }, [camera]);
 
   return credentials ? (
     <div id="callContainer">
@@ -31,6 +45,13 @@ export default function VideoRoom() {
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
+      <button
+        onClick={() => {
+          camera.disableVideo();
+        }}
+      >
+        Mute me
+      </button>
     </div>
   ) : null;
 }
