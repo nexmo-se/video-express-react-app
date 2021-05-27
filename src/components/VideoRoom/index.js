@@ -8,9 +8,10 @@ import SingleParticipantView from '../SingleparticipantView/index';
 
 export default function VideoRoom() {
   const [credentials, setCredentials] = useState(null);
-  const { createCall, participantsCount, camera, screen } = useRoom({
+  const { createCall, subscribersCount, camera, room } = useRoom({
     credentials
   });
+  const [screen, setScreen] = useState(null);
   let { roomName } = useParams();
 
   useEffect(() => {
@@ -30,9 +31,8 @@ export default function VideoRoom() {
       console.log(camera);
     }
     if (screen) {
-      console.log(screen);
     }
-  }, [participantsCount, camera, screen]);
+  }, [subscribersCount, camera, screen]);
 
   // useEffect(() => {
   //   console.log(camera);
@@ -41,13 +41,16 @@ export default function VideoRoom() {
   return credentials ? (
     <div id="callContainer">
       <div id="roomContainer">
-        {participantsCount === 0 ? (
+        {subscribersCount === 0 ? (
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
       <button
-        onClick={() => {
+        onClick={async () => {
           camera.disableVideo();
+          await room.startScreensharing();
+          setScreen(room.screen);
+          // .then(() => console.log('sharing your screen'));
         }}
       >
         Mute me

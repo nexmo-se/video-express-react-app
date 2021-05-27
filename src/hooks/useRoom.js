@@ -5,7 +5,7 @@ export function useRoom({ apikey, sessionId, token }) {
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
   const [connected, setconnected] = useState(false);
-  const [participantsCount, setParticipantsCount] = useState(0);
+  const [subscribersCount, setSubscribersCount] = useState(0);
 
   //   const onConnected = useCallback(
   //     // roomRef.current.on('connected', () => {
@@ -72,13 +72,13 @@ export function useRoom({ apikey, sessionId, token }) {
     });
     roomRef.current.on('participantJoined', participant => {
       //   addParticipant();
-      setParticipantsCount(prevCount => prevCount + 1);
+      setSubscribersCount(prevCount => prevCount + 1);
       console.log('Room: participant joined: ', participant);
-      console.log(participantsCount);
+      console.log(subscribersCount);
     });
     roomRef.current.on('participantLeft', (participant, reason) => {
       console.log('Room: participant left', participant, reason);
-      setParticipantsCount(prevCount => prevCount - 1);
+      setSubscribersCount(prevCount => prevCount - 1);
     });
 
     roomRef.current
@@ -94,8 +94,9 @@ export function useRoom({ apikey, sessionId, token }) {
 
   return {
     createCall,
-    participantsCount: participantsCount,
+    subscribersCount: subscribersCount,
     connected: connected,
-    camera: camera
+    camera: camera,
+    room: roomRef.current
   };
 }
