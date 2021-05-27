@@ -6,14 +6,18 @@ on:
       - master
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.4.6 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "ot-ai-dashboard" #Must be unique in Heroku
-          heroku_email: "enrico.portolan@vonage.com"
-      - name: Run build complete
-        run: echo successfully build  
+  deploy:
+      name: Deploy
+      runs-on: ubuntu-latest
+
+      steps: 
+        - name: Checkout
+          uses: actions/checkout@v1
+
+        - name: Add remote origin
+          run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+        - name: Set ENV Variables
+          run: heroku config:set VIDEO_API_API_KEY=${{ secrets.VIDEO_API_API_KEY }} VIDEO_API_API_SECRET=${{ secrets.VIDEO_API_API_SECRET }} 
+
+        - name: Deploy backend to heroku
+           un: git push --force heroku `git subtree split --prefix server HEAD`:master
