@@ -26,17 +26,16 @@
   },
   "scripts": {
     "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "build": "react-scripts build",
+    "build": "PUBLIC_URL=/ react-scripts build",
     "test": "react-scripts test",
     "heroku-postbuild": "npm run build",
     "prod": "concurrently \"npm run server-prod\" \"npm run start\"",
-    "server-prod": "node server/index.js",
+    "server-prod": "NODE_ENV=production node server/index.js",
     "server-dev": "nodemon server/index.js",
     "postinstall": "npm run build"
   },
   "homepage": ".",
-  "main": "server.js",
-  "proxy": "http://localhost:5000",
+  "main": "server/index.js",
   "eslintConfig": {
     "extends": [
       "react-app",
