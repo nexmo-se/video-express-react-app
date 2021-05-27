@@ -5,13 +5,14 @@ import style from '../VideoRoom/index.css';
 import { useRoom } from '../../hooks/useRoom';
 
 import SingleParticipantView from '../SingleparticipantView/index';
+import ToolBar from 'components/ToolBar';
 
 export default function VideoRoom() {
   const [credentials, setCredentials] = useState(null);
   const { createCall, subscribersCount, camera, room, participants } = useRoom({
     credentials
   });
-  const [screen, setScreen] = useState(null);
+
   let { roomName } = useParams();
 
   useEffect(() => {
@@ -45,29 +46,7 @@ export default function VideoRoom() {
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
-
-      {/* Controller Component */}
-      {/* this will go on separate components */}
-      <div id="layoutcontrol">
-        <button
-          className="buttons"
-          onClick={() => {
-            const isVideoEnabled = camera.isVideoEnabled();
-            isVideoEnabled ? camera.disableVideo() : camera.enableVideo();
-          }}
-        >
-          Mute me
-        </button>
-        <button
-          className="buttons"
-          onClick={async () => {
-            await room.startScreensharing();
-            setScreen(room.screen);
-          }}
-        >
-          share screen
-        </button>
-      </div>
+      <ToolBar camera={camera} room={room}></ToolBar>
     </div>
   ) : null;
 }
