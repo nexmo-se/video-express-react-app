@@ -6,6 +6,7 @@ import { useRoom } from '../../hooks/useRoom';
 
 import SingleParticipantView from '../SingleparticipantView/index';
 import ToolBar from 'components/ToolBar';
+import MuteParticipantsButton from 'components/MuteparticipantButton';
 
 export default function VideoRoom() {
   const [credentials, setCredentials] = useState(null);
@@ -42,6 +43,7 @@ export default function VideoRoom() {
   return credentials ? (
     <div id="callContainer">
       <div id="roomContainer">
+        <MuteParticipantsButton />
         {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />
         ) : null}

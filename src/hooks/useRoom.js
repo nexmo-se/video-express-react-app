@@ -71,7 +71,11 @@ export function useRoom({ apikey, sessionId, token }) {
     //   // participantJoined: onParticipantJoined
     //   //streamDestroyed: onStreamDestroyed
     // };
-    // if (roomRef.current) roomRef.current.on(connectionEventHandlers);
+    // if (roomRef.current) {
+    //   roomRef.current.on({
+    //     connected: onConnected
+    //   });
+    // }
 
     //   const streamEventHandlers = {
     //     created: onStreamCreated
