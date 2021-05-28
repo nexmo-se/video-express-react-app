@@ -17,14 +17,14 @@ export function useRoom({ apikey, sessionId, token }) {
     );
   };
 
-  const onConnected = useCallback(
-    // roomRef.current.on('connected', () => {
-    console.log(
-      'Room.CameraPublisher - connected viniendo de donde tiene que venir'
-    ),
-    // }),
-    []
-  );
+  // const onConnected = useCallback(
+  //   // roomRef.current.on('connected', () => {
+  //   console.log(
+  //     'Room.CameraPublisher - connected viniendo de donde tiene que venir'
+  //   ),
+  //   // }),
+  //   []
+  // );
 
   //   const onParticipantJoined = useCallback(
   //     // roomRef.current.on('connected', () => {
@@ -78,21 +78,21 @@ export function useRoom({ apikey, sessionId, token }) {
 
     //     //streamDestroyed: onStreamDestroyed
     //   };
-    // roomRef.current.on('connected', () => {
-    //   console.log('Room: connected');
-    // });
-    // roomRef.current.on('disconnected', () => {
-    //   console.log('Room: disconnected');
-    // });
-    // roomRef.current.on('participantJoined', participant => {
-    //   //   addParticipant();
-    //   addparticipants({ participant: participant });
-    //   console.log('Room: participant joined: ', participant);
-    // });
-    // roomRef.current.on('participantLeft', (participant, reason) => {
-    //   removeparticipants({ participant: participant });
-    //   console.log('Room: participant left', participant, reason);
-    // });
+    roomRef.current.on('connected', () => {
+      console.log('Room: connected');
+    });
+    roomRef.current.on('disconnected', () => {
+      console.log('Room: disconnected');
+    });
+    roomRef.current.on('participantJoined', participant => {
+      //   addParticipant();
+      addparticipants({ participant: participant });
+      console.log('Room: participant joined: ', participant);
+    });
+    roomRef.current.on('participantLeft', (participant, reason) => {
+      removeparticipants({ participant: participant });
+      console.log('Room: participant left', participant, reason);
+    });
 
     roomRef.current
       .join({
