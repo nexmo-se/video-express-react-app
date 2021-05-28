@@ -4,7 +4,7 @@ export function useRoom({ apikey, sessionId, token }) {
   const roomRef = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
-  const [connected, setconnected] = useState(false);
+  const [connected, setConnected] = useState(false);
   const [participants, setParticipants] = useState([]);
 
   const addparticipants = ({ participant }) => {
@@ -103,10 +103,9 @@ export function useRoom({ apikey, sessionId, token }) {
         publisherProperties: { name: 'John', style: { nameDisplayMode: 'on' } }
       })
       .then(() => {
-        setconnected(true);
+        setConnected(true);
         setCamera(roomRef.current.camera);
         setScreen(roomRef.current.screen);
-        //   camera.on(streamEventHandlers);
       })
       .catch(e => console.log(e));
   }, []);

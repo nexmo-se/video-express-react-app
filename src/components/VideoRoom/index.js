@@ -28,14 +28,6 @@ export default function VideoRoom() {
     }
   }, [createCall, credentials]);
 
-  // useEffect(() => {
-  //   if (camera) {
-  //   }
-  //   if (screen) {
-  //   }
-  // }, [subscribersCount, camera, screen]);
-  // [subscribersCount]
-
   useEffect(() => {
     if (participants) console.log(participants);
   }, [participants]);
