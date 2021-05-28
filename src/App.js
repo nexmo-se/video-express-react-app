@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import VideoRoom from './components/VideoRoom';
 import Error from './components/Error';
+import WaitingRoom from './components/WaitingRoom';
 import EndCall from './components/EndCall';
 
 // Theme Configuration
@@ -42,10 +43,11 @@ function App() {
             </Route> */}
             <Route path="/room/:roomName" component={VideoRoom}></Route>
             <Route path="/error" component={Error}></Route>
-            <Route exact path="/">
+            <Route exact path="/" component={WaitingRoom}></Route>
+            <Route path="*">
               <Redirect
                 to={{
-                  pathname: '/error',
+                  pathname: '/',
                 }}
               />
             </Route>
