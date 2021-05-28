@@ -17,14 +17,14 @@ export function useRoom({ apikey, sessionId, token }) {
     );
   };
 
-  // const onConnected = useCallback(
-  //   // roomRef.current.on('connected', () => {
-  //   console.log(
-  //     'Room.CameraPublisher - connected viniendo de donde tiene que venir'
-  //   ),
-  //   // }),
-  //   []
-  // );
+  const onConnected = useCallback(
+    // roomRef.current.on('connected', () => {
+    console.log(
+      'Room.CameraPublisher - connected viniendo de donde tiene que venir'
+    ),
+    // }),
+    []
+  );
 
   //   const onParticipantJoined = useCallback(
   //     // roomRef.current.on('connected', () => {
@@ -71,30 +71,33 @@ export function useRoom({ apikey, sessionId, token }) {
     //   // participantJoined: onParticipantJoined
     //   //streamDestroyed: onStreamDestroyed
     // };
-    // roomRef.current.on(connectionEventHandlers);
+    // if (roomRef.current) roomRef.current.on(connectionEventHandlers);
+
     //   const streamEventHandlers = {
     //     created: onStreamCreated
 
     //     //streamDestroyed: onStreamDestroyed
     //   };
-    roomRef.current.on('connected', () => {
-      console.log('Room: connected');
-    });
-    roomRef.current.on('disconnected', () => {
-      console.log('Room: disconnected');
-    });
-    roomRef.current.on('participantJoined', participant => {
-      //   addParticipant();
-      addparticipants({ participant: participant });
-      console.log('Room: participant joined: ', participant);
-    });
-    roomRef.current.on('participantLeft', (participant, reason) => {
-      removeparticipants({ participant: participant });
-      console.log('Room: participant left', participant, reason);
-    });
+    // roomRef.current.on('connected', () => {
+    //   console.log('Room: connected');
+    // });
+    // roomRef.current.on('disconnected', () => {
+    //   console.log('Room: disconnected');
+    // });
+    // roomRef.current.on('participantJoined', participant => {
+    //   //   addParticipant();
+    //   addparticipants({ participant: participant });
+    //   console.log('Room: participant joined: ', participant);
+    // });
+    // roomRef.current.on('participantLeft', (participant, reason) => {
+    //   removeparticipants({ participant: participant });
+    //   console.log('Room: participant left', participant, reason);
+    // });
 
     roomRef.current
-      .join()
+      .join({
+        publisherProperties: { name: 'John', style: { nameDisplayMode: 'on' } }
+      })
       .then(() => {
         setconnected(true);
         setCamera(roomRef.current.camera);
