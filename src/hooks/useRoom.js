@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 
-export function useRoom({ apikey, sessionId, token }) {
-  const roomRef = useRef(null);
+export function useRoom() {
+  let roomRef = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
   const [connected, setConnected] = useState(false);
@@ -64,7 +64,7 @@ export function useRoom({ apikey, sessionId, token }) {
         screenPublisherContainer: 'roomContainer'
       }
     });
-
+    console.log('this is the room' + roomRef);
     // const connectionEventHandlers = {
     //   connected: onConnected
     //   // disconnected: onDisconnected,

@@ -10,9 +10,7 @@ import MuteParticipantsButton from 'components/MuteparticipantButton';
 
 export default function VideoRoom() {
   const [credentials, setCredentials] = useState(null);
-  const { createCall, subscribersCount, camera, room, participants } = useRoom({
-    credentials
-  });
+  const { createCall, subscribersCount, room, participants } = useRoom();
 
   let { roomName } = useParams();
 
@@ -40,7 +38,7 @@ export default function VideoRoom() {
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
-      <ToolBar camera={camera} room={room}></ToolBar>
+      <ToolBar room={room}></ToolBar>
     </div>
   ) : null;
 }
