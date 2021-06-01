@@ -5,24 +5,9 @@ import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
 import MuteAll from 'components/MuteAllButton';
+import ScreenSharingButton from 'components/ScreenSharingButton';
 
 export default function ToolBar({ room, participants }) {
-  const [screen, setScreen] = useState(null);
-
-  const toggleVideo = () => {
-    if (room) {
-      const camera = room.camera;
-      const isVideoEnabled = camera.isVideoEnabled();
-      isVideoEnabled ? camera.disableVideo() : camera.enableVideo();
-    }
-    return;
-  };
-
-  const startScreenSharing = async () => {
-    await room.startScreensharing();
-    setScreen(room.screen);
-  };
-
   const muteAll = () => {
     if (participants) {
       participants.map(participant => {
@@ -36,12 +21,7 @@ export default function ToolBar({ room, participants }) {
       <MuteVideoButton room={room} />
       <MuteAudioButton room={room} />
       <RecordingButton room={room} />
-      <button className="buttons" onClick={startScreenSharing}>
-        share screen
-      </button>
-      {/* <button className="buttons" onClick={muteAll}>
-        Mute all
-      </button> */}
+      <ScreenSharingButton room={room} />
       <MuteAll participants={participants} />
     </div>
   );

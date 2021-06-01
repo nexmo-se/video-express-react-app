@@ -1,4 +1,4 @@
-export default function muteAll({ participants }) {
+export default function muteAllButton({ participants }) {
   const muteAll = () => {
     if (participants) {
       participants.map(participant => {
