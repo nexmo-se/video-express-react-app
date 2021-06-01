@@ -3,6 +3,10 @@ import { useState } from 'react';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import { startRecording, stopRecording } from '../../api/fetchRecording';
 
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import { IconButton } from '@material-ui/core';
+
 export default function RecordingButton({ room }) {
   const [isRecording, setRecording] = useState(false);
   const [archiveId, setArchiveId] = useState(null);
@@ -50,8 +54,17 @@ export default function RecordingButton({ room }) {
   };
 
   return (
-    <button className="buttons" onClick={handleRecordingAction}>
-      Record Call
-    </button>
+    <IconButton
+      edge="start"
+      color="inherit"
+      aria-label="mic"
+      onClick={handleRecordingAction}
+    >
+      {isRecording ? (
+        <RadioButtonCheckedIcon fontSize="inherit" />
+      ) : (
+        <RadioButtonUncheckedIcon fontSize="inherit" />
+      )}
+    </IconButton>
   );
 }

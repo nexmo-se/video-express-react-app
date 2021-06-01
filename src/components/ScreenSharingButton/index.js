@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import ScreenShare from '@material-ui/icons/ScreenShare';
+import StopScreenShare from '@material-ui/icons/StopScreenShare';
+import { IconButton } from '@material-ui/core';
 
 export default function ScreenSharingButton({ room }) {
   const [isScreenSharing, setScreenSharing] = useState(false);
@@ -26,8 +29,21 @@ export default function ScreenSharingButton({ room }) {
   };
 
   return (
-    <button className="buttons" onClick={handleScreenSharing}>
-      share screen
-    </button>
+    // <button className="buttons" onClick={handleScreenSharing}>
+    //   share screen
+    // </button>
+
+    <IconButton
+      edge="start"
+      color="inherit"
+      aria-label="mic"
+      onClick={handleScreenSharing}
+    >
+      {isScreenSharing ? (
+        <StopScreenShare fontSize="inherit" />
+      ) : (
+        <ScreenShare fontSize="inherit" />
+      )}
+    </IconButton>
   );
 }

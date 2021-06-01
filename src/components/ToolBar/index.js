@@ -8,11 +8,22 @@ import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 
 export default function ToolBar({ room, participants }) {
+  const [hasAudio, setHasAudio] = useState(null);
+  const [hasVideo, setHasVideo] = useState(null);
+  const [areAllMuted, setAllMuted] = useState(false);
   const handleMuteAll = () => {
-    if (participants) {
+    if (!areAllMuted) {
+      //if (participants) {
       participants.map(participant => {
         participant.camera.disableAudio();
       });
+      //}
+      setAllMuted(true);
+    } else {
+      participants.map(participant => {
+        participant.camera.enableAudio();
+      });
+      setAllMuted(false);
     }
   };
 
@@ -20,24 +31,36 @@ export default function ToolBar({ room, participants }) {
     if (room) {
       const camera = room.camera;
       const isVideoEnabled = camera.isVideoEnabled();
-      isVideoEnabled ? camera.disableVideo() : camera.enableVideo();
+      if (isVideoEnabled) {
+        setHasVideo(true);
+        camera.disableVideo();
+      } else {
+        setHasVideo(false);
+        camera.enableVideo();
+      }
     }
   };
   const toggleAudio = () => {
     if (room) {
       const camera = room.camera;
       const isAudioEnabled = camera.isAudioEnabled();
-      isAudioEnabled ? camera.disableAudio() : camera.enableAudio();
+      if (isAudioEnabled) {
+        setHasAudio(true);
+        camera.disableAudio();
+      } else {
+        setHasAudio(false);
+        camera.enableAudio();
+      }
     }
   };
 
   return (
     <div id="layoutcontrol">
-      <MuteVideoButton toggleVideo={toggleVideo} />
-      <MuteAudioButton toggleAudio={toggleAudio} />
+      <MuteVideoButton toggleVideo={toggleVideo} hasVideo={hasVideo} />
+      <MuteAudioButton toggleAudio={toggleAudio} hasAudio={hasAudio} />
       <RecordingButton room={room} />
       <ScreenSharingButton room={room} />
-      <MuteAll handleMuteAll={handleMuteAll} />
+      <MuteAll handleMuteAll={handleMuteAll} areAllMuted={areAllMuted} />
     </div>
   );
 }
