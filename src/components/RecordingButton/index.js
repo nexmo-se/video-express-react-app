@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { startRecording, stopRecording } from '../../api/fetchRecording';
+import VoiceChatIcon from '@material-ui/icons/VoiceChat';
 
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
@@ -61,7 +62,7 @@ export default function RecordingButton({ room }) {
       {isRecording ? (
         <RadioButtonCheckedIcon fontSize="inherit" />
       ) : (
-        <RadioButtonUncheckedIcon fontSize="inherit" />
+        <VoiceChatIcon fontSize="inherit" />
       )}
     </IconButton>
   );
