@@ -31,7 +31,7 @@ app.get('/session/:room', async (req, res) => {
       res.json({
         sessionId: sessions[roomName],
         token: data.token,
-        apiKey: data.apiKey,
+        apiKey: data.apiKey
       });
     } else {
       const data = await opentok.getCredentials();
@@ -39,7 +39,7 @@ app.get('/session/:room', async (req, res) => {
       res.json({
         sessionId: data.sessionId,
         token: data.token,
-        apiKey: data.apiKey,
+        apiKey: data.apiKey
       });
     }
   } catch (error) {
@@ -54,7 +54,7 @@ app.post('/archive/start', async (req, res) => {
     const response = await opentok.initiateArchiving(session_id);
     res.json({
       archiveId: response.id,
-      status: response.status,
+      status: response.status
     });
   } catch (error) {
     console.log(error.message);
@@ -68,7 +68,7 @@ app.get('/archive/stop/:archiveId', async (req, res) => {
     const response = await opentok.stopArchiving(archiveId);
     res.json({
       archiveId: response,
-      status: 'stopped',
+      status: 'stopped'
     });
   } catch (error) {
     console.log(error.message);
@@ -88,6 +88,6 @@ app.get('/archive/:sessionId', async (req, res) => {
 });
 
 // start express server on port 5000
-app.listen(process.env.PORT || 5000, () => {
-  console.log('server started on port', process.env.PORT);
+app.listen(process.env.SERVER_PORT || 5000, () => {
+  console.log('server started on port', process.env.SERVER_PORT);
 });
