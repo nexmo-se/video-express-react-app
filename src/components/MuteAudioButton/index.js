@@ -1,5 +1,3 @@
-import style from './index.css';
-
 import { useCallback } from 'react';
 
 export default function MuteAudioButton({ room }) {
