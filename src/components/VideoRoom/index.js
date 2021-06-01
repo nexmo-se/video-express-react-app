@@ -38,7 +38,7 @@ export default function VideoRoom() {
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
-      <ToolBar room={room}></ToolBar>
+      <ToolBar room={room} participants={participants}></ToolBar>
     </div>
   ) : null;
 }
