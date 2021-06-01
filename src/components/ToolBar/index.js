@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import style from './index.css';
 
+import MuteAudioButton from 'components/MuteAudioButton';
+import MuteVideoButton from 'components/MuteVideoButton';
+import RecordingButton from 'components/RecordingButton';
+
 export default function ToolBar({ room }) {
   const [screen, setScreen] = useState(null);
-  console.log(room);
-  // const camera = room.camera;
 
   const toggleVideo = () => {
     if (room) {
@@ -21,9 +23,9 @@ export default function ToolBar({ room }) {
   };
   return (
     <div id="layoutcontrol">
-      <button className="buttons" onClick={toggleVideo}>
-        Toggle video
-      </button>
+      <MuteVideoButton room={room} />
+      <MuteAudioButton room={room} />
+      <RecordingButton room={room} />
       <button className="buttons" onClick={startScreenSharing}>
         share screen
       </button>

@@ -9,14 +9,12 @@ const fetchRecordings = sessionId => {
 
 const startRecording = sessionId => {
   return axios.post(`${API_URL}/start`, {
-    sessionId: sessionId
+    session_id: sessionId
   });
 };
 
-const stopRecording = sessionId => {
-  return axios.get(`${API_URL}/stop`, {
-    params: { archiveId: archiveId }
-  });
+const stopRecording = archiveId => {
+  return axios.get(`${API_URL}/stop/${archiveId}`);
 };
 
 export { fetchRecordings, startRecording, stopRecording };
