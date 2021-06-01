@@ -1,15 +1,27 @@
-require('dotenv').config();
-
+const path = require('path');
+let env = process.env.NODE_ENV || 'development';
+const envPath = path.join(__dirname, '..');
+console.log('envPath', envPath);
+require('dotenv').config({ path: `${envPath}/.env.${env}` });
 const cors = require('cors');
+console.log('Node Running Environement:', env);
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express(); // create express app
 const opentok = require('./opentok/opentok');
 app.use(cors());
-const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 const sessions = {};
 
+if (env === 'production') {
+  const buildPath = path.join(__dirname, '..', 'build');
+  app.use(express.static(buildPath));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+  });
+}
 app.get('/session/:room', async (req, res) => {
   try {
     const { room: roomName } = req.params;
@@ -19,7 +31,7 @@ app.get('/session/:room', async (req, res) => {
       res.json({
         sessionId: sessions[roomName],
         token: data.token,
-        apiKey: data.apiKey
+        apiKey: data.apiKey,
       });
     } else {
       const data = await opentok.getCredentials();
@@ -27,7 +39,7 @@ app.get('/session/:room', async (req, res) => {
       res.json({
         sessionId: data.sessionId,
         token: data.token,
-        apiKey: data.apiKey
+        apiKey: data.apiKey,
       });
     }
   } catch (error) {
@@ -42,7 +54,7 @@ app.post('/archive/start', async (req, res) => {
     const response = await opentok.initiateArchiving(session_id);
     res.json({
       archiveId: response.id,
-      status: response.status
+      status: response.status,
     });
   } catch (error) {
     console.log(error.message);
@@ -56,7 +68,7 @@ app.get('/archive/stop/:archiveId', async (req, res) => {
     const response = await opentok.stopArchiving(archiveId);
     res.json({
       archiveId: response,
-      status: 'stopped'
+      status: 'stopped',
     });
   } catch (error) {
     console.log(error.message);

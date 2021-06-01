@@ -1,6 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import VideoRoom from './components/VideoRoom';
 import Error from './components/Error';
 import EndCall from './components/EndCall';
@@ -31,20 +36,18 @@ function App() {
     <ThemeProvider theme={theme()}>
       <Router>
         <div>
-          {/* A <Switch> looks through its children <Route>s and
-        renders the first one that matches the current URL. */}
           <Switch>
-            {/* <Route path="/about">
-            <About />
-          </Route> */}
-            <Route path="/room/:roomName/end">
+            {/* <Route path="/room/:roomName/end">
               <EndCall />
-            </Route>
-            <Route path="/room/:roomName">
-              <VideoRoom />
-            </Route>
-            <Route path="/error">
-              <Error />
+            </Route> */}
+            <Route path="/room/:roomName" component={VideoRoom}></Route>
+            <Route path="/error" component={Error}></Route>
+            <Route exact path="/">
+              <Redirect
+                to={{
+                  pathname: '/error',
+                }}
+              />
             </Route>
           </Switch>
         </div>
