@@ -8,14 +8,6 @@ import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 
 export default function ToolBar({ room, participants }) {
-  const muteAll = () => {
-    if (participants) {
-      participants.map(participant => {
-        participant.camera.disableVideo();
-      });
-    }
-  };
-
   return (
     <div id="layoutcontrol">
       <MuteVideoButton room={room} />
