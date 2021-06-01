@@ -1,17 +1,15 @@
-// import style from './index.css';
 import { useState } from 'react';
-import VideocamIcon from '@material-ui/icons/Videocam';
 import { startRecording, stopRecording } from '../../api/fetchRecording';
 
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import { IconButton } from '@material-ui/core';
 
 export default function RecordingButton({ room }) {
   const [isRecording, setRecording] = useState(false);
   const [archiveId, setArchiveId] = useState(null);
 
-  const handleRecordingStart = async (sessionId) => {
+  const handleRecordingStart = async sessionId => {
     console.log('starting to record');
     try {
       const data = await startRecording(sessionId);
@@ -27,7 +25,7 @@ export default function RecordingButton({ room }) {
     }
   };
 
-  const handleRecordingStop = async (archiveId) => {
+  const handleRecordingStop = async archiveId => {
     console.log('stopping the recording');
     console.log(archiveId);
     if (isRecording) {

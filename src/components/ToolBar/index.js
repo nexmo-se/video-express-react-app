@@ -13,11 +13,10 @@ export default function ToolBar({ room, participants }) {
   const [areAllMuted, setAllMuted] = useState(false);
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      //if (participants) {
       participants.map(participant => {
         participant.camera.disableAudio();
       });
-      //}
+
       setAllMuted(true);
     } else {
       participants.map(participant => {

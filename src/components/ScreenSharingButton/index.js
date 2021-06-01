@@ -29,11 +29,8 @@ export default function ScreenSharingButton({ room }) {
   };
 
   return (
-    // <button className="buttons" onClick={handleScreenSharing}>
-    //   share screen
-    // </button>
-
     <IconButton
+      variant="primary"
       edge="start"
       color="inherit"
       aria-label="mic"

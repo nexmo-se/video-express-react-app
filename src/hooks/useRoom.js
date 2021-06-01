@@ -99,7 +99,10 @@ export function useRoom() {
 
     roomRef.current
       .join({
-        publisherProperties: { name: 'John', style: { nameDisplayMode: 'on' } }
+        publisherProperties: {
+          name: 'John',
+          style: { nameDisplayMode: 'auto' }
+        }
       })
       .then(() => {
         setConnected(true);
