@@ -1,19 +1,21 @@
 import axios from 'axios';
-const API_URL = `${process.env.REACT_APP_API_URL_DEVELOPMENT}/archive`;
-
-const fetchRecordings = sessionId => {
+let API_URL = `${process.env.REACT_APP_API_URL_DEVELOPMENT}/archive`;
+if (process.env.NODE_ENV === 'production') {
+  API_URL = `${process.env.REACT_APP_API_URL_PRODUCTION}`;
+}
+const fetchRecordings = (sessionId) => {
   return axios.get(API_URL, {
-    params: { sessionId: sessionId }
+    params: { sessionId: sessionId },
   });
 };
 
-const startRecording = sessionId => {
+const startRecording = (sessionId) => {
   return axios.post(`${API_URL}/start`, {
-    session_id: sessionId
+    session_id: sessionId,
   });
 };
 
-const stopRecording = archiveId => {
+const stopRecording = (archiveId) => {
   return axios.get(`${API_URL}/stop/${archiveId}`);
 };
 
