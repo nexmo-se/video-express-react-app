@@ -1,15 +1,4 @@
-import { useCallback } from 'react';
-
-export default function MuteAudioButton({ room }) {
-  const toggleAudio = useCallback(() => {
-    if (room) {
-      const camera = room.camera;
-      const isAudioEnabled = camera.isAudioEnabled();
-      isAudioEnabled ? camera.disableAudio() : camera.enableAudio();
-    }
-    return;
-  }, [room]);
-
+export default function MuteAudioButton({ toggleAudio }) {
   return (
     <button className="buttons" onClick={toggleAudio}>
       Toggle Audio

@@ -64,7 +64,6 @@ export function useRoom() {
         screenPublisherContainer: 'roomContainer'
       }
     });
-    console.log(roomRef.current);
     // const connectionEventHandlers = {
     //   connected: onConnected
     //   // disconnected: onDisconnected,

@@ -1,14 +1,6 @@
-export default function muteAllButton({ participants }) {
-  const muteAll = () => {
-    if (participants) {
-      participants.map(participant => {
-        participant.camera.disableAudio();
-      });
-    }
-  };
-
+export default function muteAllButton({ handleMuteAll }) {
   return (
-    <button className="buttons" onClick={muteAll}>
+    <button className="buttons" onClick={handleMuteAll}>
       Mute all
     </button>
   );
