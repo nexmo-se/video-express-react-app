@@ -33,7 +33,7 @@ export default function VideoRoom() {
   return credentials ? (
     <div id="callContainer">
       <div id="roomContainer">
-        <MuteParticipantsButton />
+        {/* <MuteParticipantsButton /> */}
         {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />
         ) : null}
