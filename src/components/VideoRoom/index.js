@@ -30,6 +30,13 @@ export default function VideoRoom() {
     }
   }, [createCall, credentials]);
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    if (participants) console.log(participants);
+  }, [participants]);
+
+>>>>>>> b964e887ad2dac029d771586149784a59280c77b
   return (
     <div id="callContainer">
       <div id="roomContainer">
