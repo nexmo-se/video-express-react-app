@@ -45,8 +45,7 @@ export default function WaitingRoom() {
     setLocalVideo(e.target.checked);
   }, []);
 
-  useEffect(() => {
-    console.log('UseEffect - localAudio');
+  const toggleAudio = React.useCallback(() => {
     if (previewPublisher) {
       console.log('previewPublisher', previewPublisher);
       if (previewPublisher.isAudioEnabled()) {
@@ -55,18 +54,27 @@ export default function WaitingRoom() {
         previewPublisher.enableAudio();
       }
     }
-  }, [localAudio, previewPublisher]);
-
-  useEffect(() => {
-    console.log('UseEffect - LocalVideo');
+  }, [previewPublisher]);
+  const toggleVideo = React.useCallback(() => {
     if (previewPublisher) {
+      console.log('previewPublisher', previewPublisher);
       if (previewPublisher.isVideoEnabled()) {
         previewPublisher.disableVideo();
       } else {
         previewPublisher.enableVideo();
       }
     }
-  }, [localVideo, previewPublisher]);
+  }, [previewPublisher]);
+
+  useEffect(() => {
+    console.log('UseEffect - localAudio', localAudio);
+    toggleAudio();
+  }, [localAudio, toggleAudio]);
+
+  useEffect(() => {
+    console.log('UseEffect - LocalVideo', localVideo);
+    toggleVideo();
+  }, [localVideo, toggleVideo]);
 
   useEffect(() => {
     createPreview(document.getElementById('waiting-room-video-container'));
