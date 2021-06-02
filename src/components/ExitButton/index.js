@@ -19,7 +19,7 @@ export default function ExitButton({ room }) {
       aria-label="videoCamera"
       onClick={exitFunction}
     >
-      <ExitToAppIcon>Finish</ExitToAppIcon>
+      <ExitToAppIcon></ExitToAppIcon>
     </IconButton>
   );
 }

@@ -2,11 +2,30 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles(theme => ({
   banner: {
     zIndex: 1,
-    position: 'absolute',
-    top: '40%',
-    right: '10%',
-    transform: 'translate(-50%, -50%)',
+    flexGrow: 0.1,
+    margin: '100px',
+    height: '100px',
+    // position: 'absolute'
+    alignItems: 'center',
+    // top: '40%',
+    // right: '10%',
+    // transform: 'translate(-50%, -50%)',
     backgroundColor: 'black'
+  },
+  container: {
+    display: 'flex'
+    // flexDirection: 'row'
+  },
+
+  meetingInfo: {
+    margin: '100px',
+    flexGrow: 1.2,
+    height: '100px',
+    color: 'white'
+  },
+  recording: {
+    display: 'flex',
+    flexDirection: 'row'
   },
   root: {
     minWidth: 275,
