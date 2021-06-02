@@ -30,9 +30,9 @@ export default function VideoRoom() {
     if (participants) console.log(participants);
   }, [participants]);
 
-  return credentials ? (
-    <div id="callContainer" className={classes.callContainer}>
-      <div id="roomContainer" className={classes.roomContainer}>
+  return (
+    <div id="callContainer">
+      <div id="roomContainer">
         <MuteParticipantsButton />
         {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />
@@ -40,5 +40,5 @@ export default function VideoRoom() {
       </div>
       <ToolBar className={classes.toolbarContainer} room={room}></ToolBar>
     </div>
-  ) : null;
+  );
 }
