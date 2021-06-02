@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
+import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
 
 export default function ToolBar({ room, participants }) {
   const [hasAudio, setHasAudio] = useState(null);
   const [hasVideo, setHasVideo] = useState(null);
   const [areAllMuted, setAllMuted] = useState(false);
+  const { push } = useHistory();
   const classes = styles();
   const handleMuteAll = () => {
     if (!areAllMuted) {
@@ -54,6 +57,10 @@ export default function ToolBar({ room, participants }) {
     }
   };
 
+  const endCall = () => {
+    // push(`end`);
+  };
+
   return (
     <div className={classes.toolbarContainer}>
       <MuteAudioButton
@@ -73,6 +80,7 @@ export default function ToolBar({ room, participants }) {
         areAllMuted={areAllMuted}
         classes={classes}
       />
+      <EndCallButton classes={classes} handleEndCall={endCall} />
     </div>
   );
 }
