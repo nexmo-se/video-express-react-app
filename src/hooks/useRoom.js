@@ -60,10 +60,10 @@ export function useRoom() {
         token: token,
         roomContainer: roomContainer,
         useLayoutManager: true,
-        managedLayoutOptions: {
-          /* cameraPublisherContainer: 'layoutContainer',
-          screenPublisherContainer: 'layoutContainer', */
-        },
+        /* managedLayoutOptions: {
+          cameraPublisherContainer: 'layoutContainer',
+          screenPublisherContainer: 'layoutContainer',
+        }, */
       });
       // const connectionEventHandlers = {
       //   connected: onConnected

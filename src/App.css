@@ -28,9 +28,25 @@
   color: #61dafb;
 }
 
+/* Temporary Fixes */
 #layoutContainer {
     background-color: transparent !important;
 }
+
+#roomContainer > .OT_publisher {
+    bottom: 25px;
+    right: 25px;
+    position: absolute;
+    border-radius: 10px;
+    border-radius: 20px;
+  }
+  #roomContainer > .OT_screenshare {
+    top: 25px;
+    left: 25px;
+    position: absolute;
+    border-radius: 10px;
+  }
+/* Temporary Fixes */
 
 @keyframes App-logo-spin {
   from {
