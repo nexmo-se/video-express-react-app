@@ -28,6 +28,12 @@ const theme = () => {
       secondary: {
         main: secondary,
       },
+      callBackground: {
+        main: '#20262D',
+      },
+      toolbarBackground: {
+        main: '#41464D',
+      },
     },
   });
 };

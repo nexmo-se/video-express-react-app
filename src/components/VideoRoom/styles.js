@@ -1,12 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
-  roomContainer: {
-    height: '100vh',
-    position: 'relative',
-  },
   callContainer: {
     height: '100vh',
     position: 'relative',
+    backgroundColor: theme.palette.callBackground.main,
+  },
+  roomContainer: {
+    position: 'relative',
+    height: 'calc(100vh - 90px)',
   },
   toolbarContainer: {
     backgroundColor: 'black',

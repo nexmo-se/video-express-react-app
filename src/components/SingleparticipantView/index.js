@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -44,10 +44,24 @@ export default function SingleParticipantView({ roomName }) {
   };
   return (
     <div className={classes.banner}>
-      <Card className={classes.centeredFlex} variant="outlined">
+      <Card className={classes.card} variant="outlined">
         <CardContent>
-          <p>Waiting for other participants</p>
-          <p ref={urlRef}>{window.location.href}</p>
+          <p>
+            Waiting for other participants. You can invite them by<br></br>
+            sharing this meeting link.
+          </p>
+          <TextField
+            variant="outlined"
+            value={window.location.href}
+            InputProps={{
+              readOnly: true,
+              className: classes.textField,
+            }}
+            InputLabelProps={{
+              classes: classes.textField,
+            }}
+            fullWidth={true}
+          />
         </CardContent>
         <CardActions>
           <ClickAwayListener onClickAway={handleClickAway}>

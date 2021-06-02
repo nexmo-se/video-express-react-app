@@ -34,10 +34,17 @@ export default makeStyles((theme) => ({
   pos: {
     marginBottom: 12,
   },
-  centeredFlex: {
+  card: {
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    background: 'transparent',
+    color: '#fff',
+    border: 'none',
+  },
+  textField: {
+    borderColor: '#fff',
+    color: '#fff',
   },
 }));

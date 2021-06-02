@@ -7,7 +7,6 @@ export default function MuteVideoButton({ classes, hasVideo, toggleVideo }) {
   return (
     <IconButton
       edge="start"
-      color="#fff"
       aria-label="videoCamera"
       onClick={toggleVideo}
       className={classes.toolbarButtons}

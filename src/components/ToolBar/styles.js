@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   toolbarContainer: {
-    backgroundColor: '#41464D',
+    backgroundColor: theme.palette.toolbarBackground.main,
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
