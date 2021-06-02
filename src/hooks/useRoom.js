@@ -89,11 +89,11 @@ export function useRoom() {
     });
     roomRef.current.on('participantJoined', participant => {
       //   addParticipant();
-      addparticipants({ participant: participant });
+      addParticipants({ participant: participant });
       console.log('Room: participant joined: ', participant);
     });
     roomRef.current.on('participantLeft', (participant, reason) => {
-      removeparticipants({ participant: participant });
+      removeParticipants({ participant: participant });
       console.log('Room: participant left', participant, reason);
     });
 
