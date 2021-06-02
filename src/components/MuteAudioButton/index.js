@@ -2,7 +2,7 @@ import MicIcon from '@material-ui/icons/Mic';
 import MicOffIcon from '@material-ui/icons/MicOff';
 import { IconButton } from '@material-ui/core';
 
-export default function MuteAudioButton({ toggleAudio, hasAudio }) {
+export default function MuteAudioButton({ toggleAudio, hasAudio, classes }) {
   return (
     // <button className="buttons" onClick={toggleAudio}>
     //   Toggle Audio
@@ -12,6 +12,7 @@ export default function MuteAudioButton({ toggleAudio, hasAudio }) {
       color="inherit"
       aria-label="mic"
       onClick={toggleAudio}
+      className={classes.toolbarButtons}
     >
       {hasAudio ? (
         <MicOffIcon fontSize="inherit" />

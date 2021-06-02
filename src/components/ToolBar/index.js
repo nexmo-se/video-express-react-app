@@ -56,11 +56,23 @@ export default function ToolBar({ room, participants }) {
 
   return (
     <div className={classes.toolbarContainer}>
-      <MuteVideoButton toggleVideo={toggleVideo} hasVideo={hasVideo} />
-      <MuteAudioButton toggleAudio={toggleAudio} hasAudio={hasAudio} />
-      <RecordingButton room={room} />
-      <ScreenSharingButton room={room} />
-      <MuteAll handleMuteAll={handleMuteAll} areAllMuted={areAllMuted} />
+      <MuteAudioButton
+        toggleAudio={toggleAudio}
+        hasAudio={hasAudio}
+        classes={classes}
+      />
+      <MuteVideoButton
+        toggleVideo={toggleVideo}
+        hasVideo={hasVideo}
+        classes={classes}
+      />
+      <RecordingButton room={room} classes={classes} />
+      <ScreenSharingButton room={room} classes={classes} />
+      <MuteAll
+        handleMuteAll={handleMuteAll}
+        areAllMuted={areAllMuted}
+        classes={classes}
+      />
     </div>
   );
 }
