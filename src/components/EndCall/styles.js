@@ -7,9 +7,7 @@ export default makeStyles(theme => ({
     height: '100px',
     // position: 'absolute'
     alignItems: 'center',
-    // top: '40%',
-    // right: '10%',
-    // transform: 'translate(-50%, -50%)',
+
     backgroundColor: 'black'
   },
   container: {

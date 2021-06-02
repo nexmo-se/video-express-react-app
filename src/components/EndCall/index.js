@@ -18,18 +18,16 @@ export default function EndCall() {
   const [recordings, setRecordings] = useState(null);
   const classes = styles();
   const { sessionId } = useParams();
-  /* const [areThereRecordings, setareThereRecordings] = useState(false); */
 
   const redirectNewMeeting = () => {
     push('');
   };
   useEffect(() => {
     try {
-      fetchRecordings(sessionId).then((data) => {
+      fetchRecordings(sessionId).then(data => {
         if (data.data) {
           setRecordings(data.data);
         }
-        /*  if (data.data.length) setareThereRecordings(true); */
       });
     } catch (err) {
       console.log(err);
@@ -65,7 +63,7 @@ export default function EndCall() {
               {recordings ? (
                 <div className={classes.recording}>
                   <ul>
-                    {recordings.map((recording) => (
+                    {recordings.map(recording => (
                       <li key={recording.id}>
                         Started at: {Date(recording.createdAt)}
                         {recording.status === 'available' ? (

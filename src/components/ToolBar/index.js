@@ -7,11 +7,16 @@ import RecordingButton from 'components/RecordingButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import ExitButton from 'components/ExitButton';
+import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 export default function ToolBar({ room, participants }) {
+  const { roomName } = useParams();
+  const { push } = useHistory();
   const [hasAudio, setHasAudio] = useState(null);
   const [hasVideo, setHasVideo] = useState(null);
   const [areAllMuted, setAllMuted] = useState(false);
+
   const handleMuteAll = () => {
     if (!areAllMuted) {
       participants.map(participant => {
@@ -24,6 +29,12 @@ export default function ToolBar({ room, participants }) {
         participant.camera.enableAudio();
       });
       setAllMuted(false);
+    }
+  };
+
+  const exitFunction = () => {
+    if (room) {
+      push(`${roomName}/${room.roomId}/end`);
     }
   };
 
@@ -62,8 +73,8 @@ export default function ToolBar({ room, participants }) {
         <RecordingButton room={room} />
         <ScreenSharingButton room={room} />
         <MuteAll handleMuteAll={handleMuteAll} areAllMuted={areAllMuted} />
+        <ExitButton exitFunction={exitFunction} />
       </div>
-      <div id="finishCall">{room ? <ExitButton room={room} /> : null}</div>
     </div>
   );
 }
