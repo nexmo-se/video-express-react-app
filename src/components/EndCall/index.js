@@ -18,23 +18,24 @@ export default function EndCall() {
   const [recordings, setRecordings] = useState(null);
   const classes = styles();
   const { sessionId } = useParams();
-  const [areThereRecordings, setareThereRecordings] = useState(false);
+  /* const [areThereRecordings, setareThereRecordings] = useState(false); */
 
   const redirectNewMeeting = () => {
     push('');
   };
   useEffect(() => {
     try {
-      fetchRecordings(sessionId).then(data => {
+      fetchRecordings(sessionId).then((data) => {
         if (data.data) {
           setRecordings(data.data);
         }
-        if (data.data.length) setareThereRecordings(true);
+        /*  if (data.data.length) setareThereRecordings(true); */
       });
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [sessionId]);
+
   return (
     <div className={classes.container}>
       <div className={classes.meetingInfo}>
@@ -53,7 +54,7 @@ export default function EndCall() {
       <div className={classes.banner}>
         <Card className={classes.centeredFlex} variant="outlined">
           <CardContent>
-            {areThereRecordings ? (
+            {recordings && recordings.length ? (
               <h3>Recordings</h3>
             ) : (
               <h3>There are no recordings</h3>
@@ -61,27 +62,27 @@ export default function EndCall() {
           </CardContent>
           <CardActions>
             <div className={classes.root}>
-              {recordings
-                ? recordings.map(recording => (
-                    <div className={classes.recording}>
-                      <ul>
-                        <li key={recording.id}>
-                          Started at: {Date(recording.createdAt)}
-                          {recording.status === 'available' ? (
-                            <Button
-                              color="inherit"
-                              edge="start"
-                              target="_blank"
-                              href={recording.url}
-                            >
-                              <GetAppIcon />
-                            </Button>
-                          ) : null}
-                        </li>
-                      </ul>
-                    </div>
-                  ))
-                : null}
+              {recordings ? (
+                <div className={classes.recording}>
+                  <ul>
+                    {recordings.map((recording) => (
+                      <li key={recording.id}>
+                        Started at: {Date(recording.createdAt)}
+                        {recording.status === 'available' ? (
+                          <Button
+                            color="inherit"
+                            edge="start"
+                            target="_blank"
+                            href={recording.url}
+                          >
+                            <GetAppIcon />
+                          </Button>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </div>
           </CardActions>
         </Card>
