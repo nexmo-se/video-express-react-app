@@ -3,7 +3,7 @@ export default makeStyles(theme => ({
   banner: {
     zIndex: 1,
     flexGrow: 0.1,
-    margin: '100px',
+    margin: '200px',
     height: '100px',
     // position: 'absolute'
     alignItems: 'center',
@@ -15,6 +15,9 @@ export default makeStyles(theme => ({
   container: {
     display: 'flex'
     // flexDirection: 'row'
+  },
+  new__meeting: {
+    color: 'rgb(43,158,250)'
   },
 
   meetingInfo: {
