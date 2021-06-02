@@ -30,7 +30,7 @@ export default function VideoRoom() {
     if (participants) console.log(participants);
   }, [participants]);
 
-  return credentials ? (
+  return (
     <div id="callContainer">
       <div id="roomContainer">
         <MuteParticipantsButton />
@@ -40,5 +40,5 @@ export default function VideoRoom() {
       </div>
       <ToolBar room={room}></ToolBar>
     </div>
-  ) : null;
+  );
 }
