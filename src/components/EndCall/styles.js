@@ -2,9 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles(theme => ({
   banner: {
     zIndex: 1,
-    flexGrow: 0.1,
+    // flexGrow: 0.1,
     margin: '200px',
     height: '100px',
+    width: '50%',
     // position: 'absolute'
     alignItems: 'center',
 
@@ -20,7 +21,7 @@ export default makeStyles(theme => ({
 
   meetingInfo: {
     margin: '100px',
-    flexGrow: 1.2,
+    width: '30%',
     height: '100px',
     color: 'white'
   },
