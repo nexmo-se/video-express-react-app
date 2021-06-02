@@ -23,7 +23,6 @@ export default function WaitingRoom() {
   };
 
   const onKeyDown = (e) => {
-    e.preventDefault();
     if (e.keyCode === 13 && e.target.value) {
       push(`room/${e.target.value}`);
     }

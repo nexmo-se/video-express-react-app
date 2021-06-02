@@ -30,9 +30,9 @@ export default function VideoRoom() {
     }
   }, [createCall, credentials]);
 
-  useEffect(() => {
-    if (participants) console.log(participants);
-  }, [participants]);
+  // useEffect(() => {
+  //   if (participants) console.log(participants);
+  // }, [participants]);
 
   return (
     <div id="callContainer" className={classes.callContainer}>
