@@ -1,7 +1,8 @@
 const path = require('path');
 let env = process.env.NODE_ENV || 'development';
-console.log('ENV', `${__dirname}.env.${env}`);
-require('dotenv').config({ path: `${__dirname}/.env.${env}` });
+const envPath = path.join(__dirname, '..');
+console.log('envPath', envPath);
+require('dotenv').config({ path: `${envPath}/.env.${env}` });
 const cors = require('cors');
 console.log('Node Running Environement:', env);
 const express = require('express');
@@ -30,7 +31,7 @@ app.get('/session/:room', async (req, res) => {
       res.json({
         sessionId: sessions[roomName],
         token: data.token,
-        apiKey: data.apiKey,
+        apiKey: data.apiKey
       });
     } else {
       const data = await opentok.getCredentials();
@@ -38,7 +39,7 @@ app.get('/session/:room', async (req, res) => {
       res.json({
         sessionId: data.sessionId,
         token: data.token,
-        apiKey: data.apiKey,
+        apiKey: data.apiKey
       });
     }
   } catch (error) {
@@ -53,13 +54,15 @@ app.post('/archive/start', async (req, res) => {
     const response = await opentok.initiateArchiving(session_id);
     res.json({
       archiveId: response.id,
-      status: response.status,
+      status: response.status
     });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
   }
 });
+
+// http://localhost:5000/archive/stop?archiveId=b265e5e8-2f95-4d3a-9c8c-a41c66ca7eef
 
 app.get('/archive/stop/:archiveId', async (req, res) => {
   const { archiveId } = req.params;
@@ -67,7 +70,7 @@ app.get('/archive/stop/:archiveId', async (req, res) => {
     const response = await opentok.stopArchiving(archiveId);
     res.json({
       archiveId: response,
-      status: 'stopped',
+      status: 'stopped'
     });
   } catch (error) {
     console.log(error.message);
@@ -75,7 +78,7 @@ app.get('/archive/stop/:archiveId', async (req, res) => {
   }
 });
 
-app.get('/archives/:sessionId', async (req, res) => {
+app.get('/archive/:sessionId', async (req, res) => {
   try {
     const { sessionId } = req.params;
     const archives = await opentok.listArchives(sessionId);
@@ -87,6 +90,6 @@ app.get('/archives/:sessionId', async (req, res) => {
 });
 
 // start express server on port 5000
-app.listen(process.env.PORT || 5000, () => {
-  console.log('server started on port', process.env.PORT);
+app.listen(process.env.SERVER_PORT || 5000, () => {
+  console.log('server started on port', process.env.SERVER_PORT);
 });
