@@ -1,25 +1,29 @@
 import { useState, useEffect } from 'react';
-import style from './index.css';
+import { useHistory } from 'react-router-dom';
 
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
+import EndCallButton from 'components/EndCallButton';
+import styles from './styles';
 
 export default function ToolBar({ room, participants }) {
   const [hasAudio, setHasAudio] = useState(null);
   const [hasVideo, setHasVideo] = useState(null);
   const [areAllMuted, setAllMuted] = useState(false);
+  const { push } = useHistory();
+  const classes = styles();
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map(participant => {
+      participants.map((participant) => {
         participant.camera.disableAudio();
       });
 
       setAllMuted(true);
     } else {
-      participants.map(participant => {
+      participants.map((participant) => {
         participant.camera.enableAudio();
       });
       setAllMuted(false);
@@ -53,13 +57,30 @@ export default function ToolBar({ room, participants }) {
     }
   };
 
+  const endCall = () => {
+    push(`${window.location.pathname}/end`);
+  };
+
   return (
-    <div id="layoutcontrol">
-      <MuteVideoButton toggleVideo={toggleVideo} hasVideo={hasVideo} />
-      <MuteAudioButton toggleAudio={toggleAudio} hasAudio={hasAudio} />
-      <RecordingButton room={room} />
-      <ScreenSharingButton room={room} />
-      <MuteAll handleMuteAll={handleMuteAll} areAllMuted={areAllMuted} />
+    <div className={classes.toolbarContainer}>
+      <MuteAudioButton
+        toggleAudio={toggleAudio}
+        hasAudio={hasAudio}
+        classes={classes}
+      />
+      <MuteVideoButton
+        toggleVideo={toggleVideo}
+        hasVideo={hasVideo}
+        classes={classes}
+      />
+      <RecordingButton room={room} classes={classes} />
+      <ScreenSharingButton room={room} classes={classes} />
+      <MuteAll
+        handleMuteAll={handleMuteAll}
+        areAllMuted={areAllMuted}
+        classes={classes}
+      />
+      <EndCallButton classes={classes} handleEndCall={endCall} />
     </div>
   );
 }

@@ -28,6 +28,12 @@ const theme = () => {
       secondary: {
         main: secondary,
       },
+      callBackground: {
+        main: '#20262D',
+      },
+      toolbarBackground: {
+        main: '#41464D',
+      },
     },
   });
 };
@@ -38,9 +44,9 @@ function App() {
       <Router>
         <div>
           <Switch>
-            {/* <Route path="/room/:roomName/end">
+            <Route path="/room/:roomName/end">
               <EndCall />
-            </Route> */}
+            </Route>
             <Route path="/room/:roomName" component={VideoRoom}></Route>
             <Route path="/error" component={Error}></Route>
             <Route exact path="/" component={WaitingRoom}></Route>

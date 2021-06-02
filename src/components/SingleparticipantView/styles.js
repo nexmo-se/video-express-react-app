@@ -19,10 +19,6 @@ export default makeStyles((theme) => ({
     borderRadius: '6px',
     zIndex: 1,
   },
-  root: {
-    minWidth: 275,
-    margin: 'auto',
-  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -34,10 +30,23 @@ export default makeStyles((theme) => ({
   pos: {
     marginBottom: 12,
   },
-  centeredFlex: {
+  card: {
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
+    background: 'transparent',
+    color: '#fff',
+    border: 'none',
+  },
+  textField: {
+    borderColor: '#fff',
+    color: '#fff',
+    textAlign: 'center',
+  },
+  flexCentered: {
+    justifyContent: 'center',
+    display: 'flex',
     alignItems: 'center',
   },
 }));
