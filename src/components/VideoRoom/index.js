@@ -15,9 +15,13 @@ export default function VideoRoom() {
   let { roomName } = useParams();
 
   useEffect(() => {
-    getCredentials(roomName).then(({ apikey, sessionId, token }) => {
-      setCredentials({ apikey, sessionId, token });
-    });
+    try {
+      getCredentials(roomName).then(({ apikey, sessionId, token }) => {
+        setCredentials({ apikey, sessionId, token });
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }, [roomName]);
 
   useEffect(() => {
@@ -33,12 +37,12 @@ export default function VideoRoom() {
   return (
     <div id="callContainer">
       <div id="roomContainer">
-        <MuteParticipantsButton />
+        {/* <MuteParticipantsButton /> */}
         {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
-      <ToolBar room={room}></ToolBar>
+      <ToolBar room={room} participants={participants}></ToolBar>
     </div>
   );
 }
