@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
+  Redirect
 } from 'react-router-dom';
 import VideoRoom from './components/VideoRoom';
 import Error from './components/Error';
@@ -23,7 +23,7 @@ const theme = () => {
     palette: {
       type: 'light',
       primary: {
-        main: primary,
+        main: primary
       },
       secondary: {
         main: secondary,
@@ -44,7 +44,7 @@ function App() {
       <Router>
         <div>
           <Switch>
-            <Route path="/room/:roomName/end">
+            <Route path="/room/:roomName/:sessionId/end">
               <EndCall />
             </Route>
             <Route path="/room/:roomName" component={VideoRoom}></Route>
@@ -53,7 +53,7 @@ function App() {
             <Route path="*">
               <Redirect
                 to={{
-                  pathname: '/',
+                  pathname: '/'
                 }}
               />
             </Route>

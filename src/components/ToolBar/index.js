@@ -8,28 +8,26 @@ import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
+import { useParams } from 'react-router';
 
 export default function ToolBar({ room, participants }) {
+  const { roomName } = useParams();
+  const { push } = useHistory();
   const [hasAudio, setHasAudio] = useState(null);
   const [hasVideo, setHasVideo] = useState(null);
   const [areAllMuted, setAllMuted] = useState(false);
-  const { push } = useHistory();
   const classes = styles();
+
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map((participant) => {
-        participant.camera.disableAudio();
-      });
+      participants.map((participant) => participant.camera.disableAudio());
 
       setAllMuted(true);
     } else {
-      participants.map((participant) => {
-        participant.camera.enableAudio();
-      });
+      participants.map((participant) => participant.camera.enableAudio());
       setAllMuted(false);
     }
   };
-
   const toggleVideo = () => {
     if (room) {
       const camera = room.camera;
@@ -58,7 +56,9 @@ export default function ToolBar({ room, participants }) {
   };
 
   const endCall = () => {
-    push(`${window.location.pathname}/end`);
+    if (room) {
+      push(`${roomName}/${room.roomId}/end`);
+    }
   };
 
   return (
