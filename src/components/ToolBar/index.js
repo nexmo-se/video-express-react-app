@@ -55,7 +55,7 @@ export default function ToolBar({ room, participants }) {
   };
 
   return (
-    <div id="layoutcontrol" className={classes.toolbarContainer}>
+    <div className={classes.toolbarContainer}>
       <MuteVideoButton toggleVideo={toggleVideo} hasVideo={hasVideo} />
       <MuteAudioButton toggleAudio={toggleAudio} hasAudio={hasAudio} />
       <RecordingButton room={room} />

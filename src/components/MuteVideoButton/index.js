@@ -4,10 +4,11 @@ import VideocamOff from '@material-ui/icons/VideocamOff';
 import { IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
-  margin: {
+  /* margin: {
     margin: theme.spacing(1),
     borderRadius: '5em',
-  },
+    height: '60px',
+  }, */
 }));
 
 export default function MuteVideoButton({ hasVideo, toggleVideo }) {
