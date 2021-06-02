@@ -1,25 +1,26 @@
 import { useState, useEffect } from 'react';
-import style from './index.css';
 
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
+import styles from './styles';
 
 export default function ToolBar({ room, participants }) {
   const [hasAudio, setHasAudio] = useState(null);
   const [hasVideo, setHasVideo] = useState(null);
   const [areAllMuted, setAllMuted] = useState(false);
+  const classes = styles();
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map(participant => {
+      participants.map((participant) => {
         participant.camera.disableAudio();
       });
 
       setAllMuted(true);
     } else {
-      participants.map(participant => {
+      participants.map((participant) => {
         participant.camera.enableAudio();
       });
       setAllMuted(false);
@@ -54,7 +55,7 @@ export default function ToolBar({ room, participants }) {
   };
 
   return (
-    <div id="layoutcontrol">
+    <div id="layoutcontrol" className={classes.toolbarContainer}>
       <MuteVideoButton toggleVideo={toggleVideo} hasVideo={hasVideo} />
       <MuteAudioButton toggleAudio={toggleAudio} hasAudio={hasAudio} />
       <RecordingButton room={room} />
