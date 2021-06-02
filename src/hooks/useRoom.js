@@ -47,34 +47,23 @@ export function useRoom() {
   //     []
   //   );
 
-  const createCall = useCallback((roomContainer, { apikey, sessionId, token }) => {
-    if (!apikey || !sessionId || !token) {
-      throw new Error('Check your credentials');
-    }
-
-    const MP = window.MP;
-    roomRef.current = new MP.Room({
-      apiKey: apikey,
-      sessionId: sessionId,
-      token: token,
-      roomContainer: 'roomContainer',
-      //useLayoutManager: true,
-      managedLayoutOptions: {
-        cameraPublisherContainer: 'roomContainer',
-        screenPublisherContainer: 'roomContainer'
+  const createCall = useCallback(
+    (roomContainer, { apikey, sessionId, token }) => {
+      if (!apikey || !sessionId || !token) {
+        throw new Error('Check your credentials');
       }
-      console.log('createCall', roomContainer);
+
       const MP = window.MP;
       roomRef.current = new MP.Room({
         apiKey: apikey,
         sessionId: sessionId,
         token: token,
-        roomContainer: roomContainer,
-        useLayoutManager: true,
-        /* managedLayoutOptions: {
-          cameraPublisherContainer: 'layoutContainer',
-          screenPublisherContainer: 'layoutContainer',
-        }, */
+        roomContainer: 'roomContainer',
+        //useLayoutManager: true,
+        managedLayoutOptions: {
+          cameraPublisherContainer: 'roomContainer',
+          screenPublisherContainer: 'roomContainer',
+        },
       });
       // const connectionEventHandlers = {
       //   connected: onConnected
