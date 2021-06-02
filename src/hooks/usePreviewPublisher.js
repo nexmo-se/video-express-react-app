@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
+const MP = window.MP;
 
 export default function usePreviewPublisher() {
-  let previewPublisher = useRef();
-  const MP = window.MP;
+  let previewPublisher = useRef(null);
 
   const createPreview = useCallback(
     async (targetEl) => {
@@ -16,7 +16,7 @@ export default function usePreviewPublisher() {
         console.log('[createPreview]', err);
       }
     },
-    [MP.PreviewPublisher]
+    []
   );
 
   const destroyPreview = useCallback(() => {

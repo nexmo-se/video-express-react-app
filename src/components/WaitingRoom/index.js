@@ -50,7 +50,8 @@ export default function WaitingRoom() {
         previewPublisher.enableAudio();
       }
     }
-  }, [localAudio, previewPublisher]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localAudio]);
 
   useEffect(() => {
     console.log('UseEffect - LocalVideo');
@@ -61,7 +62,8 @@ export default function WaitingRoom() {
         previewPublisher.enableVideo();
       }
     }
-  }, [localVideo, previewPublisher]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localVideo]);
 
   useEffect(() => {
     createPreview(document.getElementById('waiting-room-video-container'));
