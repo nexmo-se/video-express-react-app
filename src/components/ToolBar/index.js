@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import style from './index.css';
+import styles from './styles';
 
 export default function ToolBar({ room }) {
   const [screen, setScreen] = useState(null);
+  const classes = styles();
   console.log(room);
   // const camera = room.camera;
 
@@ -20,7 +21,7 @@ export default function ToolBar({ room }) {
     setScreen(room.screen);
   };
   return (
-    <div id="layoutcontrol">
+    <div className={classes.toolbarContainer}>
       <button className="buttons" onClick={toggleVideo}>
         Toggle video
       </button>

@@ -31,8 +31,8 @@ export default function VideoRoom() {
   }, [participants]);
 
   return (
-    <div id="callContainer">
-      <div id="roomContainer">
+    <div id="callContainer" className={classes.callContainer}>
+      <div id="roomContainer" className={classes.roomContainer}>
         <MuteParticipantsButton />
         {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />
