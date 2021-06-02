@@ -15,7 +15,7 @@ export default function ExitButton({ room }) {
   return (
     <IconButton
       edge="start"
-      color="inherit"
+      // color="inherit"
       aria-label="videoCamera"
       onClick={exitFunction}
     >

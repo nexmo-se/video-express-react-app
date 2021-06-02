@@ -9,6 +9,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 import styles from './styles';
 
@@ -17,6 +18,7 @@ export default function EndCall() {
   const [recordings, setRecordings] = useState(null);
   const classes = styles();
   const { sessionId } = useParams();
+  const [areThereRecordings, setareThereRecordings] = useState(false);
 
   const redirectNewMeeting = () => {
     push('');
@@ -24,9 +26,10 @@ export default function EndCall() {
   useEffect(() => {
     try {
       fetchRecordings(sessionId).then(data => {
-        setRecordings(data.data);
-        // setCredentials({ apikey, sessionId, token });
-        console.log(data);
+        if (data.data) {
+          setRecordings(data.data);
+        }
+        if (data.data.length) setareThereRecordings(true);
       });
     } catch (err) {
       console.log(err);
@@ -50,28 +53,32 @@ export default function EndCall() {
       <div className={classes.banner}>
         <Card className={classes.centeredFlex} variant="outlined">
           <CardContent>
-            <h3>These are your recordings</h3>
-
-            {/* <p ref={urlRef}>{window.location.href}</p> */}
+            {areThereRecordings ? (
+              <h3>Recordings</h3>
+            ) : (
+              <h3>There are no recordings</h3>
+            )}
           </CardContent>
           <CardActions>
             <div className={classes.root}>
               {recordings
                 ? recordings.map(recording => (
                     <div className={classes.recording}>
-                      <li key={recording.id}>
-                        Started at: {Date(recording.createdAt)}
-                        <IconButton
-                          edge="start"
-                          color="inherit"
-                          aria-label="mic"
-                          // onClick={handleRecordingAction}
-                        >
+                      <ul>
+                        <li key={recording.id}>
+                          Started at: {Date(recording.createdAt)}
                           {recording.status === 'available' ? (
-                            <GetAppIcon fontSize="inherit" />
+                            <Button
+                              color="inherit"
+                              edge="start"
+                              target="_blank"
+                              href={recording.url}
+                            >
+                              <GetAppIcon />
+                            </Button>
                           ) : null}
-                        </IconButton>
-                      </li>
+                        </li>
+                      </ul>
                     </div>
                   ))
                 : null}

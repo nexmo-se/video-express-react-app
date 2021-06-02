@@ -58,7 +58,7 @@ export function useRoom() {
       sessionId: sessionId,
       token: token,
       roomContainer: 'roomContainer',
-      useLayoutManager: true,
+      //useLayoutManager: true,
       managedLayoutOptions: {
         cameraPublisherContainer: 'roomContainer',
         screenPublisherContainer: 'roomContainer'
