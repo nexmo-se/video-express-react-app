@@ -7,7 +7,7 @@ export default function WaitingRoom() {
   const classes = useStyles();
   const { push } = useHistory();
   const waitingRoomVideoContainer = useRef();
-  const [roomName, setRoomName] = useState(null);
+  const [roomName, setRoomName] = useState('');
 
   const handleJoinClick = () => {
     // todo room name
@@ -20,6 +20,13 @@ export default function WaitingRoom() {
   const onChangeRoomName = (e) => {
     const roomName = e.target.value;
     setRoomName(roomName);
+  };
+
+  const onKeyDown = (e) => {
+    e.preventDefault();
+    if (e.keyCode === 13 && e.target.value) {
+      push(`room/${e.target.value}`);
+    }
   };
 
   return (
@@ -39,6 +46,7 @@ export default function WaitingRoom() {
             helperText={roomName === '' ? 'Empty field!' : ' '}
             value={roomName}
             onChange={onChangeRoomName}
+            onKeyDown={onKeyDown}
           />
         </form>
         <div
