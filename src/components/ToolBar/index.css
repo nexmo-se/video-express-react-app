@@ -1,3 +1,6 @@
+#flex-container {
+  display: flex;
+}
 #layoutcontrol {
   background-color: white;
   height: 90px;
@@ -9,13 +12,7 @@
   border-radius: 0;
   border: none;
 }
-.buttons {
-  width: 50px;
-  height: 50px;
-  margin: 30px 10px !important;
-  border: 1px solid white;
-  border-radius: 50%;
-  background-position: center;
-  background-repeat: no-repeat;
-  cursor: pointer;
+#finishCall {
+  display: flex;
+  justify-content: end;
 }

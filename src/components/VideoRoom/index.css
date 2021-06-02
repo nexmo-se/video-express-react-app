@@ -6,7 +6,7 @@ body {
 #roomContainer {
   width: 100vw;
   height: calc(100vh - 90px);
-  background-color: #ddd;
+  /* background-color: #ddd; */
   position: relative;
 }
 

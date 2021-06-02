@@ -6,6 +6,7 @@ import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
+import ExitButton from 'components/ExitButton';
 
 export default function ToolBar({ room, participants }) {
   const [hasAudio, setHasAudio] = useState(null);
@@ -54,12 +55,15 @@ export default function ToolBar({ room, participants }) {
   };
 
   return (
-    <div id="layoutcontrol">
-      <MuteVideoButton toggleVideo={toggleVideo} hasVideo={hasVideo} />
-      <MuteAudioButton toggleAudio={toggleAudio} hasAudio={hasAudio} />
-      <RecordingButton room={room} />
-      <ScreenSharingButton room={room} />
-      <MuteAll handleMuteAll={handleMuteAll} areAllMuted={areAllMuted} />
+    <div id="flex-container">
+      <div id="layoutcontrol">
+        <MuteVideoButton toggleVideo={toggleVideo} hasVideo={hasVideo} />
+        <MuteAudioButton toggleAudio={toggleAudio} hasAudio={hasAudio} />
+        <RecordingButton room={room} />
+        <ScreenSharingButton room={room} />
+        <MuteAll handleMuteAll={handleMuteAll} areAllMuted={areAllMuted} />
+      </div>
+      <div id="finishCall">{room ? <ExitButton room={room} /> : null}</div>
     </div>
   );
 }
