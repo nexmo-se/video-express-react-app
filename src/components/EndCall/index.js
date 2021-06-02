@@ -20,7 +20,7 @@ export default function EndCall() {
   const { sessionId } = useParams();
 
   const redirectNewMeeting = () => {
-    push('');
+    push('/');
   };
   useEffect(() => {
     try {

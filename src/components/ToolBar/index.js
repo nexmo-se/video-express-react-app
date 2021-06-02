@@ -6,7 +6,7 @@ import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
-import ExitButton from 'components/ExitButton';
+import EndCallButton from 'components/EndCallButton';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 
@@ -73,7 +73,7 @@ export default function ToolBar({ room, participants }) {
         <RecordingButton room={room} />
         <ScreenSharingButton room={room} />
         <MuteAll handleMuteAll={handleMuteAll} areAllMuted={areAllMuted} />
-        <ExitButton exitFunction={exitFunction} />
+        <EndCallButton exitFunction={exitFunction} />
       </div>
     </div>
   );

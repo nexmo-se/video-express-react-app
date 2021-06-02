@@ -2,7 +2,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { IconButton } from '@material-ui/core';
 
-export default function ExitButton({ exitFunction }) {
+export default function EndCallButton({ exitFunction }) {
   return (
     <IconButton
       edge="start"
