@@ -7,11 +7,11 @@ export function useRoom() {
   const [connected, setConnected] = useState(false);
   const [participants, setParticipants] = useState([]);
 
-  const addparticipants = ({ participant }) => {
+  const addParticipants = ({ participant }) => {
     setParticipants(prev => [...prev, participant]);
   };
 
-  const removeparticipants = ({ participant }) => {
+  const removeParticipants = ({ participant }) => {
     setParticipants(prev =>
       prev.filter(prevparticipant => prevparticipant.id !== participant.id)
     );
@@ -64,7 +64,6 @@ export function useRoom() {
         screenPublisherContainer: 'roomContainer'
       }
     });
-    console.log('this is the room' + roomRef);
     // const connectionEventHandlers = {
     //   connected: onConnected
     //   // disconnected: onDisconnected,
@@ -99,9 +98,7 @@ export function useRoom() {
     });
 
     roomRef.current
-      .join({
-        publisherProperties: { name: 'John', style: { nameDisplayMode: 'on' } }
-      })
+      .join()
       .then(() => {
         setConnected(true);
         setCamera(roomRef.current.camera);
