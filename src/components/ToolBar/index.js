@@ -58,7 +58,7 @@ export default function ToolBar({ room, participants }) {
   };
 
   const endCall = () => {
-    push(`${window.location.href}/  end`);
+    push(`${window.location.pathname}/end`);
   };
 
   return (

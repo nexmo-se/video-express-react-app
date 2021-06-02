@@ -19,10 +19,6 @@ export default makeStyles((theme) => ({
     borderRadius: '6px',
     zIndex: 1,
   },
-  root: {
-    minWidth: 275,
-    margin: 'auto',
-  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -46,5 +42,11 @@ export default makeStyles((theme) => ({
   textField: {
     borderColor: '#fff',
     color: '#fff',
+    textAlign: 'center',
+  },
+  flexCentered: {
+    justifyContent: 'center',
+    display: 'flex',
+    alignItems: 'center',
   },
 }));

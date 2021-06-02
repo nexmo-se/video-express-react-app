@@ -46,6 +46,9 @@ export default function SingleParticipantView({ roomName }) {
     <div className={classes.banner}>
       <Card className={classes.card} variant="outlined">
         <CardContent>
+          <div className={classes.flexCentered}>
+            <EmojiEmotionsIcon style={{ fontSize: 100 }}></EmojiEmotionsIcon>
+          </div>
           <p>
             Waiting for other participants. You can invite them by<br></br>
             sharing this meeting link.
@@ -65,20 +68,17 @@ export default function SingleParticipantView({ roomName }) {
         </CardContent>
         <CardActions>
           <ClickAwayListener onClickAway={handleClickAway}>
-            <div className={classes.root}>
-              <Button
-                edge="end"
-                color="primary"
-                variant="contained"
-                style={{ marginLeft: '50px' }}
-                onClick={copyUrl}
-              >
-                Copy Meeting Link
-                {open ? (
-                  <div className={classes.acCopySuccess}>Copied</div>
-                ) : null}
-              </Button>
-            </div>
+            <Button
+              edge="end"
+              color="primary"
+              variant="contained"
+              onClick={copyUrl}
+            >
+              Copy meeting URL
+              {open ? (
+                <div className={classes.acCopySuccess}>Copied</div>
+              ) : null}
+            </Button>
           </ClickAwayListener>
         </CardActions>
       </Card>

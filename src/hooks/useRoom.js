@@ -61,8 +61,8 @@ export function useRoom() {
         roomContainer: roomContainer,
         useLayoutManager: true,
         managedLayoutOptions: {
-          cameraPublisherContainer: 'layoutContainer',
-          screenPublisherContainer: 'layoutContainer',
+          /* cameraPublisherContainer: 'layoutContainer',
+          screenPublisherContainer: 'layoutContainer', */
         },
       });
       // const connectionEventHandlers = {
@@ -97,13 +97,12 @@ export function useRoom() {
         removeParticipants({ participant: participant });
         console.log('Room: participant left', participant, reason);
       });
-      const publisherOptions = {};
-      if (process.NODE_ENV === 'development') {
-        publisherOptions.publishVideo = false;
+      const publisherProperties = {};
+      if (process.env.NODE_ENV === 'development') {
+        publisherProperties.videoSource = null;
       }
-
       roomRef.current
-        .join(publisherOptions)
+        .join({ publisherProperties })
         .then(() => {
           setConnected(true);
           setCamera(roomRef.current.camera);
