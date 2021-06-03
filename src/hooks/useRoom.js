@@ -97,7 +97,13 @@ export function useRoom() {
         removeParticipants({ participant: participant });
         console.log('Room: participant left', participant, reason);
       });
-      const finalPublisherOptions = Object.assign({}, publisherOptions);
+      const finalPublisherOptions = Object.assign({}, publisherOptions, {
+        style: {
+          buttonDisplayMode: 'off',
+          nameDisplayMode: 'on',
+        },
+        showControls: false,
+      });
       if (process.env.NODE_ENV === 'development') {
         finalPublisherOptions.videoSource = null;
       }

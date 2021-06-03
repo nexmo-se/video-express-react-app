@@ -48,27 +48,6 @@ export default function WaitingRoom() {
     setLocalVideo(e.target.checked);
   }, []);
 
-  const toggleAudio = React.useCallback(() => {
-    if (previewPublisher) {
-      console.log('previewPublisher', previewPublisher);
-      if (previewPublisher.isAudioEnabled()) {
-        previewPublisher.disableAudio();
-      } else {
-        previewPublisher.enableAudio();
-      }
-    }
-  }, [previewPublisher]);
-  const toggleVideo = React.useCallback(() => {
-    if (previewPublisher) {
-      console.log('previewPublisher', previewPublisher);
-      if (previewPublisher.isVideoEnabled()) {
-        previewPublisher.disableVideo();
-      } else {
-        previewPublisher.enableVideo();
-      }
-    }
-  }, [previewPublisher]);
-
   useEffect(() => {
     if (
       localAudio !== user.defaultSettings.publishAudio ||
@@ -85,13 +64,25 @@ export default function WaitingRoom() {
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
-    toggleAudio();
-  }, [localAudio]);
+    if (previewPublisher) {
+      if (localAudio && !previewPublisher.isAudioEnabled()) {
+        previewPublisher.enableAudio();
+      } else if (!localAudio && previewPublisher.isAudioEnabled()) {
+        previewPublisher.disableAudio();
+      }
+    }
+  }, [localAudio, previewPublisher]);
 
   useEffect(() => {
     console.log('UseEffect - LocalVideo', localVideo);
-    toggleVideo();
-  }, [localVideo]);
+    if (previewPublisher) {
+      if (localVideo && !previewPublisher.isVideoEnabled()) {
+        previewPublisher.enableVideo();
+      } else if (!localVideo && previewPublisher.isVideoEnabled()) {
+        previewPublisher.disableVideo();
+      }
+    }
+  }, [localVideo, previewPublisher]);
 
   useEffect(() => {
     if (waitingRoomVideoContainer.current) {
