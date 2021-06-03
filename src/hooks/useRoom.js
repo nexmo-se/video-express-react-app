@@ -8,12 +8,12 @@ export function useRoom() {
   const [participants, setParticipants] = useState([]);
 
   const addParticipants = ({ participant }) => {
-    setParticipants((prev) => [...prev, participant]);
+    setParticipants(prev => [...prev, participant]);
   };
 
   const removeParticipants = ({ participant }) => {
-    setParticipants((prev) =>
-      prev.filter((prevparticipant) => prevparticipant.id !== participant.id)
+    setParticipants(prev =>
+      prev.filter(prevparticipant => prevparticipant.id !== participant.id)
     );
   };
 
@@ -61,9 +61,9 @@ export function useRoom() {
         roomContainer: 'roomContainer',
         //useLayoutManager: true,
         managedLayoutOptions: {
-          cameraPublisherContainer: 'roomContainer',
-          screenPublisherContainer: 'roomContainer',
-        },
+          cameraPublisherContainer: 'layoutContainer',
+          screenPublisherContainer: 'roomContainer'
+        }
       });
       // const connectionEventHandlers = {
       //   connected: onConnected
@@ -88,7 +88,11 @@ export function useRoom() {
       roomRef.current.on('disconnected', () => {
         console.log('Room: disconnected');
       });
-      roomRef.current.on('participantJoined', (participant) => {
+      roomRef.current.on('reconnecting', () => {
+        setNetworkError('We are working to reconnect you');
+        console.log('Room: reconnecting');
+      });
+      roomRef.current.on('participantJoined', participant => {
         //   addParticipant();
         addParticipants({ participant: participant });
         console.log('Room: participant joined: ', participant);
@@ -108,7 +112,7 @@ export function useRoom() {
           setCamera(roomRef.current.camera);
           setScreen(roomRef.current.screen);
         })
-        .catch((e) => console.log(e));
+        .catch(e => console.log(e));
     },
     []
   );
@@ -118,6 +122,6 @@ export function useRoom() {
     connected: connected,
     camera: camera,
     room: roomRef.current,
-    participants,
+    participants
   };
 }

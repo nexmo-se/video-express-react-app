@@ -1,13 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
-export default makeStyles((theme) => ({
+export default makeStyles(theme => ({
   callContainer: {
     height: '100vh',
     position: 'relative',
-    backgroundColor: theme.palette.callBackground.main,
+    backgroundColor: theme.palette.callBackground.main
   },
   roomContainer: {
     position: 'relative',
-    height: 'calc(100vh - 90px)',
+    height: 'calc(100vh - 90px)'
+  },
+  errorContainer: {
+    color: 'white',
+    position: 'absolute',
+    top: '50%',
+    left: '50%'
   },
   toolbarContainer: {
     backgroundColor: 'black',
@@ -16,8 +22,8 @@ export default makeStyles((theme) => ({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0,
-  },
+    right: 0
+  }
 
   /* .roomContainer > .OT_subscriber {
     border-radius: 30px,

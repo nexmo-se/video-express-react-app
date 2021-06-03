@@ -10,19 +10,25 @@ import MuteParticipantsButton from 'components/MuteparticipantButton';
 
 export default function VideoRoom() {
   const [credentials, setCredentials] = useState(null);
+  const [error, setError] = useState(null);
   const { createCall, subscribersCount, room, participants } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
   let { roomName } = useParams();
 
   useEffect(() => {
-    try {
-      getCredentials(roomName).then(({ apikey, sessionId, token }) => {
-        setCredentials({ apikey, sessionId, token });
+    getCredentials(roomName)
+      .then(({ data }) => {
+        setCredentials({
+          apikey: data.apiKey,
+          sessionId: data.sessionId,
+          token: data.token
+        });
+      })
+      .catch(err => {
+        setError(err);
+        console.log(err);
       });
-    } catch (err) {
-      console.log(err);
-    }
   }, [roomName]);
 
   useEffect(() => {
@@ -30,6 +36,13 @@ export default function VideoRoom() {
       createCall(roomContainer.current, credentials);
     }
   }, [createCall, credentials]);
+
+  if (error)
+    return (
+      <div className={classes.errorContainer}>
+        There was an error fetching the data from the server
+      </div>
+    );
 
   return (
     <div id="callContainer" className={classes.callContainer}>
