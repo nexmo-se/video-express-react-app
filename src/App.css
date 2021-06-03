@@ -40,9 +40,7 @@
   border-radius: 10px;
   border-radius: 20px;
 }
-.OT_publisher {
-  border: 2px solid green;
-}
+
 #roomContainer > .OT_screenshare {
   top: 25px;
   left: 25px;
