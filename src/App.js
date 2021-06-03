@@ -4,8 +4,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
+import { UserContext } from './context/UserContext';
 import VideoRoom from './components/VideoRoom';
 import Error from './components/Error';
 import WaitingRoom from './components/WaitingRoom';
@@ -15,6 +16,7 @@ import EndCall from './components/EndCall';
 
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { ThemeProvider } from '@material-ui/styles';
+import { useMemo, useState } from 'react';
 
 const theme = () => {
   let primary = process.env.REACT_APP_PALETTE_PRIMARY || '#3c93cd';
@@ -23,7 +25,7 @@ const theme = () => {
     palette: {
       type: 'light',
       primary: {
-        main: primary
+        main: primary,
       },
       secondary: {
         main: secondary,
@@ -39,26 +41,35 @@ const theme = () => {
 };
 
 function App() {
+  const [user, setUser] = useState({
+    defaultSettings: {
+      publishAudio: true,
+      publishVideo: true,
+    },
+  });
+  const userValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
     <ThemeProvider theme={theme()}>
       <Router>
-        <div>
-          <Switch>
-            <Route path="/room/:roomName/:sessionId/end">
-              <EndCall />
-            </Route>
-            <Route path="/room/:roomName" component={VideoRoom}></Route>
-            <Route path="/error" component={Error}></Route>
-            <Route exact path="/" component={WaitingRoom}></Route>
-            <Route path="*">
-              <Redirect
-                to={{
-                  pathname: '/'
-                }}
-              />
-            </Route>
-          </Switch>
-        </div>
+        <UserContext.Provider value={userValue}>
+          <div>
+            <Switch>
+              <Route path="/room/:roomName/:sessionId/end">
+                <EndCall />
+              </Route>
+              <Route path="/room/:roomName" component={VideoRoom}></Route>
+              <Route path="/error" component={Error}></Route>
+              <Route exact path="/" component={WaitingRoom}></Route>
+              <Route path="*">
+                <Redirect
+                  to={{
+                    pathname: '/',
+                  }}
+                />
+              </Route>
+            </Switch>
+          </div>
+        </UserContext.Provider>
       </Router>
     </ThemeProvider>
   );

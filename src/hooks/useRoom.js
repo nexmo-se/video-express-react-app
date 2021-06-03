@@ -48,7 +48,7 @@ export function useRoom() {
   //   );
 
   const createCall = useCallback(
-    (roomContainer, { apikey, sessionId, token }) => {
+    ({ apikey, sessionId, token }, roomContainer, publisherOptions) => {
       if (!apikey || !sessionId || !token) {
         throw new Error('Check your credentials');
       }
@@ -97,12 +97,13 @@ export function useRoom() {
         removeParticipants({ participant: participant });
         console.log('Room: participant left', participant, reason);
       });
-      const publisherProperties = {};
+      const finalPublisherOptions = Object.assign({}, publisherOptions);
       if (process.env.NODE_ENV === 'development') {
-        publisherProperties.videoSource = null;
+        finalPublisherOptions.videoSource = null;
       }
+      console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
-        .join({ publisherProperties })
+        .join({ publisherProperties: finalPublisherOptions })
         .then(() => {
           setConnected(true);
           setCamera(roomRef.current.camera);

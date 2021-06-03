@@ -5,11 +5,12 @@ export default function usePreviewPublisher() {
   const MP = window.MP;
 
   const createPreview = useCallback(
-    async (targetEl) => {
+    async (targetEl, publisherProperties) => {
       try {
         previewPublisher.current = new MP.PreviewPublisher(targetEl);
         await previewPublisher.current.previewMedia({
           targetElement: targetEl,
+          publisherProperties,
         });
         console.log('[Preview Created] - ', previewPublisher);
       } catch (err) {

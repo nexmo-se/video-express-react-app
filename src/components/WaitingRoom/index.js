@@ -5,18 +5,21 @@ import useStyles from './styles';
 import usePreviewPublisher from '../../hooks/usePreviewPublisher';
 import AudioSettings from '../AudioSetting';
 import VideoSettings from '../VideoSetting';
-
-const defaultLocalAudio = true;
-const defaultLocalVideo = true;
+import { UserContext } from '../../context/UserContext';
 
 export default function WaitingRoom() {
   const classes = useStyles();
   const { push } = useHistory();
+  const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
 
   const [roomName, setRoomName] = useState('');
-  const [localAudio, setLocalAudio] = useState(defaultLocalAudio);
-  const [localVideo, setLocalVideo] = useState(defaultLocalVideo);
+  const [localAudio, setLocalAudio] = useState(
+    user.defaultSettings.publishAudio
+  );
+  const [localVideo, setLocalVideo] = useState(
+    user.defaultSettings.publishVideo
+  );
   const { createPreview, destroyPreview, previewPublisher } =
     usePreviewPublisher();
 
@@ -67,17 +70,28 @@ export default function WaitingRoom() {
   }, [previewPublisher]);
 
   useEffect(() => {
+    setUser({
+      defaultSettings: {
+        publishAudio: localAudio,
+        publishVideo: localVideo,
+      },
+    });
+  }, [localAudio, localVideo, setUser]);
+
+  useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
     toggleAudio();
-  }, [localAudio, toggleAudio]);
+  }, [localAudio]);
 
   useEffect(() => {
     console.log('UseEffect - LocalVideo', localVideo);
     toggleVideo();
-  }, [localVideo, toggleVideo]);
+  }, [localVideo]);
 
   useEffect(() => {
-    createPreview(document.getElementById('waiting-room-video-container'));
+    createPreview(document.getElementById('waiting-room-video-container'), {
+      ...user.defaultSettings,
+    });
     return () => {
       destroyPreview();
     };
