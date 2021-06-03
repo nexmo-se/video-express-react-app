@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 const sessions = {};
 
 if (env === 'production') {
+  console.log('Setting Up express.static for prod');
   const buildPath = path.join(__dirname, '..', 'build');
   app.use(express.static(buildPath));
 
