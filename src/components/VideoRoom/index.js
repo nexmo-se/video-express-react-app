@@ -1,14 +1,16 @@
 import { useParams } from 'react-router';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { getCredentials } from '../../api/fetchCreds';
 import styles from './styles.js';
 import { useRoom } from '../../hooks/useRoom';
+import { UserContext } from '../../context/UserContext';
 
 import SingleParticipantView from '../SingleparticipantView/index';
 import ToolBar from 'components/ToolBar';
 import MuteParticipantsButton from 'components/MuteparticipantButton';
 
 export default function VideoRoom() {
+  const { user } = useContext(UserContext);
   const [credentials, setCredentials] = useState(null);
   const { createCall, subscribersCount, room, participants } = useRoom();
   const roomContainer = useRef();
@@ -27,9 +29,11 @@ export default function VideoRoom() {
 
   useEffect(() => {
     if (credentials) {
-      createCall(roomContainer.current, credentials);
+      createCall(credentials, roomContainer.current, {
+        ...user.defaultSettings,
+      });
     }
-  }, [createCall, credentials]);
+  }, [createCall, credentials, user]);
 
   return (
     <div id="callContainer" className={classes.callContainer}>
