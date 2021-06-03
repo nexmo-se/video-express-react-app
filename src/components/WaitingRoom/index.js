@@ -5,18 +5,21 @@ import useStyles from './styles';
 import usePreviewPublisher from '../../hooks/usePreviewPublisher';
 import AudioSettings from '../AudioSetting';
 import VideoSettings from '../VideoSetting';
-
-const defaultLocalAudio = true;
-const defaultLocalVideo = true;
+import { UserContext } from '../../context/UserContext';
 
 export default function WaitingRoom() {
   const classes = useStyles();
   const { push } = useHistory();
+  const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
 
   const [roomName, setRoomName] = useState('');
-  const [localAudio, setLocalAudio] = useState(defaultLocalAudio);
-  const [localVideo, setLocalVideo] = useState(defaultLocalVideo);
+  const [localAudio, setLocalAudio] = useState(
+    user.defaultSettings.publishAudio
+  );
+  const [localVideo, setLocalVideo] = useState(
+    user.defaultSettings.publishVideo
+  );
   const { createPreview, destroyPreview, previewPublisher } =
     usePreviewPublisher();
 
@@ -45,39 +48,47 @@ export default function WaitingRoom() {
     setLocalVideo(e.target.checked);
   }, []);
 
-  const toggleAudio = React.useCallback(() => {
-    if (previewPublisher) {
-      console.log('previewPublisher', previewPublisher);
-      if (previewPublisher.isAudioEnabled()) {
-        previewPublisher.disableAudio();
-      } else {
-        previewPublisher.enableAudio();
-      }
+  useEffect(() => {
+    if (
+      localAudio !== user.defaultSettings.publishAudio ||
+      localVideo !== user.defaultSettings.publishVideo
+    ) {
+      setUser({
+        defaultSettings: {
+          publishAudio: localAudio,
+          publishVideo: localVideo,
+        },
+      });
     }
-  }, [previewPublisher]);
-  const toggleVideo = React.useCallback(() => {
-    if (previewPublisher) {
-      console.log('previewPublisher', previewPublisher);
-      if (previewPublisher.isVideoEnabled()) {
-        previewPublisher.disableVideo();
-      } else {
-        previewPublisher.enableVideo();
-      }
-    }
-  }, [previewPublisher]);
+  }, [localAudio, localVideo, user, setUser]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
-    toggleAudio();
-  }, [localAudio, toggleAudio]);
+    if (previewPublisher) {
+      if (localAudio && !previewPublisher.isAudioEnabled()) {
+        previewPublisher.enableAudio();
+      } else if (!localAudio && previewPublisher.isAudioEnabled()) {
+        previewPublisher.disableAudio();
+      }
+    }
+  }, [localAudio, previewPublisher]);
 
   useEffect(() => {
     console.log('UseEffect - LocalVideo', localVideo);
-    toggleVideo();
-  }, [localVideo, toggleVideo]);
+    if (previewPublisher) {
+      if (localVideo && !previewPublisher.isVideoEnabled()) {
+        previewPublisher.enableVideo();
+      } else if (!localVideo && previewPublisher.isVideoEnabled()) {
+        previewPublisher.disableVideo();
+      }
+    }
+  }, [localVideo, previewPublisher]);
 
   useEffect(() => {
-    createPreview(document.getElementById('waiting-room-video-container'));
+    if (waitingRoomVideoContainer.current) {
+      createPreview(waitingRoomVideoContainer.current);
+    }
+
     return () => {
       destroyPreview();
     };

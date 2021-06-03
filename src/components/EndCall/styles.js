@@ -8,7 +8,7 @@ export default makeStyles(theme => ({
     width: '50%',
     // position: 'absolute'
     alignItems: 'center',
-
+    borderRadius: '30px',
     backgroundColor: 'black'
   },
   container: {
@@ -50,6 +50,7 @@ export default makeStyles(theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'black',
-    color: 'white'
+    color: 'white',
+    borderRadius: '30px'
   }
 }));
