@@ -70,13 +70,18 @@ export default function WaitingRoom() {
   }, [previewPublisher]);
 
   useEffect(() => {
-    setUser({
-      defaultSettings: {
-        publishAudio: localAudio,
-        publishVideo: localVideo,
-      },
-    });
-  }, [localAudio, localVideo, setUser]);
+    if (
+      localAudio !== user.defaultSettings.publishAudio ||
+      localVideo !== user.defaultSettings.publishVideo
+    ) {
+      setUser({
+        defaultSettings: {
+          publishAudio: localAudio,
+          publishVideo: localVideo,
+        },
+      });
+    }
+  }, [localAudio, localVideo, user, setUser]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
@@ -89,9 +94,10 @@ export default function WaitingRoom() {
   }, [localVideo]);
 
   useEffect(() => {
-    createPreview(document.getElementById('waiting-room-video-container'), {
-      ...user.defaultSettings,
-    });
+    if (waitingRoomVideoContainer.current) {
+      createPreview(waitingRoomVideoContainer.current);
+    }
+
     return () => {
       destroyPreview();
     };

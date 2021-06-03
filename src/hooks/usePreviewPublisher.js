@@ -1,12 +1,15 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useContext } from 'react';
 
 export default function usePreviewPublisher() {
   let previewPublisher = useRef();
+
   const MP = window.MP;
 
   const createPreview = useCallback(
-    async (targetEl, publisherProperties) => {
+    async (targetEl, publisherOptions) => {
       try {
+        const publisherProperties = Object.assign({}, publisherOptions);
+        console.log('[createPreview]', publisherProperties);
         previewPublisher.current = new MP.PreviewPublisher(targetEl);
         await previewPublisher.current.previewMedia({
           targetElement: targetEl,
