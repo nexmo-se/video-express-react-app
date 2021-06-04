@@ -54,8 +54,10 @@ export default function RecordingButton({ classes, room }) {
     }
   };
 
+  const title = isRecording ? 'Stop Recording' : 'Start Recording';
+
   return (
-    <Tooltip title="Recording" aria-label="add">
+    <Tooltip title={title} aria-label="add">
       <IconButton
         edge="start"
         color="inherit"
