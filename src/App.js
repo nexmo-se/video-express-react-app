@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
+  Redirect
 } from 'react-router-dom';
 import { UserContext } from './context/UserContext';
 import VideoRoom from './components/VideoRoom';
@@ -25,18 +25,18 @@ const theme = () => {
     palette: {
       type: 'light',
       primary: {
-        main: primary,
+        main: primary
       },
       secondary: {
-        main: secondary,
+        main: secondary
       },
       callBackground: {
-        main: '#20262D',
+        main: '#20262D'
       },
       toolbarBackground: {
-        main: '#41464D',
-      },
-    },
+        main: '#41464D'
+      }
+    }
   });
 };
 
@@ -44,8 +44,8 @@ function App() {
   const [user, setUser] = useState({
     defaultSettings: {
       publishAudio: true,
-      publishVideo: true,
-    },
+      publishVideo: true
+    }
   });
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
@@ -58,12 +58,13 @@ function App() {
                 <EndCall />
               </Route>
               <Route path="/room/:roomName" component={VideoRoom}></Route>
+              <Route path="/waitingroom/:room" component={WaitingRoom}></Route>
               <Route path="/error" component={Error}></Route>
               <Route exact path="/" component={WaitingRoom}></Route>
               <Route path="*">
                 <Redirect
                   to={{
-                    pathname: '/',
+                    pathname: '/'
                   }}
                 />
               </Route>

@@ -14,14 +14,10 @@ export default function SingleParticipantView({ roomName }) {
   const classes = styles();
   const [copiedMeetingUrl, setCopiedMeetingUrl] = useState(false);
 
-  const getMeetingUrl = () => {
-    return window.location.href;
-  };
-
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
-    setOpen((prev) => !prev);
+    setOpen(prev => !prev);
   };
 
   const handleClickAway = () => {
@@ -31,10 +27,10 @@ export default function SingleParticipantView({ roomName }) {
   //Maybe use a ref instead
   const copyUrl = () => {
     //https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
-    const url = window.location.href;
+    const url = window.location.href.replace('room', 'waitingroom');
     navigator.clipboard.writeText(url).then(
       () => {
-        setOpen((prev) => !prev);
+        setOpen(prev => !prev);
         console.log('Copy successfully');
       },
       () => {
@@ -58,10 +54,10 @@ export default function SingleParticipantView({ roomName }) {
             value={window.location.href}
             InputProps={{
               readOnly: true,
-              className: classes.textField,
+              className: classes.textField
             }}
             InputLabelProps={{
-              classes: classes.textField,
+              classes: classes.textField
             }}
             fullWidth={true}
           />

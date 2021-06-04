@@ -6,45 +6,65 @@ import usePreviewPublisher from '../../hooks/usePreviewPublisher';
 import AudioSettings from '../AudioSetting';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
+import { useParams } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 export default function WaitingRoom() {
+  const location = useLocation();
+  const { room } = useParams();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
 
-  const [roomName, setRoomName] = useState('');
+  const [roomName, setRoomName] = useState(room);
+  const [userName, setuserName] = useState('');
   const [localAudio, setLocalAudio] = useState(
     user.defaultSettings.publishAudio
   );
   const [localVideo, setLocalVideo] = useState(
     user.defaultSettings.publishVideo
   );
-  const { createPreview, destroyPreview, previewPublisher } =
-    usePreviewPublisher();
+  const {
+    createPreview,
+    destroyPreview,
+    previewPublisher
+  } = usePreviewPublisher();
+
+  const isInWaitingRoom = () => {
+    if (location.pathname.split('/')[1] === 'waitingroom') {
+      return true;
+    }
+    return false;
+  };
 
   const handleJoinClick = () => {
     if (!roomName) {
       return;
     }
-    push(`room/${roomName}`);
+    isInWaitingRoom() ? push(`/room/${roomName}`) : push(`room/${roomName}`);
   };
 
-  const onChangeRoomName = (e) => {
+  const onChangeRoomName = e => {
     const roomName = e.target.value;
     setRoomName(roomName);
   };
 
-  const onKeyDown = (e) => {
+  const onChangeParticipantName = e => {
+    const userName = e.target.value;
+    setuserName(userName);
+  };
+
+  const onKeyDown = e => {
     if (e.keyCode === 13 && e.target.value) {
       push(`room/${e.target.value}`);
     }
   };
-  const handleAudioChange = React.useCallback((e) => {
+  const handleAudioChange = React.useCallback(e => {
     setLocalAudio(e.target.checked);
   }, []);
 
-  const handleVideoChange = React.useCallback((e) => {
+  const handleVideoChange = React.useCallback(e => {
     setLocalVideo(e.target.checked);
   }, []);
 
@@ -56,8 +76,9 @@ export default function WaitingRoom() {
       setUser({
         defaultSettings: {
           publishAudio: localAudio,
-          publishVideo: localVideo,
+          publishVideo: localVideo
         },
+        userName
       });
     }
   }, [localAudio, localVideo, user, setUser]);
@@ -101,6 +122,7 @@ export default function WaitingRoom() {
           <TextField
             variant="outlined"
             margin="normal"
+            disabled={room != null}
             required
             fullWidth
             id="room-name"
@@ -109,9 +131,23 @@ export default function WaitingRoom() {
             autoComplete="Room Name"
             autoFocus
             helperText={roomName === '' ? 'Empty field!' : ' '}
-            value={roomName}
+            value={roomName ? roomName : ''}
             onChange={onChangeRoomName}
             onKeyDown={onKeyDown}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="publisher-name"
+            label="Name"
+            name="name"
+            autoComplete="Name"
+            //autoFocus
+            helperText={userName === '' ? 'Optional' : ' '}
+            value={userName}
+            onChange={onChangeParticipantName}
+            //onKeyDown={onKeyDown}
           />
         </form>
         <div
