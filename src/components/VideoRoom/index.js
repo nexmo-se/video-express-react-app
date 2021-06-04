@@ -7,7 +7,6 @@ import { UserContext } from '../../context/UserContext';
 
 import SingleParticipantView from '../SingleparticipantView/index';
 import ToolBar from 'components/ToolBar';
-import MuteParticipantsButton from 'components/MuteparticipantButton';
 
 export default function VideoRoom() {
   const { user } = useContext(UserContext);
