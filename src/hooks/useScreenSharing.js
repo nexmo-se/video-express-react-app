@@ -12,12 +12,15 @@ export default function useScreenSharing({ room }) {
         console.log('[startScreensharing]- ', screen);
         setIsScreenSharing(true); // todo this is a temporary fix because the event are not being triggered
         screen.on('started', () => {
-          console.log('The screen sharing has started!');
+          console.log('[useScreensharing] -  The screen sharing has started!');
           setScreen(screen);
           setIsScreenSharing(true);
         });
         screen.on('stopped', (reason) => {
-          console.log('The screen sharing stopped because: ', reason);
+          console.log(
+            '[useScreensharing] - The screen sharing stopped because: ',
+            reason
+          );
           setScreen(null);
           setIsScreenSharing(false);
         });
