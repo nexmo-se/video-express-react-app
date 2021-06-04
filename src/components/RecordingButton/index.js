@@ -1,45 +1,45 @@
 import { useState } from 'react';
 import { startRecording, stopRecording } from '../../api/fetchRecording';
-import VoiceChatIcon from '@material-ui/icons/VoiceChat';
 
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { IconButton } from '@material-ui/core';
+import styles from './styles';
 
 export default function RecordingButton({ classes, room }) {
   const [isRecording, setRecording] = useState(false);
   const [archiveId, setArchiveId] = useState(null);
+  const localClasses = styles();
 
   const handleRecordingStart = async (sessionId) => {
     console.log('starting to record');
     try {
       const data = await startRecording(sessionId);
       if (data.status === 200 && data.data) {
-        const { archiveId, status } = data.data;
-        console.log(archiveId, status);
+        const { archiveId } = data.data;
         setArchiveId(archiveId);
         setRecording(true);
       }
     } catch (e) {
       console.log(e);
+      setRecording(false);
       //todo handle error
     }
   };
 
   const handleRecordingStop = async (archiveId) => {
-    console.log('stopping the recording');
-    console.log(archiveId);
-    if (isRecording) {
-      try {
+    console.log('stopping the recording', archiveId);
+    try {
+      if (isRecording) {
         const data = await stopRecording(archiveId);
         if (data.status === 200 && data.data) {
           const { status } = data.data;
           console.log(archiveId, status);
           setRecording(false);
         }
-      } catch (e) {
-        console.log(e);
+        // todo what happens here? 
       }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -61,9 +61,13 @@ export default function RecordingButton({ classes, room }) {
       className={classes.toolbarButtons}
     >
       {isRecording ? (
-        <RadioButtonCheckedIcon fontSize="inherit" />
+        <FiberManualRecordIcon
+          fontSize="inherit"
+          className={localClasses.activeRecordingIcon}
+          style={{ color: '#D50F2C' }}
+        />
       ) : (
-        <VoiceChatIcon fontSize="inherit" />
+        <FiberManualRecordIcon fontSize="inherit" />
       )}
     </IconButton>
   );
