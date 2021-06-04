@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 
-export function useRoom() {
+export default function useRoom() {
   let roomRef = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
@@ -88,6 +88,10 @@ export function useRoom() {
       roomRef.current.on('disconnected', () => {
         console.log('Room: disconnected');
       });
+      roomRef.current.on('reconnecting', () => {
+        setNetworkError('We are working to reconnect you');
+        console.log('Room: reconnecting');
+      });
       roomRef.current.on('participantJoined', (participant) => {
         //   addParticipant();
         addParticipants({ participant: participant });
@@ -104,15 +108,13 @@ export function useRoom() {
         },
         showControls: false,
       });
-      if (process.env.NODE_ENV === 'development') {
-        finalPublisherOptions.videoSource = null;
-      }
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
         .join({ publisherProperties: finalPublisherOptions })
         .then(() => {
           setConnected(true);
           setCamera(roomRef.current.camera);
+          console.log('roomRef', roomRef.current);
           setScreen(roomRef.current.screen);
         })
         .catch((e) => console.log(e));
@@ -120,11 +122,38 @@ export function useRoom() {
     []
   );
 
+  /* const startScreenSharing = useCallback(async () => {
+    if (roomRef.current) {
+      try {
+        await roomRef.current.startScreensharing();
+        const { screen } = roomRef.current;
+        screen.on('started', () => {
+          console.log('The screen sharing has started!');
+        });
+        screen.on('stopped', (reason) => {
+          console.log('The screen sharing because: ', reason);
+        });
+        // publisherRef.current.on("accessDenied", accessDeniedListener); todo add listeners
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, []);
+
+  const stopScreenSharing = useCallback(async () => {
+    if (roomRef.current) {
+      roomRef.current.stopScreensharing();
+    }
+  }, []); */
+
   return {
     createCall,
     connected: connected,
     camera: camera,
+    screen: screen,
     room: roomRef.current,
+    /*     startScreenSharing,
+    stopScreenSharing, */
     participants,
   };
 }

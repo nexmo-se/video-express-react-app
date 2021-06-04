@@ -7,11 +7,6 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .App-header {
   background-color: #282c34;
@@ -30,29 +25,37 @@
 
 /* Temporary Fixes */
 #layoutContainer {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
 
 #roomContainer > .OT_publisher {
-    bottom: 25px;
-    right: 25px;
-    position: absolute;
-    border-radius: 10px;
-    border-radius: 20px;
-  }
-  #roomContainer > .OT_screenshare {
-    top: 25px;
-    left: 25px;
-    position: absolute;
-    border-radius: 10px;
-  }
+  bottom: 25px;
+  right: 25px;
+  position: absolute;
+  border-radius: 20px;
+}
+
+#roomContainer > .OT_screenshare {
+  top: 25px;
+  left: 25px;
+  position: absolute;
+  border-radius: 10px;
+}
 /* Temporary Fixes */
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes pulse-red {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(213, 15, 45, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(213, 15, 45, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(213, 15, 45, 0);
+	}
 }

@@ -23,15 +23,16 @@ export default function EndCall() {
     push('/');
   };
   useEffect(() => {
-    try {
-      fetchRecordings(sessionId).then(data => {
+    fetchRecordings(sessionId)
+      .then(data => {
         if (data.data) {
           setRecordings(data.data);
         }
+      })
+      .catch(err => {
+        setError(err);
+        console.log(err);
       });
-    } catch (err) {
-      console.log(err);
-    }
   }, [sessionId]);
 
   return (

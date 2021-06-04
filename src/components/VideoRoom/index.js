@@ -2,29 +2,34 @@ import { useParams } from 'react-router';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { getCredentials } from '../../api/fetchCreds';
 import styles from './styles.js';
-import { useRoom } from '../../hooks/useRoom';
+import useRoom from '../../hooks/useRoom';
 import { UserContext } from '../../context/UserContext';
 
 import SingleParticipantView from '../SingleparticipantView/index';
 import ToolBar from 'components/ToolBar';
-import MuteParticipantsButton from 'components/MuteparticipantButton';
 
 export default function VideoRoom() {
   const { user } = useContext(UserContext);
   const [credentials, setCredentials] = useState(null);
+  const [error, setError] = useState(null);
   const { createCall, subscribersCount, room, participants } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
   let { roomName } = useParams();
 
   useEffect(() => {
-    try {
-      getCredentials(roomName).then(({ apikey, sessionId, token }) => {
-        setCredentials({ apikey, sessionId, token });
+    getCredentials(roomName)
+      .then(({ data }) => {
+        setCredentials({
+          apikey: data.apiKey,
+          sessionId: data.sessionId,
+          token: data.token,
+        });
+      })
+      .catch((err) => {
+        setError(err);
+        console.log(err);
       });
-    } catch (err) {
-      console.log(err);
-    }
   }, [roomName]);
 
   useEffect(() => {
@@ -34,6 +39,13 @@ export default function VideoRoom() {
       });
     }
   }, [createCall, credentials, user]);
+
+  if (error)
+    return (
+      <div className={classes.errorContainer}>
+        There was an error fetching the data from the server
+      </div>
+    );
 
   return (
     <div id="callContainer" className={classes.callContainer}>
