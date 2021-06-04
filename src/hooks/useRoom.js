@@ -61,7 +61,7 @@ export function useRoom() {
         roomContainer: 'roomContainer',
         //useLayoutManager: true,
         managedLayoutOptions: {
-          cameraPublisherContainer: 'layoutContainer',
+          cameraPublisherContainer: 'roomContainer',
           screenPublisherContainer: 'roomContainer'
         }
       });
