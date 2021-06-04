@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 
-export function useRoom() {
+export default function useRoom() {
   let roomRef = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
@@ -114,6 +114,7 @@ export function useRoom() {
         .then(() => {
           setConnected(true);
           setCamera(roomRef.current.camera);
+          console.log('roomRef', roomRef.current);
           setScreen(roomRef.current.screen);
         })
         .catch((e) => console.log(e));
@@ -121,11 +122,38 @@ export function useRoom() {
     []
   );
 
+  /* const startScreenSharing = useCallback(async () => {
+    if (roomRef.current) {
+      try {
+        await roomRef.current.startScreensharing();
+        const { screen } = roomRef.current;
+        screen.on('started', () => {
+          console.log('The screen sharing has started!');
+        });
+        screen.on('stopped', (reason) => {
+          console.log('The screen sharing because: ', reason);
+        });
+        // publisherRef.current.on("accessDenied", accessDeniedListener); todo add listeners
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, []);
+
+  const stopScreenSharing = useCallback(async () => {
+    if (roomRef.current) {
+      roomRef.current.stopScreensharing();
+    }
+  }, []); */
+
   return {
     createCall,
     connected: connected,
     camera: camera,
+    screen: screen,
     room: roomRef.current,
+    /*     startScreenSharing,
+    stopScreenSharing, */
     participants,
   };
 }

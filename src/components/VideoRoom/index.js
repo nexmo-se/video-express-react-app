@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { getCredentials } from '../../api/fetchCreds';
 import styles from './styles.js';
-import { useRoom } from '../../hooks/useRoom';
+import useRoom from '../../hooks/useRoom';
 import { UserContext } from '../../context/UserContext';
 
 import SingleParticipantView from '../SingleparticipantView/index';
@@ -23,10 +23,10 @@ export default function VideoRoom() {
         setCredentials({
           apikey: data.apiKey,
           sessionId: data.sessionId,
-          token: data.token
+          token: data.token,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err);
         console.log(err);
       });
