@@ -59,6 +59,8 @@ function App() {
                 <EndCall />
               </Route>
               <Route path="/room/:roomName" component={VideoRoom}></Route>
+              {/* add a new component > When you go to room/roomName checks whether there's an username. If yes, the user went to waiting room
+            If yes, render videoRoom. If not, render waitingroom */}
               <Route path="/waitingroom/:room" component={WaitingRoom}></Route>
               <Route path="/error" component={Error}></Route>
               <Route exact path="/" component={WaitingRoom}></Route>

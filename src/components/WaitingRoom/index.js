@@ -79,6 +79,7 @@ export default function WaitingRoom() {
       localVideo !== user.defaultSettings.publishVideo
     ) {
       setUser({
+        ...user,
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo
@@ -87,13 +88,11 @@ export default function WaitingRoom() {
     }
   }, [localAudio, localVideo, user, setUser]);
 
-  // useEffect(() => {
-  //   if (userName !== user.userName) {
-  //     setUser({
-  //       userName: userName
-  //     });
-  //   }
-  // }, [userName, setUser]);
+  useEffect(() => {
+    if (userName !== user.userName) {
+      setUser({ ...user, userName: userName });
+    }
+  }, [userName, setUser]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
