@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ScreenShare from '@material-ui/icons/ScreenShare';
 import StopScreenShare from '@material-ui/icons/StopScreenShare';
 import { IconButton } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default function ScreenSharingButton({ classes, room }) {
   const [isScreenSharing, setScreenSharing] = useState(false);
@@ -29,19 +30,21 @@ export default function ScreenSharingButton({ classes, room }) {
   };
 
   return (
-    <IconButton
-      variant="primary"
-      edge="start"
-      color="inherit"
-      aria-label="mic"
-      onClick={handleScreenSharing}
-      className={classes.toolbarButtons}
-    >
-      {isScreenSharing ? (
-        <StopScreenShare fontSize="inherit" />
-      ) : (
-        <ScreenShare fontSize="inherit" />
-      )}
-    </IconButton>
+    <Tooltip title="Screen sharing" aria-label="add">
+      <IconButton
+        variant="primary"
+        edge="start"
+        color="inherit"
+        aria-label="mic"
+        onClick={handleScreenSharing}
+        className={classes.toolbarButtons}
+      >
+        {isScreenSharing ? (
+          <StopScreenShare fontSize="inherit" />
+        ) : (
+          <ScreenShare fontSize="inherit" />
+        )}
+      </IconButton>
+    </Tooltip>
   );
 }

@@ -4,6 +4,7 @@ import { startRecording, stopRecording } from '../../api/fetchRecording';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { IconButton } from '@material-ui/core';
 import styles from './styles';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default function RecordingButton({ classes, room }) {
   const [isRecording, setRecording] = useState(false);
@@ -27,7 +28,8 @@ export default function RecordingButton({ classes, room }) {
   };
 
   const handleRecordingStop = async (archiveId) => {
-    console.log('stopping the recording', archiveId);
+    console.log('stopping the recording');
+    console.log(archiveId);
     try {
       if (isRecording) {
         const data = await stopRecording(archiveId);
@@ -36,7 +38,7 @@ export default function RecordingButton({ classes, room }) {
           console.log(archiveId, status);
           setRecording(false);
         }
-        // todo what happens here? 
+        // todo what happens here?
       }
     } catch (e) {
       console.log(e);
@@ -53,22 +55,24 @@ export default function RecordingButton({ classes, room }) {
   };
 
   return (
-    <IconButton
-      edge="start"
-      color="inherit"
-      aria-label="mic"
-      onClick={handleRecordingAction}
-      className={classes.toolbarButtons}
-    >
-      {isRecording ? (
-        <FiberManualRecordIcon
-          fontSize="inherit"
-          className={localClasses.activeRecordingIcon}
-          style={{ color: '#D50F2C' }}
-        />
-      ) : (
-        <FiberManualRecordIcon fontSize="inherit" />
-      )}
-    </IconButton>
+    <Tooltip title="Recording" aria-label="add">
+      <IconButton
+        edge="start"
+        color="inherit"
+        aria-label="mic"
+        onClick={handleRecordingAction}
+        className={classes.toolbarButtons}
+      >
+        {isRecording ? (
+          <FiberManualRecordIcon
+            fontSize="inherit"
+            className={localClasses.activeRecordingIcon}
+            style={{ color: '#D50F2C' }}
+          />
+        ) : (
+          <FiberManualRecordIcon fontSize="inherit" />
+        )}
+      </IconButton>
+    </Tooltip>
   );
 }
