@@ -89,7 +89,6 @@ export default function useRoom() {
         console.log('Room: disconnected');
       });
       roomRef.current.on('reconnecting', () => {
-        setNetworkError('We are working to reconnect you');
         console.log('Room: reconnecting');
       });
       roomRef.current.on('participantJoined', (participant) => {
