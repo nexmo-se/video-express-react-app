@@ -18,7 +18,8 @@ export default function WaitingRoom() {
   const waitingRoomVideoContainer = useRef();
 
   const [roomName, setRoomName] = useState(room);
-  const [userName, setuserName] = useState('');
+  const [userName, setUserName] = useState(user.userName);
+  // const [localName, setLocalName] = useState(user.userName);
   const [localAudio, setLocalAudio] = useState(
     user.defaultSettings.publishAudio
   );
@@ -50,10 +51,14 @@ export default function WaitingRoom() {
     setRoomName(roomName);
   };
 
-  const onChangeParticipantName = e => {
-    const userName = e.target.value;
-    setuserName(userName);
-  };
+  // const onChangeParticipantName = e => {
+  //   // const userName = e.target.value;
+  //   setUserName(e.target.value);
+  // };
+
+  const onChangeParticipantName = React.useCallback(e => {
+    setUserName(e.target.value);
+  }, []);
 
   const onKeyDown = e => {
     if (e.keyCode === 13 && e.target.value) {
@@ -77,11 +82,18 @@ export default function WaitingRoom() {
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo
-        },
-        userName
+        }
       });
     }
   }, [localAudio, localVideo, user, setUser]);
+
+  // useEffect(() => {
+  //   if (userName !== user.userName) {
+  //     setUser({
+  //       userName: userName
+  //     });
+  //   }
+  // }, [userName, setUser]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
@@ -147,7 +159,7 @@ export default function WaitingRoom() {
             helperText={userName === '' ? 'Optional' : ' '}
             value={userName}
             onChange={onChangeParticipantName}
-            //onKeyDown={onKeyDown}
+            onKeyDown={onKeyDown}
           />
         </form>
         <div

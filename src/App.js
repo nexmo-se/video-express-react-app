@@ -42,6 +42,7 @@ const theme = () => {
 
 function App() {
   const [user, setUser] = useState({
+    userName: `User-${Math.floor(100000 + Math.random() * 900000)}`,
     defaultSettings: {
       publishAudio: true,
       publishVideo: true

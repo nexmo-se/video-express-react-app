@@ -48,7 +48,12 @@ export function useRoom() {
   //   );
 
   const createCall = useCallback(
-    ({ apikey, sessionId, token }, roomContainer, publisherOptions) => {
+    (
+      { apikey, sessionId, token },
+      roomContainer,
+      userName,
+      publisherOptions
+    ) => {
       if (!apikey || !sessionId || !token) {
         throw new Error('Check your credentials');
       }
@@ -104,10 +109,13 @@ export function useRoom() {
       const finalPublisherOptions = Object.assign({}, publisherOptions, {
         style: {
           buttonDisplayMode: 'off',
-          nameDisplayMode: 'on',
+          nameDisplayMode: 'auto',
+          audioLevelDisplayMode: 'off'
         },
-        showControls: false,
+        name: userName,
+        showControls: true
       });
+      console.log(finalPublisherOptions);
       if (process.env.NODE_ENV === 'development') {
         finalPublisherOptions.videoSource = null;
       }
