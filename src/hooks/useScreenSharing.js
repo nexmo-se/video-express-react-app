@@ -10,6 +10,7 @@ export default function useScreenSharing({ room }) {
         await room.startScreensharing();
         const { screen } = room;
         console.log('[startScreensharing]- ', screen);
+        setIsScreenSharing(true); // todo this is a temporary fix because the event are not being triggered
         screen.on('started', () => {
           console.log('The screen sharing has started!');
           setScreen(screen);
@@ -26,7 +27,7 @@ export default function useScreenSharing({ room }) {
           setIsScreenSharing(false);
         });
       } catch (e) {
-        console.log(e);
+        console.log('[useScreensharing] - startScreenSharing error:', e);
       }
     }
   }, [room]);
@@ -35,6 +36,7 @@ export default function useScreenSharing({ room }) {
     console.log('[startScreensharing]- ', room);
     if (room) {
       room.stopScreensharing();
+      setIsScreenSharing(false); // todo this is a temporary fix because the event are not being triggered
     }
   }, [room]);
 

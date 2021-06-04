@@ -24,7 +24,9 @@ export default function ScreenSharingButton({ classes, room }) {
         color="inherit"
         aria-label="mic"
         onClick={handleScreenSharing}
-        className={classes.toolbarButtons}
+        className={`${classes.toolbarButtons} ${
+          isScreenSharing ? classes.activeButton : ''
+        }`}
       >
         {isScreenSharing ? (
           <StopScreenShare fontSize="inherit" />
