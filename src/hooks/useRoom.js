@@ -108,9 +108,6 @@ export function useRoom() {
         },
         showControls: false,
       });
-      /* if (process.env.NODE_ENV === 'development') {
-        finalPublisherOptions.videoSource = null;
-      } */
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
         .join({ publisherProperties: finalPublisherOptions })
