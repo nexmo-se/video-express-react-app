@@ -36,6 +36,10 @@ const theme = () => {
       toolbarBackground: {
         main: '#41464D',
       },
+      activeButtons: {
+        green: '#1C8731',
+        red: '#D50F2C',
+      },
     },
   });
 };

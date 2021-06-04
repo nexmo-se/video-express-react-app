@@ -29,8 +29,10 @@ export default function ScreenSharingButton({ classes, room }) {
     }
   };
 
+  const title = isScreenSharing ? 'Stop Screensharing' : 'Start Screensharing';
+
   return (
-    <Tooltip title="Screen sharing" aria-label="add">
+    <Tooltip title={title} aria-label="add">
       <IconButton
         variant="primary"
         edge="start"
