@@ -7,19 +7,16 @@ import AudioSettings from '../AudioSetting';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
 import { useParams } from 'react-router';
-import { useLocation } from 'react-router-dom';
 
-export default function WaitingRoom() {
-  const location = useLocation();
+export default function WaitingRoom({ location }) {
   const { room } = useParams();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
-
-  const [roomName, setRoomName] = useState(room);
-  const [userName, setUserName] = useState(user.userName);
-  // const [localName, setLocalName] = useState(user.userName);
+  const roomToJoin = location?.state?.from.pathname.split('/room/')[1];
+  const [roomName, setRoomName] = useState(roomToJoin);
+  const [userName, setUserName] = useState(null);
   const [localAudio, setLocalAudio] = useState(
     user.defaultSettings.publishAudio
   );
@@ -32,29 +29,18 @@ export default function WaitingRoom() {
     previewPublisher
   } = usePreviewPublisher();
 
-  const isInWaitingRoom = () => {
-    if (location.pathname.split('/')[1] === 'waitingroom') {
-      return true;
-    }
-    return false;
-  };
-
   const handleJoinClick = () => {
     if (!roomName) {
       return;
     }
-    isInWaitingRoom() ? push(`/room/${roomName}`) : push(`room/${roomName}`);
+
+    push(`room/${roomName}`);
   };
 
   const onChangeRoomName = e => {
     const roomName = e.target.value;
     setRoomName(roomName);
   };
-
-  // const onChangeParticipantName = e => {
-  //   // const userName = e.target.value;
-  //   setUserName(e.target.value);
-  // };
 
   const onChangeParticipantName = React.useCallback(e => {
     setUserName(e.target.value);
@@ -93,6 +79,18 @@ export default function WaitingRoom() {
       setUser({ ...user, userName: userName });
     }
   }, [userName, setUser]);
+
+  useEffect(() => {
+    if (userName !== user.userName) {
+      setUser({ ...user, roomName: roomName });
+    }
+  }, [roomName, setUser]);
+
+  // useEffect(() => {
+  //   if (location) {
+  //     console.log(location);
+  //   }
+  // }, [location]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
@@ -136,6 +134,7 @@ export default function WaitingRoom() {
             disabled={room != null}
             required
             fullWidth
+            disabled={roomToJoin != undefined}
             id="room-name"
             label="Room Name"
             name="roomName"
@@ -156,7 +155,7 @@ export default function WaitingRoom() {
             autoComplete="Name"
             //autoFocus
             helperText={userName === '' ? 'Optional' : ' '}
-            value={userName}
+            value={userName ? userName : ''}
             onChange={onChangeParticipantName}
             onKeyDown={onKeyDown}
           />

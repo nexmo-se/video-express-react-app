@@ -27,7 +27,7 @@ export default function SingleParticipantView({ roomName }) {
   //Maybe use a ref instead
   const copyUrl = () => {
     //https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
-    const url = window.location.href.replace('room', 'waitingroom');
+    const url = window.location.href;
     navigator.clipboard.writeText(url).then(
       () => {
         setOpen(prev => !prev);

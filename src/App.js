@@ -11,6 +11,7 @@ import VideoRoom from './components/VideoRoom';
 import Error from './components/Error';
 import WaitingRoom from './components/WaitingRoom';
 import EndCall from './components/EndCall';
+import UserNameRoute from './components/UserNameRoute';
 
 // Theme Configuration
 
@@ -42,7 +43,6 @@ const theme = () => {
 
 function App() {
   const [user, setUser] = useState({
-    userName: `User-${Math.floor(100000 + Math.random() * 900000)}`,
     defaultSettings: {
       publishAudio: true,
       publishVideo: true
@@ -58,10 +58,15 @@ function App() {
               <Route path="/room/:roomName/:sessionId/end">
                 <EndCall />
               </Route>
-              <Route path="/room/:roomName" component={VideoRoom}></Route>
+              <UserNameRoute
+                exact
+                path="/room/:roomName"
+                component={VideoRoom}
+              />
+              {/* <Route path="/room/:roomName" component={VideoRoom}></Route> */}
               {/* add a new component > When you go to room/roomName checks whether there's an username. If yes, the user went to waiting room
             If yes, render videoRoom. If not, render waitingroom */}
-              <Route path="/waitingroom/:room" component={WaitingRoom}></Route>
+              {/* <Route path="/waitingroom/:room" component={WaitingRoom}></Route> */}
               <Route path="/error" component={Error}></Route>
               <Route exact path="/" component={WaitingRoom}></Route>
               <Route path="*">
