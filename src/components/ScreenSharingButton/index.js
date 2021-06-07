@@ -21,6 +21,13 @@ export default function ScreenSharingButton({ classes, room }) {
     if (room) {
       try {
         await room.startScreensharing();
+        // const screen = room.screen;
+        room.screen.on('started', () => {
+          console.log('The screen sharing has started!');
+        });
+        room.screen.on('stopped', () => {
+          console.log('Room.ScreenPublisher - stopped');
+        });
         setScreenSharing(true);
       } catch (e) {
         console.log(e);

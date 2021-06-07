@@ -86,12 +86,6 @@ export default function WaitingRoom({ location }) {
     }
   }, [roomName, setUser]);
 
-  // useEffect(() => {
-  //   if (location) {
-  //     console.log(location);
-  //   }
-  // }, [location]);
-
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
     if (previewPublisher) {
@@ -152,6 +146,7 @@ export default function WaitingRoom({ location }) {
             id="publisher-name"
             label="Name"
             name="name"
+            required
             autoComplete="Name"
             //autoFocus
             helperText={userName === '' ? 'Optional' : ' '}
