@@ -6,6 +6,7 @@ export function useRoom() {
   const [screen, setScreen] = useState(null);
   const [connected, setConnected] = useState(false);
   const [participants, setParticipants] = useState([]);
+  const [networkStatus, setNetworkStatus] = useState(null);
 
   const addParticipants = ({ participant }) => {
     setParticipants(prev => [...prev, participant]);
@@ -91,12 +92,13 @@ export function useRoom() {
         console.log('Room: connected');
       });
       roomRef.current.on('disconnected', () => {
+        setNetworkStatus('disconnected');
         console.log('Room: disconnected');
       });
 
-      roomRef.current.on('reconnecting', () => {
-        setNetworkError('We are working to reconnect you');
-        console.log('Room: reconnecting');
+      roomRef.current.on('reconnected', () => {
+        setNetworkStatus('reconnected');
+        console.log('Room: reconnected');
       });
       roomRef.current.on('participantJoined', participant => {
         //   addParticipant();
@@ -138,6 +140,7 @@ export function useRoom() {
     connected: connected,
     camera: camera,
     room: roomRef.current,
-    participants
+    participants,
+    networkStatus
   };
 }
