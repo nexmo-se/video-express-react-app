@@ -8,6 +8,7 @@ import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import SignalWifiOffIcon from '@material-ui/icons/SignalWifiOff';
+import RouterIcon from '@material-ui/icons/Router';
 
 export default function NetworkToast({ networkStatus }) {
   const [open, setOpen] = React.useState(true);
@@ -22,23 +23,19 @@ export default function NetworkToast({ networkStatus }) {
       return <CheckCircleOutlineIcon fontSize="inherit" />;
     }
     if (networkStatus === 'reconnecting') {
+      return <RouterIcon fontSize="inherit" />;
     }
     return <SignalWifiOffIcon fontSize="inherit" />;
   };
+
   return (
     <div className={classes.root}>
       <Collapse in={open}>
         <Alert
-          icon={
-            networkStatus === 'reconnected' ? (
-              <CheckCircleOutlineIcon fontSize="inherit" />
-            ) : (
-              <SignalWifiOffIcon fontSize="inherit" />
-            )
-          }
-          //   onClose={() => {
-          //     setOpen(false);
-          //   }}
+          icon={getIcon()}
+          onClose={() => {
+            setOpen(false);
+          }}
           action={
             <IconButton
               aria-label="close"
@@ -51,12 +48,11 @@ export default function NetworkToast({ networkStatus }) {
               <CloseIcon fontSize="inherit" />
             </IconButton>
           }
-          //   severity="error"
-          //   {networkStatus  ===  'reconnected' ? severity="info" : severity="error"}
-          severity={networkStatus === 'reconnected' ? 'info' : 'error'}
-          //   color="info"
+          severity={networkStatus === 'disconnected' ? 'error' : 'info'}
         >
-          You have been {networkStatus}
+          {networkStatus === 'reconnecting'
+            ? 'We are working to reconnect you'
+            : `You have been ${networkStatus}`}
         </Alert>
       </Collapse>
     </div>
