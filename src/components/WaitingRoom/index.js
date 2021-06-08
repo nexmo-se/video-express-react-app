@@ -80,11 +80,12 @@ export default function WaitingRoom({ location }) {
     }
   }, [userName, setUser]);
 
-  useEffect(() => {
-    if (userName !== user.userName) {
-      setUser({ ...user, roomName: roomName });
-    }
-  }, [roomName, setUser]);
+  // useEffect(() => {
+  //   if (roomName) {
+  //     setUser({ ...user, roomName: roomName });
+  //   }
+  //   console.log(user);
+  // }, [roomName, setUser]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);

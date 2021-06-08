@@ -6,7 +6,6 @@ import useUserName from '../../hooks/useUserName';
 const UserNameRoute = ({ component: Component, ...rest }) => {
   const { hasUserName } = useUserName();
   const location = useLocation();
-  console.log(location);
 
   return (
     <Route
