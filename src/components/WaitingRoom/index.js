@@ -7,11 +7,13 @@ import AudioSettings from '../AudioSetting';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
 import { useParams } from 'react-router';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 export default function WaitingRoom({ location }) {
   const { room } = useParams();
   const classes = useStyles();
   const { push } = useHistory();
+  let [logLevel, setLogLevel] = useState(0);
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
   const roomToJoin = location?.state?.from.pathname.split('/room/')[1];
@@ -51,6 +53,21 @@ export default function WaitingRoom({ location }) {
       push(`room/${e.target.value}`);
     }
   };
+
+  const calculateAudioLevel = audioLevel => {
+    let movingAvg = null;
+    if (movingAvg === null || movingAvg <= audioLevel) {
+      movingAvg = audioLevel;
+    } else {
+      movingAvg = 0.8 * movingAvg + 0.2 * audioLevel;
+    }
+
+    // 1.5 scaling to map the -30 - 0 dBm range to [0,1]
+    logLevel = Math.log(movingAvg) / Math.LN10 / 1.5 + 1;
+    setLogLevel(Math.min(Math.max(logLevel, 0), 1) * 100);
+    // console.log(logLevel * 100);
+  };
+
   const handleAudioChange = React.useCallback(e => {
     setLocalAudio(e.target.checked);
   }, []);
@@ -90,6 +107,14 @@ export default function WaitingRoom({ location }) {
       }
     }
   }, [localAudio, previewPublisher]);
+
+  useEffect(() => {
+    if (previewPublisher) {
+      previewPublisher.on('audioLevelUpdated', audioLevel => {
+        calculateAudioLevel(audioLevel);
+      });
+    }
+  }, [previewPublisher, logLevel]);
 
   useEffect(() => {
     console.log('UseEffect - LocalVideo', localVideo);
@@ -160,6 +185,8 @@ export default function WaitingRoom({ location }) {
             hasAudio={localAudio}
             onAudioChange={handleAudioChange}
           />
+          <LinearProgress variant="determinate" value={logLevel} />
+          {/* //) */}
           <VideoSettings
             className={classes.deviceSettings}
             hasVideo={localVideo}
