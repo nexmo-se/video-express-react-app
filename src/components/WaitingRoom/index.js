@@ -61,11 +61,9 @@ export default function WaitingRoom({ location }) {
     } else {
       movingAvg = 0.8 * movingAvg + 0.2 * audioLevel;
     }
-
     // 1.5 scaling to map the -30 - 0 dBm range to [0,1]
     logLevel = Math.log(movingAvg) / Math.LN10 / 1.5 + 1;
     setLogLevel(Math.min(Math.max(logLevel, 0), 1) * 100);
-    // console.log(logLevel * 100);
   };
 
   const handleAudioChange = React.useCallback(e => {
@@ -186,7 +184,6 @@ export default function WaitingRoom({ location }) {
             onAudioChange={handleAudioChange}
           />
           <LinearProgress variant="determinate" value={logLevel} />
-          {/* //) */}
           <VideoSettings
             className={classes.deviceSettings}
             hasVideo={localVideo}
