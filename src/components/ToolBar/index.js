@@ -20,11 +20,11 @@ export default function ToolBar({ room, participants }) {
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map((participant) => participant.camera.disableAudio());
+      participants.map(participant => participant.camera.disableAudio());
 
       setAllMuted(true);
     } else {
-      participants.map((participant) => participant.camera.enableAudio());
+      participants.map(participant => participant.camera.enableAudio());
       setAllMuted(false);
     }
   };
@@ -58,6 +58,7 @@ export default function ToolBar({ room, participants }) {
   const endCall = () => {
     if (room) {
       push(`${roomName}/${room.roomId}/end`);
+      room.leave();
     }
   };
 
