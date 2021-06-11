@@ -12,8 +12,17 @@ export default makeStyles(theme => ({
     backgroundColor: 'black'
   },
   container: {
-    display: 'flex'
-    // flexDirection: 'row'
+    ['@media (min-width:768px)']: {
+      marginTop: 10,
+      display: 'flex',
+      flexDirection: 'row'
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    alignContent: 'center'
+    // align-items: center;
+    // align-content: center;
   },
   new__meeting: {
     color: 'rgb(43,158,250)'
