@@ -100,8 +100,11 @@ export function useRoom() {
         setNetworkStatus('reconnected');
         console.log('Room: reconnected');
       });
+      roomRef.current.on('reconnecting', () => {
+        setNetworkStatus('reconnecting');
+        console.log('Room: reconnecting');
+      });
       roomRef.current.on('participantJoined', participant => {
-        //   addParticipant();
         addParticipants({ participant: participant });
         console.log('Room: participant joined: ', participant);
       });
