@@ -30,7 +30,7 @@ export default makeStyles(theme => ({
 
   meetingInfo: {
     margin: '100px',
-    width: '30%',
+    width: '50%',
     height: '100px',
     color: 'white'
   },
