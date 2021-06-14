@@ -9,12 +9,11 @@ import { UserContext } from '../../context/UserContext';
 import { useParams } from 'react-router';
 
 export default function WaitingRoom({ location }) {
-  const { room } = useParams();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
-  const roomToJoin = location?.state?.from.pathname.split('/room/')[1];
+  const roomToJoin = location?.state?.room;
   const [roomName, setRoomName] = useState(roomToJoin);
   const [userName, setUserName] = useState(null);
   const [localAudio, setLocalAudio] = useState(
@@ -126,7 +125,7 @@ export default function WaitingRoom({ location }) {
           <TextField
             variant="outlined"
             margin="normal"
-            disabled={room != null}
+            // disabled={room != null}
             required
             fullWidth
             disabled={roomToJoin != undefined}
@@ -136,7 +135,7 @@ export default function WaitingRoom({ location }) {
             autoComplete="Room Name"
             autoFocus
             helperText={roomName === '' ? 'Empty field!' : ' '}
-            value={roomName ? roomName : ''}
+            value={roomName}
             onChange={onChangeRoomName}
             onKeyDown={onKeyDown}
           />

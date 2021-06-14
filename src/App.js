@@ -62,6 +62,7 @@ function App() {
                 exact
                 path="/room/:roomName"
                 component={VideoRoom}
+                room="perrin"
               />
 
               <Route path="/error" component={Error}></Route>
