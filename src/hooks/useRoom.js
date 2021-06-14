@@ -48,7 +48,12 @@ export default function useRoom() {
   //   );
 
   const createCall = useCallback(
-    ({ apikey, sessionId, token }, roomContainer, publisherOptions) => {
+    (
+      { apikey, sessionId, token },
+      roomContainer,
+      userName,
+      publisherOptions
+    ) => {
       if (!apikey || !sessionId || !token) {
         throw new Error('Check your credentials');
       }
@@ -88,6 +93,7 @@ export default function useRoom() {
       roomRef.current.on('disconnected', () => {
         console.log('Room: disconnected');
       });
+
       roomRef.current.on('reconnecting', () => {
         console.log('Room: reconnecting');
       });
@@ -103,9 +109,11 @@ export default function useRoom() {
       const finalPublisherOptions = Object.assign({}, publisherOptions, {
         style: {
           buttonDisplayMode: 'off',
-          nameDisplayMode: 'on',
+          nameDisplayMode: 'auto',
+          audioLevelDisplayMode: 'off'
         },
-        showControls: false,
+        name: userName,
+        showControls: true
       });
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
