@@ -13,48 +13,45 @@ export default function WaitingRoom({ location }) {
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
-  const roomToJoin = location?.state?.room;
+  const roomToJoin = location?.state?.room || '';
   const [roomName, setRoomName] = useState(roomToJoin);
-  const [userName, setUserName] = useState(null);
+  const [userName, setUserName] = useState('');
   const [localAudio, setLocalAudio] = useState(
     user.defaultSettings.publishAudio
   );
   const [localVideo, setLocalVideo] = useState(
     user.defaultSettings.publishVideo
   );
-  const {
-    createPreview,
-    destroyPreview,
-    previewPublisher
-  } = usePreviewPublisher();
+  const { createPreview, destroyPreview, previewPublisher } =
+    usePreviewPublisher();
 
   const handleJoinClick = () => {
-    if (!roomName) {
+    if (!roomName || !userName) {
       return;
     }
 
     push(`room/${roomName}`);
   };
 
-  const onChangeRoomName = e => {
+  const onChangeRoomName = (e) => {
     const roomName = e.target.value;
     setRoomName(roomName);
   };
 
-  const onChangeParticipantName = React.useCallback(e => {
+  const onChangeParticipantName = React.useCallback((e) => {
     setUserName(e.target.value);
   }, []);
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (e.keyCode === 13 && e.target.value) {
       push(`room/${e.target.value}`);
     }
   };
-  const handleAudioChange = React.useCallback(e => {
+  const handleAudioChange = React.useCallback((e) => {
     setLocalAudio(e.target.checked);
   }, []);
 
-  const handleVideoChange = React.useCallback(e => {
+  const handleVideoChange = React.useCallback((e) => {
     setLocalVideo(e.target.checked);
   }, []);
 
@@ -67,8 +64,8 @@ export default function WaitingRoom({ location }) {
         ...user,
         defaultSettings: {
           publishAudio: localAudio,
-          publishVideo: localVideo
-        }
+          publishVideo: localVideo,
+        },
       });
     }
   }, [localAudio, localVideo, user, setUser]);
@@ -120,7 +117,7 @@ export default function WaitingRoom({ location }) {
             margin="normal"
             required
             fullWidth
-            disabled={roomToJoin != undefined}
+            disabled={roomToJoin !== ''}
             id="room-name"
             label="Room Name"
             name="roomName"
@@ -140,7 +137,7 @@ export default function WaitingRoom({ location }) {
             name="name"
             required
             autoComplete="Name"
-            helperText={userName === '' ? 'Optional' : ' '}
+            helperText={userName === '' ? 'Empty Field' : ' '}
             value={userName}
             onChange={onChangeParticipantName}
             onKeyDown={onKeyDown}
@@ -165,7 +162,12 @@ export default function WaitingRoom({ location }) {
         </div>
       </Grid>
       <Grid container direction="column" justify="center" alignItems="center">
-        <Button variant="contained" color="primary" onClick={handleJoinClick}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleJoinClick}
+          disabled={!roomName && !userName}
+        >
           Join Call
         </Button>
       </Grid>

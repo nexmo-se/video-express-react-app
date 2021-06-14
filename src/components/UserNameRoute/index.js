@@ -1,28 +1,20 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import { UserContext } from '../../context/UserContext';
 
 const UserNameRoute = ({ component: Component, ...rest }) => {
-  const roomName = rest.computedMatch.params.roomName;
-
+  const roomName = rest?.computedMatch?.params?.roomName;
   const { user } = useContext(UserContext);
-
-  const hasUserName = () => {
-    if (user.userName) return true;
-    return false;
-  };
-
-  console.log(rest);
   return (
     <Route
       {...rest}
-      render={props =>
-        !hasUserName() ? (
+      render={(props) =>
+        !user.userName ? (
           <Redirect
             to={{
               pathname: '/',
-              state: { room: roomName }
+              state: { room: roomName },
             }}
           />
         ) : (
