@@ -79,13 +79,6 @@ export default function WaitingRoom({ location }) {
     }
   }, [userName, setUser]);
 
-  // useEffect(() => {
-  //   if (roomName) {
-  //     setUser({ ...user, roomName: roomName });
-  //   }
-  //   console.log(user);
-  // }, [roomName, setUser]);
-
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
     if (previewPublisher) {
@@ -125,7 +118,6 @@ export default function WaitingRoom({ location }) {
           <TextField
             variant="outlined"
             margin="normal"
-            // disabled={room != null}
             required
             fullWidth
             disabled={roomToJoin != undefined}
@@ -148,9 +140,8 @@ export default function WaitingRoom({ location }) {
             name="name"
             required
             autoComplete="Name"
-            //autoFocus
             helperText={userName === '' ? 'Optional' : ' '}
-            value={userName ? userName : ''}
+            value={userName}
             onChange={onChangeParticipantName}
             onKeyDown={onKeyDown}
           />
