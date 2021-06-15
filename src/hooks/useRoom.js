@@ -110,10 +110,10 @@ export default function useRoom() {
         style: {
           buttonDisplayMode: 'off',
           nameDisplayMode: 'auto',
-          audioLevelDisplayMode: 'off'
+          audioLevelDisplayMode: 'off',
         },
         name: userName,
-        showControls: true
+        showControls: true,
       });
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
@@ -129,33 +129,9 @@ export default function useRoom() {
     []
   );
 
-  /* const startScreenSharing = useCallback(async () => {
-    if (roomRef.current) {
-      try {
-        await roomRef.current.startScreensharing();
-        const { screen } = roomRef.current;
-        screen.on('started', () => {
-          console.log('The screen sharing has started!');
-        });
-        screen.on('stopped', (reason) => {
-          console.log('The screen sharing because: ', reason);
-        });
-        // publisherRef.current.on("accessDenied", accessDeniedListener); todo add listeners
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }, []);
-
-  const stopScreenSharing = useCallback(async () => {
-    if (roomRef.current) {
-      roomRef.current.stopScreensharing();
-    }
-  }, []); */
-
   return {
     createCall,
-    connected: connected,
+    connected,
     camera: camera,
     screen: screen,
     room: roomRef.current,
