@@ -101,6 +101,7 @@ export default function useRoom() {
         console.log('Room: reconnected');
       });
       roomRef.current.on('reconnecting', () => {
+        setNetworkStatus('reconnecting');
         console.log('Room: reconnecting');
       });
       roomRef.current.on('participantJoined', (participant) => {
@@ -116,10 +117,10 @@ export default function useRoom() {
         style: {
           buttonDisplayMode: 'off',
           nameDisplayMode: 'auto',
-          audioLevelDisplayMode: 'off'
+          audioLevelDisplayMode: 'off',
         },
         name: userName,
-        showControls: true
+        showControls: true,
       });
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
@@ -166,7 +167,7 @@ export default function useRoom() {
     screen: screen,
     room: roomRef.current,
     participants,
-    networkStatus
+    networkStatus,
     /*     startScreenSharing,
     stopScreenSharing, */
   };
