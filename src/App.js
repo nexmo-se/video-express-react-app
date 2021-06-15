@@ -35,9 +35,13 @@ const theme = () => {
         main: '#20262D'
       },
       toolbarBackground: {
-        main: '#41464D'
-      }
-    }
+        main: '#41464D',
+      },
+      activeButtons: {
+        green: '#1C8731',
+        red: '#D50F2C',
+      },
+    },
   });
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 
-export function useRoom() {
+export default function useRoom() {
   let roomRef = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
@@ -9,12 +9,12 @@ export function useRoom() {
   const [networkStatus, setNetworkStatus] = useState(null);
 
   const addParticipants = ({ participant }) => {
-    setParticipants(prev => [...prev, participant]);
+    setParticipants((prev) => [...prev, participant]);
   };
 
   const removeParticipants = ({ participant }) => {
-    setParticipants(prev =>
-      prev.filter(prevparticipant => prevparticipant.id !== participant.id)
+    setParticipants((prev) =>
+      prev.filter((prevparticipant) => prevparticipant.id !== participant.id)
     );
   };
 
@@ -68,8 +68,8 @@ export function useRoom() {
         //useLayoutManager: true,
         managedLayoutOptions: {
           cameraPublisherContainer: 'roomContainer',
-          screenPublisherContainer: 'roomContainer'
-        }
+          screenPublisherContainer: 'roomContainer',
+        },
       });
       // const connectionEventHandlers = {
       //   connected: onConnected
@@ -101,10 +101,10 @@ export function useRoom() {
         console.log('Room: reconnected');
       });
       roomRef.current.on('reconnecting', () => {
-        setNetworkStatus('reconnecting');
         console.log('Room: reconnecting');
       });
-      roomRef.current.on('participantJoined', participant => {
+      roomRef.current.on('participantJoined', (participant) => {
+        //   addParticipant();
         addParticipants({ participant: participant });
         console.log('Room: participant joined: ', participant);
       });
@@ -121,29 +121,53 @@ export function useRoom() {
         name: userName,
         showControls: true
       });
-      console.log(finalPublisherOptions);
-      if (process.env.NODE_ENV === 'development') {
-        finalPublisherOptions.videoSource = null;
-      }
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
         .join({ publisherProperties: finalPublisherOptions })
         .then(() => {
           setConnected(true);
           setCamera(roomRef.current.camera);
+          console.log('roomRef', roomRef.current);
           setScreen(roomRef.current.screen);
         })
-        .catch(e => console.log(e));
+        .catch((e) => console.log(e));
     },
     []
   );
+
+  /* const startScreenSharing = useCallback(async () => {
+    if (roomRef.current) {
+      try {
+        await roomRef.current.startScreensharing();
+        const { screen } = roomRef.current;
+        screen.on('started', () => {
+          console.log('The screen sharing has started!');
+        });
+        screen.on('stopped', (reason) => {
+          console.log('The screen sharing because: ', reason);
+        });
+        // publisherRef.current.on("accessDenied", accessDeniedListener); todo add listeners
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, []);
+
+  const stopScreenSharing = useCallback(async () => {
+    if (roomRef.current) {
+      roomRef.current.stopScreensharing();
+    }
+  }, []); */
 
   return {
     createCall,
     connected: connected,
     camera: camera,
+    screen: screen,
     room: roomRef.current,
     participants,
     networkStatus
+    /*     startScreenSharing,
+    stopScreenSharing, */
   };
 }

@@ -5,15 +5,19 @@ import { IconButton } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 
 export default function MuteVideoButton({ classes, hasVideo, toggleVideo }) {
+  const title = hasVideo ? 'Disable Camera' : 'Enable Camera';
+  console.log('[MuteVideoButton] - hasVideo', hasVideo);
   return (
-    <Tooltip title="Toggle video" aria-label="add">
+    <Tooltip title={title} aria-label="add">
       <IconButton
         edge="start"
         aria-label="videoCamera"
         onClick={toggleVideo}
-        className={classes.toolbarButtons}
+        className={`${classes.toolbarButtons} ${
+          !hasVideo ? classes.disabledButton : ''
+        }`}
       >
-        {hasVideo ? <VideocamOff /> : <VideoCam />}
+        {!hasVideo ? <VideocamOff /> : <VideoCam />}
       </IconButton>
     </Tooltip>
   );

@@ -13,31 +13,31 @@ import { useParams } from 'react-router';
 export default function ToolBar({ room, participants }) {
   const { roomName } = useParams();
   const { push } = useHistory();
-  const [hasAudio, setHasAudio] = useState(null);
-  const [hasVideo, setHasVideo] = useState(null);
+  const [hasAudio, setHasAudio] = useState(true);
+  const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map((participant) => participant.camera.disableAudio());
+      participants.map(participant => participant.camera.disableAudio());
 
       setAllMuted(true);
     } else {
-      participants.map((participant) => participant.camera.enableAudio());
+      participants.map(participant => participant.camera.enableAudio());
       setAllMuted(false);
     }
   };
   const toggleVideo = () => {
-    if (room) {
-      const camera = room.camera;
+    if (room && room.camera) {
+      const { camera } = room;
       const isVideoEnabled = camera.isVideoEnabled();
       if (isVideoEnabled) {
-        setHasVideo(true);
         camera.disableVideo();
-      } else {
         setHasVideo(false);
+      } else {
         camera.enableVideo();
+        setHasVideo(true);
       }
     }
   };
@@ -46,11 +46,11 @@ export default function ToolBar({ room, participants }) {
       const camera = room.camera;
       const isAudioEnabled = camera.isAudioEnabled();
       if (isAudioEnabled) {
-        setHasAudio(true);
         camera.disableAudio();
-      } else {
         setHasAudio(false);
+      } else {
         camera.enableAudio();
+        setHasAudio(true);
       }
     }
   };
@@ -58,8 +58,19 @@ export default function ToolBar({ room, participants }) {
   const endCall = () => {
     if (room) {
       push(`${roomName}/${room.roomId}/end`);
+      room.leave();
     }
   };
+
+  useEffect(() => {
+    console.log('[toolbar] useEffect - ');
+    const isAudioEnabled =
+      room && room.camera && room.camera.isAudioEnabled() ? true : false;
+    const isVideoEnabled =
+      room && room.camera && room.camera.isVideoEnabled() ? true : false;
+    setHasAudio(isAudioEnabled);
+    setHasVideo(isVideoEnabled);
+  }, [room]);
 
   return (
     <div className={classes.toolbarContainer}>

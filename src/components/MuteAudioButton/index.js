@@ -4,12 +4,9 @@ import { IconButton } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 
 export default function MuteAudioButton({ toggleAudio, hasAudio, classes }) {
+  const title = hasAudio ? 'Disable Microphone' : 'Enable Microphone';
   return (
-    // <button className="buttons" onClick={toggleAudio}>
-    //   Toggle Audio
-    // </button>
-
-    <Tooltip title="Toggle Audio" aria-label="add">
+    <Tooltip title={title} aria-label="add">
       {/* <Fab color="primary" className={classes.fab}>
           <AddIcon />
         </Fab> */}
@@ -19,9 +16,11 @@ export default function MuteAudioButton({ toggleAudio, hasAudio, classes }) {
         color="inherit"
         aria-label="mic"
         onClick={toggleAudio}
-        className={classes.toolbarButtons}
+        className={`${classes.toolbarButtons} ${
+          !hasAudio ? classes.disabledButton : ''
+        }`}
       >
-        {hasAudio ? (
+        {!hasAudio ? (
           <MicOffIcon fontSize="inherit" />
         ) : (
           <MicIcon fontSize="inherit" />
