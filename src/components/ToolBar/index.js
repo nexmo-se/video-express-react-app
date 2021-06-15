@@ -10,7 +10,7 @@ import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
 import { useParams } from 'react-router';
 
-export default function ToolBar({ room, participants }) {
+export default function ToolBar({ room, participants, connected }) {
   const { roomName } = useParams();
   const { push } = useHistory();
   const [hasAudio, setHasAudio] = useState(true);
@@ -42,7 +42,7 @@ export default function ToolBar({ room, participants }) {
     }
   };
   const toggleAudio = () => {
-    if (room) {
+    if (room && room.camera) {
       const camera = room.camera;
       const isAudioEnabled = camera.isAudioEnabled();
       if (isAudioEnabled) {
@@ -58,18 +58,21 @@ export default function ToolBar({ room, participants }) {
   const endCall = () => {
     if (room) {
       push(`${roomName}/${room.roomId}/end`);
+      room.leave();
     }
   };
 
   useEffect(() => {
-    console.log('[toolbar] useEffect - ');
-    const isAudioEnabled =
-      room && room.camera && room.camera.isAudioEnabled() ? true : false;
-    const isVideoEnabled =
-      room && room.camera && room.camera.isVideoEnabled() ? true : false;
-    setHasAudio(isAudioEnabled);
-    setHasVideo(isVideoEnabled);
-  }, [room]);
+    console.log('[toolbar] useEffect - Connected', connected);
+    if (connected) {
+      const isAudioEnabled =
+        room && room.camera && room.camera.isAudioEnabled() ? true : false;
+      const isVideoEnabled =
+        room && room.camera && room.camera.isVideoEnabled() ? true : false;
+      setHasAudio(isAudioEnabled);
+      setHasVideo(isVideoEnabled);
+    }
+  }, [connected, room]);
 
   return (
     <div className={classes.toolbarContainer}>

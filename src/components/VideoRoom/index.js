@@ -12,7 +12,7 @@ export default function VideoRoom() {
   const { user } = useContext(UserContext);
   const [credentials, setCredentials] = useState(null);
   const [error, setError] = useState(null);
-  const { createCall, subscribersCount, room, participants } = useRoom();
+  const { createCall, room, participants, connected } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
   let { roomName } = useParams();
@@ -34,7 +34,8 @@ export default function VideoRoom() {
 
   useEffect(() => {
     if (credentials) {
-      createCall(credentials, roomContainer.current, {
+      console.log(user);
+      createCall(credentials, roomContainer.current, user.userName, {
         ...user.defaultSettings,
       });
     }
@@ -59,7 +60,11 @@ export default function VideoRoom() {
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
-      <ToolBar room={room} participants={participants}></ToolBar>
+      <ToolBar
+        room={room}
+        participants={participants}
+        connected={connected}
+      ></ToolBar>
     </div>
   );
 }

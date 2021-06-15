@@ -48,7 +48,12 @@ export default function useRoom() {
   //   );
 
   const createCall = useCallback(
-    ({ apikey, sessionId, token }, roomContainer, publisherOptions) => {
+    (
+      { apikey, sessionId, token },
+      roomContainer,
+      userName,
+      publisherOptions
+    ) => {
       if (!apikey || !sessionId || !token) {
         throw new Error('Check your credentials');
       }
@@ -88,6 +93,7 @@ export default function useRoom() {
       roomRef.current.on('disconnected', () => {
         console.log('Room: disconnected');
       });
+
       roomRef.current.on('reconnecting', () => {
         console.log('Room: reconnecting');
       });
@@ -103,9 +109,11 @@ export default function useRoom() {
       const finalPublisherOptions = Object.assign({}, publisherOptions, {
         style: {
           buttonDisplayMode: 'off',
-          nameDisplayMode: 'on',
+          nameDisplayMode: 'auto',
+          audioLevelDisplayMode: 'off',
         },
-        showControls: false,
+        name: userName,
+        showControls: true,
       });
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
@@ -121,33 +129,9 @@ export default function useRoom() {
     []
   );
 
-  /* const startScreenSharing = useCallback(async () => {
-    if (roomRef.current) {
-      try {
-        await roomRef.current.startScreensharing();
-        const { screen } = roomRef.current;
-        screen.on('started', () => {
-          console.log('The screen sharing has started!');
-        });
-        screen.on('stopped', (reason) => {
-          console.log('The screen sharing because: ', reason);
-        });
-        // publisherRef.current.on("accessDenied", accessDeniedListener); todo add listeners
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }, []);
-
-  const stopScreenSharing = useCallback(async () => {
-    if (roomRef.current) {
-      roomRef.current.stopScreensharing();
-    }
-  }, []); */
-
   return {
     createCall,
-    connected: connected,
+    connected,
     camera: camera,
     screen: screen,
     room: roomRef.current,

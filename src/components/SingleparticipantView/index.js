@@ -14,14 +14,10 @@ export default function SingleParticipantView({ roomName }) {
   const classes = styles();
   const [copiedMeetingUrl, setCopiedMeetingUrl] = useState(false);
 
-  const getMeetingUrl = () => {
-    return window.location.href;
-  };
-
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
-    setOpen((prev) => !prev);
+    setOpen(prev => !prev);
   };
 
   const handleClickAway = () => {
@@ -34,7 +30,8 @@ export default function SingleParticipantView({ roomName }) {
     const url = window.location.href;
     navigator.clipboard.writeText(url).then(
       () => {
-        setOpen((prev) => !prev);
+        setOpen(prev => !prev);
+
         console.log('Copy successfully');
       },
       () => {
@@ -58,10 +55,10 @@ export default function SingleParticipantView({ roomName }) {
             value={window.location.href}
             InputProps={{
               readOnly: true,
-              className: classes.textField,
+              className: classes.textField
             }}
             InputLabelProps={{
-              classes: classes.textField,
+              classes: classes.textField
             }}
             fullWidth={true}
           />

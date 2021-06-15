@@ -6,14 +6,16 @@ import usePreviewPublisher from '../../hooks/usePreviewPublisher';
 import AudioSettings from '../AudioSetting';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
+import { useParams } from 'react-router';
 
-export default function WaitingRoom() {
+export default function WaitingRoom({ location }) {
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
-
-  const [roomName, setRoomName] = useState('');
+  const roomToJoin = location?.state?.room || '';
+  const [roomName, setRoomName] = useState(roomToJoin);
+  const [userName, setUserName] = useState('');
   const [localAudio, setLocalAudio] = useState(
     user.defaultSettings.publishAudio
   );
@@ -24,9 +26,10 @@ export default function WaitingRoom() {
     usePreviewPublisher();
 
   const handleJoinClick = () => {
-    if (!roomName) {
+    if (!roomName || !userName) {
       return;
     }
+
     push(`room/${roomName}`);
   };
 
@@ -34,6 +37,10 @@ export default function WaitingRoom() {
     const roomName = e.target.value;
     setRoomName(roomName);
   };
+
+  const onChangeParticipantName = React.useCallback((e) => {
+    setUserName(e.target.value);
+  }, []);
 
   const onKeyDown = (e) => {
     if (e.keyCode === 13 && e.target.value) {
@@ -54,6 +61,7 @@ export default function WaitingRoom() {
       localVideo !== user.defaultSettings.publishVideo
     ) {
       setUser({
+        ...user,
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo,
@@ -61,6 +69,12 @@ export default function WaitingRoom() {
       });
     }
   }, [localAudio, localVideo, user, setUser]);
+
+  useEffect(() => {
+    if (userName !== user.userName) {
+      setUser({ ...user, userName: userName });
+    }
+  }, [userName, setUser]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
@@ -103,6 +117,7 @@ export default function WaitingRoom() {
             margin="normal"
             required
             fullWidth
+            disabled={roomToJoin !== ''}
             id="room-name"
             label="Room Name"
             name="roomName"
@@ -111,6 +126,20 @@ export default function WaitingRoom() {
             helperText={roomName === '' ? 'Empty field!' : ' '}
             value={roomName}
             onChange={onChangeRoomName}
+            onKeyDown={onKeyDown}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="publisher-name"
+            label="Name"
+            name="name"
+            required
+            autoComplete="Name"
+            helperText={userName === '' ? 'Empty Field' : ' '}
+            value={userName}
+            onChange={onChangeParticipantName}
             onKeyDown={onKeyDown}
           />
         </form>
@@ -133,7 +162,12 @@ export default function WaitingRoom() {
         </div>
       </Grid>
       <Grid container direction="column" justify="center" alignItems="center">
-        <Button variant="contained" color="primary" onClick={handleJoinClick}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleJoinClick}
+          disabled={!roomName && !userName}
+        >
           Join Call
         </Button>
       </Grid>
