@@ -19,7 +19,7 @@ export default function VideoRoom() {
     subscribersCount,
     room,
     participants,
-    networkStatus
+    networkStatus,
   } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
@@ -44,7 +44,7 @@ export default function VideoRoom() {
     if (credentials) {
       console.log(user);
       createCall(credentials, roomContainer.current, user.userName, {
-        ...user.defaultSettings
+        ...user.defaultSettings,
       });
     }
   }, [createCall, credentials, user]);
@@ -63,7 +63,9 @@ export default function VideoRoom() {
         className={classes.roomContainer}
         ref={roomContainer}
       >
-        {networkStatus && <NetworkToast networkStatus={networkStatus} />}
+        <NetworkToast
+          networkStatus={networkStatus}
+        />
         {/* <MuteParticipantsButton /> */}
         {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />

@@ -11,11 +11,11 @@ import SignalWifiOffIcon from '@material-ui/icons/SignalWifiOff';
 import RouterIcon from '@material-ui/icons/Router';
 
 export default function NetworkToast({ networkStatus }) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(Boolean(networkStatus));
   const classes = styles();
 
   useEffect(() => {
-    setOpen(true);
+    setOpen(Boolean(networkStatus));
   }, [networkStatus]);
 
   const getIcon = () => {
