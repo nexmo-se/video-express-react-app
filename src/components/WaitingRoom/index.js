@@ -10,51 +10,47 @@ import { useParams } from 'react-router';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 export default function WaitingRoom({ location }) {
-  const { room } = useParams();
   const classes = useStyles();
   const { push } = useHistory();
   let [logLevel, setLogLevel] = useState(0);
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
-  const roomToJoin = location?.state?.from.pathname.split('/room/')[1];
+  const roomToJoin = location?.state?.room || '';
   const [roomName, setRoomName] = useState(roomToJoin);
-  const [userName, setUserName] = useState(null);
+  const [userName, setUserName] = useState('');
   const [localAudio, setLocalAudio] = useState(
     user.defaultSettings.publishAudio
   );
   const [localVideo, setLocalVideo] = useState(
     user.defaultSettings.publishVideo
   );
-  const {
-    createPreview,
-    destroyPreview,
-    previewPublisher
-  } = usePreviewPublisher();
+  const { createPreview, destroyPreview, previewPublisher } =
+    usePreviewPublisher();
 
   const handleJoinClick = () => {
-    if (!roomName) {
+    if (!roomName || !userName) {
       return;
     }
 
     push(`room/${roomName}`);
   };
 
-  const onChangeRoomName = e => {
+  const onChangeRoomName = (e) => {
     const roomName = e.target.value;
     setRoomName(roomName);
   };
 
-  const onChangeParticipantName = React.useCallback(e => {
+  const onChangeParticipantName = React.useCallback((e) => {
     setUserName(e.target.value);
   }, []);
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (e.keyCode === 13 && e.target.value) {
       push(`room/${e.target.value}`);
     }
   };
 
-  const calculateAudioLevel = audioLevel => {
+  const calculateAudioLevel = (audioLevel) => {
     let movingAvg = null;
     if (movingAvg === null || movingAvg <= audioLevel) {
       movingAvg = audioLevel;
@@ -66,11 +62,11 @@ export default function WaitingRoom({ location }) {
     setLogLevel(Math.min(Math.max(logLevel, 0), 1) * 100);
   };
 
-  const handleAudioChange = React.useCallback(e => {
+  const handleAudioChange = React.useCallback((e) => {
     setLocalAudio(e.target.checked);
   }, []);
 
-  const handleVideoChange = React.useCallback(e => {
+  const handleVideoChange = React.useCallback((e) => {
     setLocalVideo(e.target.checked);
   }, []);
 
@@ -83,8 +79,8 @@ export default function WaitingRoom({ location }) {
         ...user,
         defaultSettings: {
           publishAudio: localAudio,
-          publishVideo: localVideo
-        }
+          publishVideo: localVideo,
+        },
       });
     }
   }, [localAudio, localVideo, user, setUser]);
@@ -108,7 +104,7 @@ export default function WaitingRoom({ location }) {
 
   useEffect(() => {
     if (previewPublisher) {
-      previewPublisher.on('audioLevelUpdated', audioLevel => {
+      previewPublisher.on('audioLevelUpdated', (audioLevel) => {
         calculateAudioLevel(audioLevel);
       });
     }
@@ -142,17 +138,16 @@ export default function WaitingRoom({ location }) {
           <TextField
             variant="outlined"
             margin="normal"
-            disabled={room != null}
             required
             fullWidth
-            disabled={roomToJoin != undefined}
+            disabled={roomToJoin !== ''}
             id="room-name"
             label="Room Name"
             name="roomName"
             autoComplete="Room Name"
             autoFocus
             helperText={roomName === '' ? 'Empty field!' : ' '}
-            value={roomName ? roomName : ''}
+            value={roomName}
             onChange={onChangeRoomName}
             onKeyDown={onKeyDown}
           />
@@ -165,9 +160,8 @@ export default function WaitingRoom({ location }) {
             name="name"
             required
             autoComplete="Name"
-            //autoFocus
-            helperText={userName === '' ? 'Optional' : ' '}
-            value={userName ? userName : ''}
+            helperText={userName === '' ? 'Empty Field' : ' '}
+            value={userName}
             onChange={onChangeParticipantName}
             onKeyDown={onKeyDown}
           />
@@ -192,7 +186,12 @@ export default function WaitingRoom({ location }) {
         </div>
       </Grid>
       <Grid container direction="column" justify="center" alignItems="center">
-        <Button variant="contained" color="primary" onClick={handleJoinClick}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleJoinClick}
+          disabled={!roomName && !userName}
+        >
           Join Call
         </Button>
       </Grid>

@@ -10,11 +10,11 @@ import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
 import { useParams } from 'react-router';
 
-export default function ToolBar({ room, participants }) {
+export default function ToolBar({ room, participants, connected }) {
   const { roomName } = useParams();
   const { push } = useHistory();
-  const [hasAudio, setHasAudio] = useState(null);
-  const [hasVideo, setHasVideo] = useState(null);
+  const [hasAudio, setHasAudio] = useState(true);
+  const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
 
@@ -29,28 +29,28 @@ export default function ToolBar({ room, participants }) {
     }
   };
   const toggleVideo = () => {
-    if (room) {
-      const camera = room.camera;
+    if (room && room.camera) {
+      const { camera } = room;
       const isVideoEnabled = camera.isVideoEnabled();
       if (isVideoEnabled) {
-        setHasVideo(true);
         camera.disableVideo();
-      } else {
         setHasVideo(false);
+      } else {
         camera.enableVideo();
+        setHasVideo(true);
       }
     }
   };
   const toggleAudio = () => {
-    if (room) {
+    if (room && room.camera) {
       const camera = room.camera;
       const isAudioEnabled = camera.isAudioEnabled();
       if (isAudioEnabled) {
-        setHasAudio(true);
         camera.disableAudio();
-      } else {
         setHasAudio(false);
+      } else {
         camera.enableAudio();
+        setHasAudio(true);
       }
     }
   };
@@ -58,8 +58,21 @@ export default function ToolBar({ room, participants }) {
   const endCall = () => {
     if (room) {
       push(`${roomName}/${room.roomId}/end`);
+      room.leave();
     }
   };
+
+  useEffect(() => {
+    console.log('[toolbar] useEffect - Connected', connected);
+    if (connected) {
+      const isAudioEnabled =
+        room && room.camera && room.camera.isAudioEnabled() ? true : false;
+      const isVideoEnabled =
+        room && room.camera && room.camera.isVideoEnabled() ? true : false;
+      setHasAudio(isAudioEnabled);
+      setHasVideo(isVideoEnabled);
+    }
+  }, [connected, room]);
 
   return (
     <div className={classes.toolbarContainer}>

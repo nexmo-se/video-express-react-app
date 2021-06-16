@@ -1,21 +1,20 @@
-import React from 'react';
-import { Route, Redirect, useLocation } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
-import useUserName from '../../hooks/useUserName';
+import { UserContext } from '../../context/UserContext';
 
 const UserNameRoute = ({ component: Component, ...rest }) => {
-  const { hasUserName } = useUserName();
-  const location = useLocation();
-
+  const roomName = rest?.computedMatch?.params?.roomName;
+  const { user } = useContext(UserContext);
   return (
     <Route
       {...rest}
-      render={props =>
-        !hasUserName() ? (
+      render={(props) =>
+        !user.userName ? (
           <Redirect
             to={{
               pathname: '/',
-              state: { from: location }
+              state: { room: roomName },
             }}
           />
         ) : (

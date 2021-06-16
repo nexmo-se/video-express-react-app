@@ -21,4 +21,16 @@ export default makeStyles((theme) => ({
     backgroundColor: '#32353A',
     color: '#fff',
   },
+  disabledButton: {
+    backgroundColor: theme.palette.activeButtons.red,
+    '&:hover': {
+      backgroundColor: theme.palette.activeButtons.red,
+    },
+  },
+  activeButton: {
+    backgroundColor: theme.palette.activeButtons.green,
+    '&:hover': {
+      backgroundColor: theme.palette.activeButtons.green,
+    },
+  },
 }));

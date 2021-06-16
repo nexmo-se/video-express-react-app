@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 
-export function useRoom() {
+export default function useRoom() {
   let roomRef = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
@@ -9,12 +9,12 @@ export function useRoom() {
   const [networkStatus, setNetworkStatus] = useState(null);
 
   const addParticipants = ({ participant }) => {
-    setParticipants(prev => [...prev, participant]);
+    setParticipants((prev) => [...prev, participant]);
   };
 
   const removeParticipants = ({ participant }) => {
-    setParticipants(prev =>
-      prev.filter(prevparticipant => prevparticipant.id !== participant.id)
+    setParticipants((prev) =>
+      prev.filter((prevparticipant) => prevparticipant.id !== participant.id)
     );
   };
 
@@ -68,8 +68,8 @@ export function useRoom() {
         //useLayoutManager: true,
         managedLayoutOptions: {
           cameraPublisherContainer: 'roomContainer',
-          screenPublisherContainer: 'roomContainer'
-        }
+          screenPublisherContainer: 'roomContainer',
+        },
       });
       // const connectionEventHandlers = {
       //   connected: onConnected
@@ -100,7 +100,11 @@ export function useRoom() {
         setNetworkStatus('reconnected');
         console.log('Room: reconnected');
       });
-      roomRef.current.on('participantJoined', participant => {
+      roomRef.current.on('reconnecting', () => {
+        setNetworkStatus('reconnecting');
+        console.log('Room: reconnecting');
+      });
+      roomRef.current.on('participantJoined', (participant) => {
         //   addParticipant();
         addParticipants({ participant: participant });
         console.log('Room: participant joined: ', participant);
@@ -113,34 +117,34 @@ export function useRoom() {
         style: {
           buttonDisplayMode: 'off',
           nameDisplayMode: 'auto',
-          audioLevelDisplayMode: 'off'
+          audioLevelDisplayMode: 'off',
         },
         name: userName,
-        showControls: true
+        showControls: true,
       });
-      console.log(finalPublisherOptions);
-      if (process.env.NODE_ENV === 'development') {
-        finalPublisherOptions.videoSource = null;
-      }
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
         .join({ publisherProperties: finalPublisherOptions })
         .then(() => {
           setConnected(true);
           setCamera(roomRef.current.camera);
+          console.log('roomRef', roomRef.current);
           setScreen(roomRef.current.screen);
         })
-        .catch(e => console.log(e));
+        .catch((e) => console.log(e));
     },
     []
   );
 
   return {
     createCall,
-    connected: connected,
+    connected,
     camera: camera,
+    screen: screen,
     room: roomRef.current,
     participants,
-    networkStatus
+    networkStatus,
+    /*     startScreenSharing,
+    stopScreenSharing, */
   };
 }

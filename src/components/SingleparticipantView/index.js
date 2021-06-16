@@ -31,6 +31,7 @@ export default function SingleParticipantView({ roomName }) {
     navigator.clipboard.writeText(url).then(
       () => {
         setOpen(prev => !prev);
+
         console.log('Copy successfully');
       },
       () => {

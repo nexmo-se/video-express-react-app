@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { getCredentials } from '../../api/fetchCreds';
 import styles from './styles.js';
-import { useRoom } from '../../hooks/useRoom';
+import useRoom from '../../hooks/useRoom';
 import { UserContext } from '../../context/UserContext';
 
 import SingleParticipantView from '../SingleparticipantView/index';
@@ -14,13 +14,7 @@ export default function VideoRoom() {
   const { user } = useContext(UserContext);
   const [credentials, setCredentials] = useState(null);
   const [error, setError] = useState(null);
-  const {
-    createCall,
-    subscribersCount,
-    room,
-    participants,
-    networkStatus
-  } = useRoom();
+  const { createCall, room, participants, connected, networkStatus } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
   let { roomName } = useParams();
@@ -31,10 +25,10 @@ export default function VideoRoom() {
         setCredentials({
           apikey: data.apiKey,
           sessionId: data.sessionId,
-          token: data.token
+          token: data.token,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err);
         console.log(err);
       });
@@ -44,7 +38,7 @@ export default function VideoRoom() {
     if (credentials) {
       console.log(user);
       createCall(credentials, roomContainer.current, user.userName, {
-        ...user.defaultSettings
+        ...user.defaultSettings,
       });
     }
   }, [createCall, credentials, user]);
@@ -63,13 +57,19 @@ export default function VideoRoom() {
         className={classes.roomContainer}
         ref={roomContainer}
       >
-        {networkStatus && <NetworkToast networkStatus={networkStatus} />}
+        <NetworkToast
+          networkStatus={networkStatus}
+        />
         {/* <MuteParticipantsButton /> */}
         {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />
         ) : null}
       </div>
-      <ToolBar room={room} participants={participants}></ToolBar>
+      <ToolBar
+        room={room}
+        participants={participants}
+        connected={connected}
+      ></ToolBar>
     </div>
   );
 }
