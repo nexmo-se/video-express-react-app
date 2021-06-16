@@ -7,12 +7,14 @@ import { UserContext } from '../../context/UserContext';
 
 import SingleParticipantView from '../SingleparticipantView/index';
 import ToolBar from 'components/ToolBar';
+import MuteParticipantsButton from 'components/MuteparticipantButton';
+import NetworkToast from 'components/NetworkToast';
 
 export default function VideoRoom() {
   const { user } = useContext(UserContext);
   const [credentials, setCredentials] = useState(null);
   const [error, setError] = useState(null);
-  const { createCall, room, participants, connected } = useRoom();
+  const { createCall, room, participants, connected, networkStatus } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
   let { roomName } = useParams();
@@ -55,6 +57,9 @@ export default function VideoRoom() {
         className={classes.roomContainer}
         ref={roomContainer}
       >
+        <NetworkToast
+          networkStatus={networkStatus}
+        />
         {/* <MuteParticipantsButton /> */}
         {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />

@@ -6,6 +6,7 @@ export default function useRoom() {
   const [screen, setScreen] = useState(null);
   const [connected, setConnected] = useState(false);
   const [participants, setParticipants] = useState([]);
+  const [networkStatus, setNetworkStatus] = useState(null);
 
   const addParticipants = ({ participant }) => {
     setParticipants((prev) => [...prev, participant]);
@@ -91,10 +92,16 @@ export default function useRoom() {
         console.log('Room: connected');
       });
       roomRef.current.on('disconnected', () => {
+        setNetworkStatus('disconnected');
         console.log('Room: disconnected');
       });
 
+      roomRef.current.on('reconnected', () => {
+        setNetworkStatus('reconnected');
+        console.log('Room: reconnected');
+      });
       roomRef.current.on('reconnecting', () => {
+        setNetworkStatus('reconnecting');
         console.log('Room: reconnecting');
       });
       roomRef.current.on('participantJoined', (participant) => {
@@ -135,8 +142,9 @@ export default function useRoom() {
     camera: camera,
     screen: screen,
     room: roomRef.current,
+    participants,
+    networkStatus,
     /*     startScreenSharing,
     stopScreenSharing, */
-    participants,
   };
 }
