@@ -12,7 +12,6 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 export default function WaitingRoom({ location }) {
   const classes = useStyles();
   const { push } = useHistory();
-  let [logLevel, setLogLevel] = useState(0);
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
   const roomToJoin = location?.state?.room || '';
@@ -24,7 +23,7 @@ export default function WaitingRoom({ location }) {
   const [localVideo, setLocalVideo] = useState(
     user.defaultSettings.publishVideo
   );
-  const { createPreview, destroyPreview, previewPublisher } =
+  const { createPreview, destroyPreview, previewPublisher, logLevel } =
     usePreviewPublisher();
 
   const handleJoinClick = () => {
@@ -48,18 +47,6 @@ export default function WaitingRoom({ location }) {
     if (e.keyCode === 13 && e.target.value) {
       push(`room/${e.target.value}`);
     }
-  };
-
-  const calculateAudioLevel = (audioLevel) => {
-    let movingAvg = null;
-    if (movingAvg === null || movingAvg <= audioLevel) {
-      movingAvg = audioLevel;
-    } else {
-      movingAvg = 0.8 * movingAvg + 0.2 * audioLevel;
-    }
-    // 1.5 scaling to map the -30 - 0 dBm range to [0,1]
-    logLevel = Math.log(movingAvg) / Math.LN10 / 1.5 + 1;
-    setLogLevel(Math.min(Math.max(logLevel, 0), 1) * 100);
   };
 
   const handleAudioChange = React.useCallback((e) => {
@@ -89,7 +76,7 @@ export default function WaitingRoom({ location }) {
     if (userName !== user.userName) {
       setUser({ ...user, userName: userName });
     }
-  }, [userName, setUser]);
+  }, [userName, user, setUser]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
@@ -102,13 +89,13 @@ export default function WaitingRoom({ location }) {
     }
   }, [localAudio, previewPublisher]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (previewPublisher) {
       previewPublisher.on('audioLevelUpdated', (audioLevel) => {
         calculateAudioLevel(audioLevel);
       });
     }
-  }, [previewPublisher, logLevel]);
+  }, [previewPublisher, calculateAudioLevel]); */
 
   useEffect(() => {
     console.log('UseEffect - LocalVideo', localVideo);
