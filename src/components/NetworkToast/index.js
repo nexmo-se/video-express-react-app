@@ -1,60 +1,87 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Alert from '@material-ui/lab/Alert';
 import styles from './styles';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import SignalWifiOffIcon from '@material-ui/icons/SignalWifiOff';
 import RouterIcon from '@material-ui/icons/Router';
+import Snackbar from '@material-ui/core/Snackbar';
 
 export default function NetworkToast({ networkStatus }) {
   const [open, setOpen] = React.useState(Boolean(networkStatus));
-  const classes = styles();
+  const classes = styles({ networkStatus });
+
+  const getIcon = () => {
+    if (networkStatus === 'reconnected') {
+      return (
+        <CheckCircleOutlineIcon
+          className={classes.networkStatusIcons}
+          fontSize="default"
+        />
+      );
+    }
+    if (networkStatus === 'reconnecting') {
+      return (
+        <RouterIcon className={classes.networkStatusIcons} fontSize="default" />
+      );
+    }
+    return (
+      <SignalWifiOffIcon
+        className={classes.networkStatusIcons}
+        fontSize="default"
+      />
+    );
+  };
+
+  const handleClose = reason => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   useEffect(() => {
     setOpen(Boolean(networkStatus));
   }, [networkStatus]);
 
-  const getIcon = () => {
-    if (networkStatus === 'reconnected') {
-      return <CheckCircleOutlineIcon fontSize="inherit" />;
-    }
-    if (networkStatus === 'reconnecting') {
-      return <RouterIcon fontSize="inherit" />;
-    }
-    return <SignalWifiOffIcon fontSize="inherit" />;
-  };
-
   return (
-    <div className={classes.root}>
-      <Collapse in={open}>
-        <Alert
-          icon={getIcon()}
-          onClose={() => {
-            setOpen(false);
-          }}
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpen(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
+    <div>
+      <Snackbar
+        className={classes.anchorOriginTopCenter}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center'
+        }}
+        ContentProps={{
+          classes: {
+            root: classes.root,
+            action: classes.action
           }
-          severity={networkStatus === 'disconnected' ? 'error' : 'info'}
-        >
-          {networkStatus === 'reconnecting'
-            ? 'We are working to reconnect you'
-            : `You have been ${networkStatus}`}
-        </Alert>
-      </Collapse>
+        }}
+        open={open}
+        // autoHideDuration={6000}
+        onClose={handleClose}
+        message={
+          <div className={classes.snackBarContent}>
+            {getIcon()}
+            {networkStatus === 'reconnecting'
+              ? 'We are working to reconnect you'
+              : `You have been ${networkStatus}`}
+          </div>
+        }
+        action={
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={handleClose}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+          // </div>
+        }
+      />
     </div>
   );
 }

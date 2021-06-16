@@ -1,28 +1,34 @@
 import { makeStyles } from '@material-ui/core/styles';
-export default makeStyles(theme => ({
+export default makeStyles({
   root: {
-    width: '30%',
-    '& > * + *': {
-      marginTop: theme.spacing(2)
-    }
+    top: '0',
+    background: ({ networkStatus }) => {
+      if (networkStatus === 'disconnected') return '#e25141';
+      if (networkStatus === 'reconnecting') return '#f19c38';
+      if (networkStatus === 'reconnected') return '#4caf50';
+    },
+    width: '100%',
+    justifyContent: 'center'
   },
-  card: {
-    justifyContent: 'center',
+  info: {
+    top: '0',
+    background: '#418be9',
+    width: '100%',
+    justifyContent: 'center'
+  },
+  action: {
+    position: 'absolute',
+    right: '0',
+    paddingRight: '10px'
+  },
+  anchorOriginTopCenter: {
+    minWidth: '100%'
+  },
+  networkStatusIcons: {
+    paddingRight: '10px'
+  },
+  snackBarContent: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    background: 'transparent',
-    color: '#fff',
-    border: 'none'
-  },
-  textField: {
-    borderColor: '#fff',
-    color: '#fff',
-    textAlign: 'center'
-  },
-  flexCentered: {
-    justifyContent: 'center',
-    display: 'flex',
-    alignItems: 'center'
+    alignItems: 'flex-end'
   }
-}));
+});
