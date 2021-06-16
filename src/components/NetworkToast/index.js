@@ -34,7 +34,7 @@ export default function NetworkToast({ networkStatus }) {
     );
   };
 
-  const handleClose = reason => {
+  const handleClose = (reason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -51,13 +51,13 @@ export default function NetworkToast({ networkStatus }) {
         className={classes.anchorOriginTopCenter}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         ContentProps={{
           classes: {
             root: classes.root,
-            action: classes.action
-          }
+            action: classes.action,
+          },
         }}
         open={open}
         // autoHideDuration={6000}
@@ -66,7 +66,7 @@ export default function NetworkToast({ networkStatus }) {
           <div className={classes.snackBarContent}>
             {getIcon()}
             {networkStatus === 'reconnecting'
-              ? 'We are working to reconnect you'
+              ? 'You are disconnected. Please check your internet connection'
               : `You have been ${networkStatus}`}
           </div>
         }

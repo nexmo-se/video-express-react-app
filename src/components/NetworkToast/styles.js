@@ -7,28 +7,24 @@ export default makeStyles({
       if (networkStatus === 'reconnecting') return '#f19c38';
       if (networkStatus === 'reconnected') return '#4caf50';
     },
-    width: '100%',
-    justifyContent: 'center'
+    /* width: '100%', */
+    justifyContent: 'center',
   },
   info: {
     top: '0',
     background: '#418be9',
-    width: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   action: {
     position: 'absolute',
     right: '0',
-    paddingRight: '10px'
-  },
-  anchorOriginTopCenter: {
-    minWidth: '100%'
+    paddingRight: '10px',
   },
   networkStatusIcons: {
-    paddingRight: '10px'
+    paddingRight: '10px',
   },
   snackBarContent: {
     display: 'flex',
-    alignItems: 'flex-end'
-  }
+    alignItems: 'flex-end',
+  },
 });
