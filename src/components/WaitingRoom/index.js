@@ -7,6 +7,7 @@ import AudioSettings from '../AudioSetting';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
 import { useParams } from 'react-router';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 export default function WaitingRoom({ location }) {
   const classes = useStyles();
@@ -22,7 +23,7 @@ export default function WaitingRoom({ location }) {
   const [localVideo, setLocalVideo] = useState(
     user.defaultSettings.publishVideo
   );
-  const { createPreview, destroyPreview, previewPublisher } =
+  const { createPreview, destroyPreview, previewPublisher, logLevel } =
     usePreviewPublisher();
 
   const handleJoinClick = () => {
@@ -47,6 +48,7 @@ export default function WaitingRoom({ location }) {
       push(`room/${e.target.value}`);
     }
   };
+
   const handleAudioChange = React.useCallback((e) => {
     setLocalAudio(e.target.checked);
   }, []);
@@ -74,7 +76,7 @@ export default function WaitingRoom({ location }) {
     if (userName !== user.userName) {
       setUser({ ...user, userName: userName });
     }
-  }, [userName, setUser]);
+  }, [userName, user, setUser]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
@@ -86,6 +88,14 @@ export default function WaitingRoom({ location }) {
       }
     }
   }, [localAudio, previewPublisher]);
+
+  /* useEffect(() => {
+    if (previewPublisher) {
+      previewPublisher.on('audioLevelUpdated', (audioLevel) => {
+        calculateAudioLevel(audioLevel);
+      });
+    }
+  }, [previewPublisher, calculateAudioLevel]); */
 
   useEffect(() => {
     console.log('UseEffect - LocalVideo', localVideo);
@@ -154,6 +164,7 @@ export default function WaitingRoom({ location }) {
             hasAudio={localAudio}
             onAudioChange={handleAudioChange}
           />
+          <LinearProgress variant="determinate" value={logLevel} />
           <VideoSettings
             className={classes.deviceSettings}
             hasVideo={localVideo}

@@ -33,4 +33,7 @@ export default makeStyles((theme) => ({
       backgroundColor: theme.palette.activeButtons.green,
     },
   },
+  activeButtonIcon: {
+    color: theme.palette.activeButtons.green,
+  },
 }));
