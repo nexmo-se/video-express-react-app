@@ -17,6 +17,8 @@ export default function WaitingRoom({ location }) {
   const roomToJoin = location?.state?.room || '';
   const [roomName, setRoomName] = useState(roomToJoin);
   const [userName, setUserName] = useState('');
+  const [isRoomNameInvalid, setIsRoomNameInvalid] = useState(false);
+  const [isUserNameInvalid, setIsUserNameInvalid] = useState(false);
   const [localAudio, setLocalAudio] = useState(
     user.defaultSettings.publishAudio
   );
@@ -27,25 +29,37 @@ export default function WaitingRoom({ location }) {
     usePreviewPublisher();
 
   const handleJoinClick = () => {
-    if (!roomName || !userName) {
-      return;
+    if (validateForm()) {
+      push(`room/${roomName}`);
     }
+  };
 
-    push(`room/${roomName}`);
+  const validateForm = () => {
+    if (userName === '') {
+      setIsUserNameInvalid(true);
+      return false;
+    } else if (roomName === '') {
+      setIsRoomNameInvalid(true);
+      return false;
+    }
+    return true;
   };
 
   const onChangeRoomName = (e) => {
     const roomName = e.target.value;
+    setIsRoomNameInvalid(false);
     setRoomName(roomName);
   };
 
   const onChangeParticipantName = React.useCallback((e) => {
+    setIsUserNameInvalid(false);
     setUserName(e.target.value);
   }, []);
 
   const onKeyDown = (e) => {
     if (e.keyCode === 13 && e.target.value) {
-      push(`room/${e.target.value}`);
+      handleJoinClick();
+      /* push(`room/${e.target.value}`); */
     }
   };
 
@@ -98,7 +112,6 @@ export default function WaitingRoom({ location }) {
   }, [previewPublisher, calculateAudioLevel]); */
 
   useEffect(() => {
-    console.log('UseEffect - LocalVideo', localVideo);
     if (previewPublisher) {
       if (localVideo && !previewPublisher.isVideoEnabled()) {
         previewPublisher.enableVideo();
@@ -132,6 +145,7 @@ export default function WaitingRoom({ location }) {
             label="Room Name"
             name="roomName"
             autoComplete="Room Name"
+            error={isRoomNameInvalid}
             autoFocus
             helperText={roomName === '' ? 'Empty field!' : ' '}
             value={roomName}
@@ -145,6 +159,7 @@ export default function WaitingRoom({ location }) {
             id="publisher-name"
             label="Name"
             name="name"
+            error={isUserNameInvalid}
             required
             autoComplete="Name"
             helperText={userName === '' ? 'Empty Field' : ' '}
