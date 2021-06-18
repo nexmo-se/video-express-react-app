@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 import { UserContext } from './context/UserContext';
 import VideoRoom from './components/VideoRoom';
@@ -18,21 +18,26 @@ import UserNameRoute from './components/UserNameRoute';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { ThemeProvider } from '@material-ui/styles';
 import { useMemo, useState } from 'react';
+import { makeStyles } from '@material-ui/core';
+
+let primary = process.env.REACT_APP_PALETTE_PRIMARY || '#b779ff';
+let secondary = process.env.REACT_APP_PALETTE_SECONDARY || '#d6219c';
 
 const theme = () => {
-  let primary = process.env.REACT_APP_PALETTE_PRIMARY || '#3c93cd';
-  let secondary = process.env.REACT_APP_PALETTE_SECONDARY || '#f0b34e';
   return createMuiTheme({
     palette: {
       type: 'light',
       primary: {
-        main: primary
+        main: primary,
       },
       secondary: {
-        main: secondary
+        main: secondary,
+      },
+      bodyBackground: {
+        black: '#131415',
       },
       callBackground: {
-        main: '#20262D'
+        main: '#20262D',
       },
       toolbarBackground: {
         main: '#41464D',
@@ -49,36 +54,30 @@ function App() {
   const [user, setUser] = useState({
     defaultSettings: {
       publishAudio: true,
-      publishVideo: true
-    }
+      publishVideo: true,
+    },
   });
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
     <ThemeProvider theme={theme()}>
       <Router>
         <UserContext.Provider value={userValue}>
-          <div>
-            <Switch>
-              <Route path="/room/:roomName/:sessionId/end">
-                <EndCall />
-              </Route>
-              <UserNameRoute
-                exact
-                path="/room/:roomName"
-                component={VideoRoom}
-              />
+          <Switch>
+            <Route path="/room/:roomName/:sessionId/end">
+              <EndCall />
+            </Route>
+            <UserNameRoute exact path="/room/:roomName" component={VideoRoom} />
 
-              <Route path="/error" component={Error}></Route>
-              <Route exact path="/" component={WaitingRoom}></Route>
-              <Route path="*">
-                <Redirect
-                  to={{
-                    pathname: '/'
-                  }}
-                />
-              </Route>
-            </Switch>
-          </div>
+            <Route path="/error" component={Error}></Route>
+            <Route exact path="/" component={WaitingRoom}></Route>
+            <Route path="*">
+              <Redirect
+                to={{
+                  pathname: '/',
+                }}
+              />
+            </Route>
+          </Switch>
         </UserContext.Provider>
       </Router>
     </ThemeProvider>

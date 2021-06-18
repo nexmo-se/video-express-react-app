@@ -7,6 +7,7 @@ import AudioSettings from '../AudioSetting';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
 import { useParams } from 'react-router';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 export default function WaitingRoom({ location }) {
   const classes = useStyles();
@@ -16,37 +17,52 @@ export default function WaitingRoom({ location }) {
   const roomToJoin = location?.state?.room || '';
   const [roomName, setRoomName] = useState(roomToJoin);
   const [userName, setUserName] = useState('');
+  const [isRoomNameInvalid, setIsRoomNameInvalid] = useState(false);
+  const [isUserNameInvalid, setIsUserNameInvalid] = useState(false);
   const [localAudio, setLocalAudio] = useState(
     user.defaultSettings.publishAudio
   );
   const [localVideo, setLocalVideo] = useState(
     user.defaultSettings.publishVideo
   );
-  const { createPreview, destroyPreview, previewPublisher } =
+  const { createPreview, destroyPreview, previewPublisher, logLevel } =
     usePreviewPublisher();
 
   const handleJoinClick = () => {
-    if (!roomName || !userName) {
-      return;
+    if (validateForm()) {
+      push(`room/${roomName}`);
     }
+  };
 
-    push(`room/${roomName}`);
+  const validateForm = () => {
+    if (userName === '') {
+      setIsUserNameInvalid(true);
+      return false;
+    } else if (roomName === '') {
+      setIsRoomNameInvalid(true);
+      return false;
+    }
+    return true;
   };
 
   const onChangeRoomName = (e) => {
     const roomName = e.target.value;
+    setIsRoomNameInvalid(false);
     setRoomName(roomName);
   };
 
   const onChangeParticipantName = React.useCallback((e) => {
+    setIsUserNameInvalid(false);
     setUserName(e.target.value);
   }, []);
 
   const onKeyDown = (e) => {
     if (e.keyCode === 13 && e.target.value) {
-      push(`room/${e.target.value}`);
+      handleJoinClick();
+      /* push(`room/${e.target.value}`); */
     }
   };
+
   const handleAudioChange = React.useCallback((e) => {
     setLocalAudio(e.target.checked);
   }, []);
@@ -74,7 +90,7 @@ export default function WaitingRoom({ location }) {
     if (userName !== user.userName) {
       setUser({ ...user, userName: userName });
     }
-  }, [userName, setUser]);
+  }, [userName, user, setUser]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
@@ -87,8 +103,15 @@ export default function WaitingRoom({ location }) {
     }
   }, [localAudio, previewPublisher]);
 
+  /* useEffect(() => {
+    if (previewPublisher) {
+      previewPublisher.on('audioLevelUpdated', (audioLevel) => {
+        calculateAudioLevel(audioLevel);
+      });
+    }
+  }, [previewPublisher, calculateAudioLevel]); */
+
   useEffect(() => {
-    console.log('UseEffect - LocalVideo', localVideo);
     if (previewPublisher) {
       if (localVideo && !previewPublisher.isVideoEnabled()) {
         previewPublisher.enableVideo();
@@ -122,6 +145,7 @@ export default function WaitingRoom({ location }) {
             label="Room Name"
             name="roomName"
             autoComplete="Room Name"
+            error={isRoomNameInvalid}
             autoFocus
             helperText={roomName === '' ? 'Empty field!' : ' '}
             value={roomName}
@@ -135,6 +159,7 @@ export default function WaitingRoom({ location }) {
             id="publisher-name"
             label="Name"
             name="name"
+            error={isUserNameInvalid}
             required
             autoComplete="Name"
             helperText={userName === '' ? 'Empty Field' : ' '}
@@ -154,6 +179,7 @@ export default function WaitingRoom({ location }) {
             hasAudio={localAudio}
             onAudioChange={handleAudioChange}
           />
+          <LinearProgress variant="determinate" value={logLevel} />
           <VideoSettings
             className={classes.deviceSettings}
             hasVideo={localVideo}
