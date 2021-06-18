@@ -14,7 +14,14 @@ export default function VideoRoom() {
   const { user } = useContext(UserContext);
   const [credentials, setCredentials] = useState(null);
   const [error, setError] = useState(null);
-  const { createCall, room, participants, connected, networkStatus } = useRoom();
+  const {
+    createCall,
+    room,
+    participants,
+    connected,
+    networkStatus,
+    publisherIsSpeaking,
+  } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
   let { roomName } = useParams();
@@ -57,9 +64,7 @@ export default function VideoRoom() {
         className={classes.roomContainer}
         ref={roomContainer}
       >
-        <NetworkToast
-          networkStatus={networkStatus}
-        />
+        <NetworkToast networkStatus={networkStatus} />
         {/* <MuteParticipantsButton /> */}
         {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />
@@ -69,6 +74,7 @@ export default function VideoRoom() {
         room={room}
         participants={participants}
         connected={connected}
+        publisherIsSpeaking={publisherIsSpeaking}
       ></ToolBar>
     </div>
   );

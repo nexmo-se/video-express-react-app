@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
+import _ from 'lodash';
 
 export default function useRoom() {
   let roomRef = useRef(null);
@@ -7,6 +8,7 @@ export default function useRoom() {
   const [connected, setConnected] = useState(false);
   const [participants, setParticipants] = useState([]);
   const [networkStatus, setNetworkStatus] = useState(null);
+  const [publisherIsSpeaking, setPublisherIsSpeaking] = useState(false);
 
   const addParticipants = ({ participant }) => {
     setParticipants((prev) => [...prev, participant]);
@@ -47,6 +49,32 @@ export default function useRoom() {
   //     // }),
   //     []
   //   );
+
+  const onAudioLevel = React.useCallback((audioLevel) => {
+    let movingAvg = null;
+    if (movingAvg === null || movingAvg <= audioLevel) {
+      movingAvg = audioLevel;
+    } else {
+      movingAvg = 0.8 * movingAvg + 0.2 * audioLevel;
+    }
+    // 1.5 scaling to map the -30 - 0 dBm range to [0,1]
+    const currentLogLevel = Math.log(movingAvg) / Math.LN10 / 1.5 + 1;
+    if (currentLogLevel > 0.4) {
+      setPublisherIsSpeaking(true);
+    } else {
+      setPublisherIsSpeaking(false);
+    }
+    /* setLogLevel(Math.min(Math.max(currentLogLevel, 0), 1) * 100); */
+  }, []);
+
+  const addPublisherCameraEvents = () => {
+    if (roomRef.current.camera) {
+      roomRef.current.camera.on(
+        'audioLevelUpdated',
+        _.throttle((event) => onAudioLevel(event), 1000)
+      );
+    }
+  };
 
   const createCall = useCallback(
     (
@@ -128,8 +156,8 @@ export default function useRoom() {
         .then(() => {
           setConnected(true);
           setCamera(roomRef.current.camera);
-          console.log('roomRef', roomRef.current);
           setScreen(roomRef.current.screen);
+          addPublisherCameraEvents();
         })
         .catch((e) => console.log(e));
     },
@@ -144,6 +172,7 @@ export default function useRoom() {
     room: roomRef.current,
     participants,
     networkStatus,
+    publisherIsSpeaking,
     /*     startScreenSharing,
     stopScreenSharing, */
   };

@@ -10,7 +10,7 @@ import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
 import { useParams } from 'react-router';
 
-export default function ToolBar({ room, participants, connected }) {
+export default function ToolBar({ room, participants, connected, publisherIsSpeaking }) {
   const { roomName } = useParams();
   const { push } = useHistory();
   const [hasAudio, setHasAudio] = useState(true);
@@ -80,6 +80,7 @@ export default function ToolBar({ room, participants, connected }) {
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}
         classes={classes}
+        publisherIsSpeaking={publisherIsSpeaking}
       />
       <MuteVideoButton
         toggleVideo={toggleVideo}
