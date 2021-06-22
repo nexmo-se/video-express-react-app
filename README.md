@@ -10,6 +10,17 @@ This application shows how to build a multi-party video app with Vonage Multipar
 
 For local development, you can run `npm run server-dev` to run the server and `npm start` to run the client side of the application. 
 
+## Features
+
+The app has the following features:
+
+- [x] Video conferencing with real-time audio and video
+- [x] Screen sharing
+- [x] Chat support for textual and file-based messaging
+- [x] Enable/disable camera
+- [x] Mute/unmute mic
+- [x] Archiving [Archive API](https://tokbox.com/developer/guides/archiving/)
+
 
 ## App Architecture
 
