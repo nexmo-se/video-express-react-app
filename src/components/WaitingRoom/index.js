@@ -47,19 +47,28 @@ export default function WaitingRoom({ location }) {
 
   const onChangeRoomName = (e) => {
     const roomName = e.target.value;
+    if (roomName === '' || roomName.trim() === '') {
+      // Space detected
+      return;
+    }
+    console.log('onChangeRoomName', roomName);
     setIsRoomNameInvalid(false);
     setRoomName(roomName);
   };
 
-  const onChangeParticipantName = React.useCallback((e) => {
+  const onChangeParticipantName = (e) => {
+    const userName = e.target.value;
+    if (userName === '' || userName.trim() === '') {
+      // Space detected
+      return;
+    }
     setIsUserNameInvalid(false);
     setUserName(e.target.value);
-  }, []);
+  };
 
   const onKeyDown = (e) => {
-    if (e.keyCode === 13 && e.target.value) {
+    if (e.keyCode === 13) {
       handleJoinClick();
-      /* push(`room/${e.target.value}`); */
     }
   };
 
@@ -147,7 +156,7 @@ export default function WaitingRoom({ location }) {
             autoComplete="Room Name"
             error={isRoomNameInvalid}
             autoFocus
-            helperText={roomName === '' ? 'Empty field!' : ' '}
+            helperText={roomName === '' ? 'Empty Field' : ' '}
             value={roomName}
             onChange={onChangeRoomName}
             onKeyDown={onKeyDown}
@@ -192,7 +201,7 @@ export default function WaitingRoom({ location }) {
           variant="contained"
           color="primary"
           onClick={handleJoinClick}
-          disabled={!roomName && !userName}
+          disabled={!roomName || !userName}
         >
           Join Call
         </Button>
