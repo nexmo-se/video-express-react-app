@@ -71,7 +71,7 @@ export default function useRoom() {
     if (roomRef.current.camera) {
       roomRef.current.camera.on(
         'audioLevelUpdated',
-        _.throttle((event) => onAudioLevel(event), 1000)
+        _.throttle((event) => onAudioLevel(event), 250)
       );
     }
   };
