@@ -40,6 +40,7 @@ export default function settingsButton({ classes, room }) {
 
   const handleOpen = () => {
     setOpenModal(true);
+    handleClose();
   };
 
   const handleCloseModal = () => {
@@ -86,32 +87,24 @@ export default function settingsButton({ classes, room }) {
           }
         }}
       >
+        <MenuItem onClick={handleOpen}>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <Typography variant="inherit">Change layout</Typography>
+        </MenuItem>
         <div>
-          <MenuItem>
-            <ListItemIcon>
-              <IconButton
-                onClick={handleOpen}
-                // className={classes.toolbarButtons}
-              >
-                <DashboardIcon />
-              </IconButton>
-              {/* <DashboardIcon fontSize="small" onClick={handleOpen} /> */}
-              <div>
-                <Modal
-                  open={openModal}
-                  onClose={handleCloseModal}
-                  aria-labelledby="simple-modal-title"
-                  aria-describedby="simple-modal-description"
-                >
-                  {body}
-                </Modal>
-              </div>
-            </ListItemIcon>
-            <Typography variant="inherit">Change layout</Typography>
-          </MenuItem>
+          <Modal
+            open={openModal}
+            onClose={handleCloseModal}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            {body}
+          </Modal>
         </div>
 
-        <MenuItem>
+        <MenuItem onClick={handleOpen}>
           <ListItemIcon>
             <SettingsVoiceIcon fontSize="small" />
           </ListItemIcon>
