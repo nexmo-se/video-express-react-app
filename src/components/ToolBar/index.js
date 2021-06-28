@@ -11,6 +11,8 @@ import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
 import { useParams } from 'react-router';
 
+import InfoIconButton from 'components/InfoIconButton';
+
 export default function ToolBar({
   room,
   participants,
@@ -89,6 +91,7 @@ export default function ToolBar({
 
   return (
     <div className={classes.toolbarContainer}>
+      <InfoIconButton classes={classes} />
       <MuteAudioButton
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}

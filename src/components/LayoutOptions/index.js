@@ -1,7 +1,6 @@
 import React from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { useState } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
