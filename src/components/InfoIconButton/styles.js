@@ -5,5 +5,8 @@ export default makeStyles(theme => ({
   },
   fullList: {
     width: 'auto'
+  },
+  button: {
+    margin: theme.spacing(1)
   }
 }));
