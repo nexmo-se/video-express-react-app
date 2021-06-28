@@ -3,45 +3,69 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useState } from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
+
 export default function LayoutOptions({
   handleLayOutChange,
   open,
   handleCloseLayout,
   anchorElLayout
 }) {
-  let [selected, setSelected] = useState(true);
+  const StyledMenu = withStyles({
+    paper: {
+      border: '1px solid #d3d4d5'
+    }
+  })(props => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'left'
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center'
+      }}
+      {...props}
+    />
+  ));
 
-  const handleClick = layout => {
-    setSelected(!selected);
-    handleLayOutChange(layout);
-  };
+  const StyledMenuItem = withStyles(theme => ({
+    root: {
+      '&:focus': {
+        backgroundColor: theme.palette.primary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.white
+        }
+      }
+    }
+  }))(MenuItem);
 
   return (
     <div>
-      <Menu
+      <StyledMenu
         id="simple-menu"
         anchorEl={anchorElLayout}
         keepMounted
         open={open}
         onClose={handleCloseLayout}
       >
-        <MenuItem
-          selected={selected}
+        <StyledMenuItem
           onClick={() => {
-            handleClick('grid');
+            handleLayOutChange('grid');
           }}
         >
           Grid
-        </MenuItem>
-        <MenuItem
-          selected={!selected}
+        </StyledMenuItem>
+        <StyledMenuItem
           onClick={() => {
-            handleClick('active-speaker');
+            handleLayOutChange('active-speaker');
           }}
         >
           Active Speaker
-        </MenuItem>
-      </Menu>
+        </StyledMenuItem>
+      </StyledMenu>
     </div>
   );
 }

@@ -13,9 +13,7 @@ import useCopyMeetingUrl from '../../hooks/useCopyMeetingUrl';
 
 export default function SingleParticipantView({ roomName }) {
   const { copyUrl } = useCopyMeetingUrl();
-
   const classes = styles();
-  // const [copiedMeetingUrl, setCopiedMeetingUrl] = useState(false);
   const [title, setTitle] = React.useState('Copy');
 
   const [open, setOpen] = React.useState(false);

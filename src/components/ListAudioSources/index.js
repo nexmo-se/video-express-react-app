@@ -8,7 +8,6 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Modal from '@material-ui/core/Modal';
 
 export default function ListLayOutOptions({
-  room,
   openModal,
   classes,
   handleCloseModal

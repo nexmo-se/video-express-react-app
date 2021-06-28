@@ -12,7 +12,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import Typography from '@material-ui/core/Typography';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import LayoutOptions from 'components/LayoutOptions';
-import ListLayOutOptions from 'components/ListLayoutOptions';
+import ListAudioSources from 'components/ListAudioSources';
 
 const ITEM_HEIGHT = 48;
 
@@ -52,7 +52,6 @@ export default function settingsButton({ classes, room }) {
 
   const handleLayOutChange = layout => {
     if (room) {
-      console.log(room);
       room.setLayoutMode(layout);
     }
   };
@@ -89,15 +88,15 @@ export default function settingsButton({ classes, room }) {
           </ListItemIcon>
           <Typography variant="inherit">Change layout</Typography>
         </MenuItem>
-        <div>
-          <LayoutOptions
-            room={room}
-            handleCloseLayout={handleCloseLayout}
-            handleLayOutChange={handleLayOutChange}
-            open={openSubMenu}
-            anchorElLayout={anchorElLayout}
-          />
-        </div>
+        {/* <div> */}
+        <LayoutOptions
+          room={room}
+          handleCloseLayout={handleCloseLayout}
+          handleLayOutChange={handleLayOutChange}
+          open={openSubMenu}
+          anchorElLayout={anchorElLayout}
+        />
+        {/* </div> */}
 
         <MenuItem onClick={handleOpen}>
           <ListItemIcon>
@@ -105,7 +104,7 @@ export default function settingsButton({ classes, room }) {
           </ListItemIcon>
           <Typography variant="inherit">Change Audio Source</Typography>
         </MenuItem>
-        <ListLayOutOptions
+        <ListAudioSources
           handleCloseModal={handleCloseModal}
           openModal={openModal}
           classes={classes}
