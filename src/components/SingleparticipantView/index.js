@@ -9,9 +9,11 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Tooltip from '@material-ui/core/Tooltip';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import styles from './styles';
+import useCopyMeetingUrl from '../../hooks/useCopyMeetingUrl';
 
 export default function SingleParticipantView({ roomName }) {
-  const urlRef = useRef();
+  const { copyUrl } = useCopyMeetingUrl();
+
   const classes = styles();
   // const [copiedMeetingUrl, setCopiedMeetingUrl] = useState(false);
   const [title, setTitle] = React.useState('Copy');
@@ -34,19 +36,6 @@ export default function SingleParticipantView({ roomName }) {
     setOpen(true);
   };
 
-  //Maybe use a ref instead
-  const copyUrl = () => {
-    //https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
-    const url = window.location.href;
-    navigator.clipboard.writeText(url).then(
-      () => {
-        console.log('Meeting URL copied');
-      },
-      () => {
-        console.log('Copy failed');
-      }
-    );
-  };
   return (
     <div className={classes.banner}>
       <Card className={classes.card} variant="outlined">
