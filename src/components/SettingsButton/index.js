@@ -5,38 +5,24 @@ import VideoCallIcon from '@material-ui/icons/VideoCall';
 import SettingsVoiceIcon from '@material-ui/icons/SettingsVoice';
 import Tooltip from '@material-ui/core/Tooltip';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
-import Modal from '@material-ui/core/Modal';
+
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import Typography from '@material-ui/core/Typography';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import LayoutOptions from 'components/LayoutOptions';
 import ListLayOutOptions from 'components/ListLayoutOptions';
-
-const options = ['None', 'Atria'];
 
 const ITEM_HEIGHT = 48;
 
 export default function settingsButton({ classes, room }) {
-  const [modalStyle] = useState(getModalStyle);
+  // const [modalStyle] = useState(getModalStyle);
   const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
-  function rand() {
-    return Math.round(Math.random() * 20) - 10;
-  }
-
-  function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`
-    };
-  }
+  const [anchorElLayout, setAnchorElLayout] = useState(null);
+  const openSubMenu = Boolean(anchorElLayout);
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -47,18 +33,28 @@ export default function settingsButton({ classes, room }) {
     setOpenModal(false);
   };
 
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <ListLayOutOptions room={room} />
-    </div>
-  );
-
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleClickLayout = event => {
+    setAnchorElLayout(event.currentTarget);
+  };
+
+  const handleCloseLayout = () => {
+    setAnchorElLayout(null);
+    setAnchorEl(null);
+  };
+
+  const handleLayOutChange = layout => {
+    if (room) {
+      console.log(room);
+      room.setLayoutMode(layout);
+    }
   };
 
   return (
@@ -87,21 +83,20 @@ export default function settingsButton({ classes, room }) {
           }
         }}
       >
-        <MenuItem onClick={handleOpen}>
+        <MenuItem onClick={handleClickLayout}>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <Typography variant="inherit">Change layout</Typography>
         </MenuItem>
         <div>
-          <Modal
-            open={openModal}
-            onClose={handleCloseModal}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-          >
-            {body}
-          </Modal>
+          <LayoutOptions
+            room={room}
+            handleCloseLayout={handleCloseLayout}
+            handleLayOutChange={handleLayOutChange}
+            open={openSubMenu}
+            anchorElLayout={anchorElLayout}
+          />
         </div>
 
         <MenuItem onClick={handleOpen}>
@@ -110,6 +105,11 @@ export default function settingsButton({ classes, room }) {
           </ListItemIcon>
           <Typography variant="inherit">Change Audio Source</Typography>
         </MenuItem>
+        <ListLayOutOptions
+          handleCloseModal={handleCloseModal}
+          openModal={openModal}
+          classes={classes}
+        />
         <MenuItem>
           <ListItemIcon>
             <VideoCallIcon fontSize="small" />
