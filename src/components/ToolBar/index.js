@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
@@ -9,14 +10,22 @@ import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
 import { useParams } from 'react-router';
+import { useTheme } from '@material-ui/core';
 
-export default function ToolBar({ room, participants, connected, publisherIsSpeaking }) {
+export default function ToolBar({
+  room,
+  participants,
+  connected,
+  publisherIsSpeaking,
+}) {
   const { roomName } = useParams();
+  const theme = useTheme();
   const { push } = useHistory();
   const [hasAudio, setHasAudio] = useState(true);
   const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
+  const isMobileWidth = useMediaQuery(theme.breakpoints.down('xs'));
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
@@ -74,7 +83,29 @@ export default function ToolBar({ room, participants, connected, publisherIsSpea
     }
   }, [connected, room]);
 
-  return (
+  return isMobileWidth ? (
+    <div className={classes.toolbarMobileContainer}>
+      <MuteAudioButton
+        toggleAudio={toggleAudio}
+        hasAudio={hasAudio}
+        classes={classes}
+        publisherIsSpeaking={publisherIsSpeaking}
+      />
+      <EndCallButton classes={classes} handleEndCall={endCall} />
+      <MuteVideoButton
+        toggleVideo={toggleVideo}
+        hasVideo={hasVideo}
+        classes={classes}
+      />
+      {/* <RecordingButton room={room} classes={classes} />
+      <ScreenSharingButton room={room} classes={classes} />
+      <MuteAll
+        handleMuteAll={handleMuteAll}
+        areAllMuted={areAllMuted}
+        classes={classes}
+      /> */}
+    </div>
+  ) : (
     <div className={classes.toolbarContainer}>
       <MuteAudioButton
         toggleAudio={toggleAudio}
