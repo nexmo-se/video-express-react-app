@@ -30,6 +30,16 @@ export default makeStyles(theme => ({
     backgroundColor: '#32353A',
     color: '#fff'
   },
+  infoButton: {
+    position: 'absolute',
+    left: '0',
+    margin: theme.spacing(1),
+    borderRadius: '5em',
+    height: '50px',
+    width: '50px',
+    backgroundColor: '#32353A',
+    color: '#fff'
+  },
   disabledButton: {
     backgroundColor: theme.palette.activeButtons.red,
     '&:hover': {

@@ -51,12 +51,8 @@ export default function ListLayOutOptions({
           value="perro"
           // onChange={handleChange}
         >
-          <FormControlLabel value="grid" control={<Radio />} label="Grid" />
-          <FormControlLabel
-            value="active-speaker"
-            control={<Radio />}
-            label="Active Speaker"
-          />
+          <FormControlLabel value="Mic 1" control={<Radio />} label="Mic 1" />
+          <FormControlLabel value="Mic 2" control={<Radio />} label="Mic 2" />
           {/* <FormControlLabel value="other" control={<Radio />} label="Other" />
         <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
         </RadioGroup>
