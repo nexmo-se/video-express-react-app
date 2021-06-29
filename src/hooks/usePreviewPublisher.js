@@ -5,7 +5,7 @@ export default function usePreviewPublisher() {
   let [logLevel, setLogLevel] = useState(0);
   const MP = window.MP;
 
-  const calculateAudioLevel = React.useCallback((audioLevel) => {
+  const calculateAudioLevel = React.useCallback(audioLevel => {
     let movingAvg = null;
     if (movingAvg === null || movingAvg <= audioLevel) {
       movingAvg = audioLevel;
@@ -23,12 +23,12 @@ export default function usePreviewPublisher() {
         const publisherProperties = Object.assign({}, publisherOptions);
         console.log('[createPreview]', publisherProperties);
         previewPublisher.current = new MP.PreviewPublisher(targetEl);
-        previewPublisher.current.on('audioLevelUpdated', (audioLevel) => {
+        previewPublisher.current.on('audioLevelUpdated', audioLevel => {
           calculateAudioLevel(audioLevel);
         });
         await previewPublisher.current.previewMedia({
           targetElement: targetEl,
-          publisherProperties,
+          publisherProperties
         });
         console.log('[Preview Created] - ', previewPublisher);
       } catch (err) {
@@ -40,7 +40,7 @@ export default function usePreviewPublisher() {
 
   const destroyPreview = useCallback(() => {
     if (previewPublisher && previewPublisher.current) {
-      previewPublisher.current.destroyPreviewPublisher();
+      previewPublisher.current.destroy();
       console.log('[destroyPreview] - ', previewPublisher);
     }
   }, []);
@@ -49,6 +49,6 @@ export default function usePreviewPublisher() {
     previewPublisher: previewPublisher.current,
     createPreview,
     destroyPreview,
-    logLevel,
+    logLevel
   };
 }

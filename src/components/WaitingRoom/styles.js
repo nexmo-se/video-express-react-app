@@ -13,6 +13,9 @@ export default makeStyles(theme => ({
     borderRadius: 5,
     width: '360px'
   },
+  formControl: {
+    width: '100%'
+  },
   waitingRoomVideoPreview: {
     display: 'flex',
     justifyContent: 'center',

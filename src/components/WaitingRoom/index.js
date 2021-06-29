@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid, TextField } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import useStyles from './styles';
 import usePreviewPublisher from '../../hooks/usePreviewPublisher';
+import useDevices from '../../hooks/useDevices';
 import AudioSettings from '../AudioSetting';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
 import { useParams } from 'react-router';
@@ -25,8 +30,33 @@ export default function WaitingRoom({ location }) {
   const [localVideo, setLocalVideo] = useState(
     user.defaultSettings.publishVideo
   );
-  const { createPreview, destroyPreview, previewPublisher, logLevel } =
-    usePreviewPublisher();
+  const [devices, setDevices] = useState(null);
+  let [audioDevice, setAudioDevice] = useState('');
+  let [videoDevice, setVideoDevice] = useState('');
+
+  const handleChangeAudio = event => {
+    console.log(event.target);
+    setAudioDevice(event.target.value);
+    const audioDeviceId = devices.audioInputDevices.find(
+      device => device.label === event.target.value
+    ).deviceId;
+    previewPublisher.setAudioDevice(audioDeviceId);
+  };
+  const handleChangeVideo = event => {
+    setVideoDevice(event.target.value);
+    const videoDeviceId = devices.videoInputDevices.find(
+      device => device.label === event.target.value
+    ).deviceId;
+    previewPublisher.setVideoDevice(videoDeviceId);
+  };
+
+  const {
+    createPreview,
+    destroyPreview,
+    previewPublisher,
+    logLevel
+  } = usePreviewPublisher();
+  const { deviceInfo } = useDevices();
 
   const handleJoinClick = () => {
     if (validateForm()) {
@@ -45,7 +75,7 @@ export default function WaitingRoom({ location }) {
     return true;
   };
 
-  const onChangeRoomName = (e) => {
+  const onChangeRoomName = e => {
     const roomName = e.target.value;
     if (roomName === '' || roomName.trim() === '') {
       // Space detected
@@ -56,7 +86,7 @@ export default function WaitingRoom({ location }) {
     setRoomName(roomName);
   };
 
-  const onChangeParticipantName = (e) => {
+  const onChangeParticipantName = e => {
     const userName = e.target.value;
     if (userName === '' || userName.trim() === '') {
       // Space detected
@@ -66,17 +96,17 @@ export default function WaitingRoom({ location }) {
     setUserName(e.target.value);
   };
 
-  const onKeyDown = (e) => {
+  const onKeyDown = e => {
     if (e.keyCode === 13) {
       handleJoinClick();
     }
   };
 
-  const handleAudioChange = React.useCallback((e) => {
+  const handleAudioChange = React.useCallback(e => {
     setLocalAudio(e.target.checked);
   }, []);
 
-  const handleVideoChange = React.useCallback((e) => {
+  const handleVideoChange = React.useCallback(e => {
     setLocalVideo(e.target.checked);
   }, []);
 
@@ -89,8 +119,8 @@ export default function WaitingRoom({ location }) {
         ...user,
         defaultSettings: {
           publishAudio: localAudio,
-          publishVideo: localVideo,
-        },
+          publishVideo: localVideo
+        }
       });
     }
   }, [localAudio, localVideo, user, setUser]);
@@ -100,6 +130,18 @@ export default function WaitingRoom({ location }) {
       setUser({ ...user, userName: userName });
     }
   }, [userName, user, setUser]);
+
+  useEffect(() => {
+    if (deviceInfo) {
+      setDevices(deviceInfo);
+      console.log(deviceInfo.audioInputDevices[0]);
+      setAudioDevice(deviceInfo?.audioInputDevices?.[0]?.label);
+      setVideoDevice(deviceInfo?.videoInputDevices?.[0]?.label);
+    }
+    // console.log(deviceInfo.audioInputDevices[0].label);
+
+    //
+  }, [deviceInfo]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
@@ -176,6 +218,44 @@ export default function WaitingRoom({ location }) {
             onChange={onChangeParticipantName}
             onKeyDown={onKeyDown}
           />
+          <div>
+            <TextField
+              id="standard-select-currency"
+              defaultValue="audio"
+              autowidth
+              select
+              label="Audio Source"
+              value={audioDevice}
+              onChange={handleChangeAudio}
+              helperText="Please select your Audio device"
+            >
+              {devices &&
+                devices.audioInputDevices.map(option => (
+                  <MenuItem key={option.label} value={option.label}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+            </TextField>
+          </div>
+          <div>
+            <TextField
+              id="standard-select-currency"
+              defaultValue="video"
+              autowidth
+              select
+              label="Video Source"
+              value={videoDevice}
+              onChange={handleChangeVideo}
+              helperText="Please select your video device"
+            >
+              {devices &&
+                devices.videoInputDevices.map(option => (
+                  <MenuItem key={option.label} value={option.label}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+            </TextField>
+          </div>
         </form>
         <div
           id="waiting-room-video-container"
