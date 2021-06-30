@@ -143,16 +143,16 @@ export default function WaitingRoom({ location }) {
     if (
       localAudio !== user.defaultSettings.publishAudio ||
       localVideo !== user.defaultSettings.publishVideo ||
-      localAudioSource ||
-      localVideoSource
+      localAudioSource !== user.defaultSettings.audioSource ||
+      localVideoSource !== user.defaultSettings.videoSource
     ) {
       setUser({
         ...user,
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo,
-          audioSource: localAudioSource ? localAudioSource : undefined,
-          videoSource: localVideoSource ? localVideoSource : undefined
+          audioSource: localAudioSource,
+          videoSource: localVideoSource
         }
       });
     }
@@ -265,7 +265,7 @@ export default function WaitingRoom({ location }) {
             onChange={onChangeParticipantName}
             onKeyDown={onKeyDown}
           />
-          <div className={classes.mediaSources}>
+          {/* <div className={classes.mediaSources}>
             <TextField
               id="audio-source"
               defaultValue="audio"
@@ -283,8 +283,41 @@ export default function WaitingRoom({ location }) {
                   </MenuItem>
                 ))}
             </TextField>
-          </div>
-          <div className={classes.mediaSources}>
+          </div> */}
+          <FormControl>
+            <InputLabel id="demo-simple-select-label">Audio</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={audioDevice}
+              onChange={handleAudioSource}
+            >
+              {devices &&
+                devices.audioInputDevices.map(option => (
+                  <MenuItem key={option.label} value={option.label}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel id="video">Video</InputLabel>
+            <Select
+              labelId="video"
+              id="demo-simple-select"
+              value={videoDevice}
+              onChange={handleVideoSource}
+            >
+              {devices &&
+                devices.videoInputDevices.map(option => (
+                  <MenuItem key={option.label} value={option.label}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+
+          {/* <div className={classes.mediaSources}>
             <TextField
               id="video-source"
               defaultValue="video"
@@ -302,7 +335,7 @@ export default function WaitingRoom({ location }) {
                   </MenuItem>
                 ))}
             </TextField>
-          </div>
+          </div> */}
         </form>
         <div
           id="waiting-room-video-container"
