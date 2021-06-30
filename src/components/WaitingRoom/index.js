@@ -45,7 +45,7 @@ export default function WaitingRoom({ location }) {
   } = usePreviewPublisher();
   const { deviceInfo } = useDevices();
 
-  const handleChangeAudioSource = event => {
+  const handleAudioSource = event => {
     setAudioDevice(event.target.value);
     const audioDeviceId = devices.audioInputDevices.find(
       device => device.label === event.target.value
@@ -54,7 +54,7 @@ export default function WaitingRoom({ location }) {
     setLocalAudioSource(audioDeviceId);
   };
 
-  const handleChangeVideoSource = event => {
+  const handleVideoSource = event => {
     setVideoDevice(event.target.value);
     const videoDeviceId = devices.videoInputDevices.find(
       device => device.label === event.target.value
@@ -267,13 +267,13 @@ export default function WaitingRoom({ location }) {
           />
           <div className={classes.mediaSources}>
             <TextField
-              id="standard-select-currency"
+              id="audio-source"
               defaultValue="audio"
-              autowidth
+              // autowidth
               select
               label="Audio Source"
               value={audioDevice}
-              onChange={handleChangeAudioSource}
+              onChange={handleAudioSource}
               // helperText="Please select your Audio device"
             >
               {devices &&
@@ -286,13 +286,13 @@ export default function WaitingRoom({ location }) {
           </div>
           <div className={classes.mediaSources}>
             <TextField
-              id="standard-select-currency"
+              id="video-source"
               defaultValue="video"
-              autowidth
+              // autowidth
               select
               label="Video Source"
               value={videoDevice}
-              onChange={handleChangeVideoSource}
+              onChange={handleVideoSource}
               // helperText="Please select your video device"
             >
               {devices &&
