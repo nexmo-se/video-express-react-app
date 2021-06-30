@@ -45,7 +45,7 @@ export default function WaitingRoom({ location }) {
   } = usePreviewPublisher();
   const { deviceInfo } = useDevices();
 
-  const handleChangeAudio = event => {
+  const handleChangeAudioSource = event => {
     setAudioDevice(event.target.value);
     const audioDeviceId = devices.audioInputDevices.find(
       device => device.label === event.target.value
@@ -54,7 +54,7 @@ export default function WaitingRoom({ location }) {
     setLocalAudioSource(audioDeviceId);
   };
 
-  const handleChangeVideo = event => {
+  const handleChangeVideoSource = event => {
     setVideoDevice(event.target.value);
     const videoDeviceId = devices.videoInputDevices.find(
       device => device.label === event.target.value
@@ -273,7 +273,7 @@ export default function WaitingRoom({ location }) {
               select
               label="Audio Source"
               value={audioDevice}
-              onChange={handleChangeAudio}
+              onChange={handleChangeAudioSource}
               // helperText="Please select your Audio device"
             >
               {devices &&
@@ -292,7 +292,7 @@ export default function WaitingRoom({ location }) {
               select
               label="Video Source"
               value={videoDevice}
-              onChange={handleChangeVideo}
+              onChange={handleChangeVideoSource}
               // helperText="Please select your video device"
             >
               {devices &&
