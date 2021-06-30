@@ -9,7 +9,6 @@ import useDevices from '../../hooks/useDevices';
 import AudioSettings from '../AudioSetting';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
 import { useParams } from 'react-router';
@@ -41,7 +40,8 @@ export default function WaitingRoom({ location }) {
     createPreview,
     destroyPreview,
     previewPublisher,
-    logLevel
+    logLevel,
+    previewMediaCreated
   } = usePreviewPublisher();
   const { deviceInfo } = useDevices();
 
@@ -154,22 +154,20 @@ export default function WaitingRoom({ location }) {
   }, [userName, user, setUser]);
 
   useEffect(async () => {
-    //this is done to delay the check of current audio and video sources to populate the menu
-    setTimeout(async () => {
-      if (previewPublisher && deviceInfo) {
-        setDevices(deviceInfo);
-        const currentAudioDevice = await previewPublisher.getAudioDevice();
-        const currentVideoDevice = await previewPublisher.getVideoDevice();
-        setAudioDevice(currentAudioDevice.label);
-        setVideoDevice(currentVideoDevice.label);
-      }
-    }, 500);
+    if (previewMediaCreated && deviceInfo) {
+      setDevices(deviceInfo);
+      const currentAudioDevice = await previewPublisher.getAudioDevice();
+      const currentVideoDevice = await previewPublisher.getVideoDevice();
+      setAudioDevice(currentAudioDevice.label);
+      setVideoDevice(currentVideoDevice.label);
+    }
   }, [
     deviceInfo,
     previewPublisher,
     setAudioDevice,
     setVideoDevice,
-    setDevices
+    setDevices,
+    previewMediaCreated
   ]);
 
   useEffect(() => {
@@ -182,14 +180,6 @@ export default function WaitingRoom({ location }) {
       }
     }
   }, [localAudio, previewPublisher]);
-
-  /* useEffect(() => {
-    if (previewPublisher) {
-      previewPublisher.on('audioLevelUpdated', (audioLevel) => {
-        calculateAudioLevel(audioLevel);
-      });
-    }
-  }, [previewPublisher, calculateAudioLevel]); */
 
   useEffect(() => {
     if (previewPublisher) {

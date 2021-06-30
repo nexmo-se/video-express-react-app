@@ -4,6 +4,7 @@ export default function usePreviewPublisher() {
   let previewPublisher = useRef();
   let [logLevel, setLogLevel] = useState(0);
   const MP = window.MP;
+  const [previewMediaCreated, setPreviewMediaCreated] = useState(false);
 
   const calculateAudioLevel = React.useCallback(audioLevel => {
     let movingAvg = null;
@@ -30,6 +31,7 @@ export default function usePreviewPublisher() {
           targetElement: targetEl,
           publisherProperties
         });
+        setPreviewMediaCreated(true);
         console.log('[Preview Created] - ', previewPublisher);
       } catch (err) {
         console.log('[createPreview]', err);
@@ -49,6 +51,7 @@ export default function usePreviewPublisher() {
     previewPublisher: previewPublisher.current,
     createPreview,
     destroyPreview,
-    logLevel
+    logLevel,
+    previewMediaCreated
   };
 }
