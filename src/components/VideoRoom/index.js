@@ -20,7 +20,7 @@ export default function VideoRoom() {
     participants,
     connected,
     networkStatus,
-    publisherIsSpeaking,
+    publisherIsSpeaking
   } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
@@ -32,10 +32,10 @@ export default function VideoRoom() {
         setCredentials({
           apikey: data.apiKey,
           sessionId: data.sessionId,
-          token: data.token,
+          token: data.token
         });
       })
-      .catch((err) => {
+      .catch(err => {
         setError(err);
         console.log(err);
       });
@@ -45,7 +45,7 @@ export default function VideoRoom() {
     if (credentials) {
       console.log(user);
       createCall(credentials, roomContainer.current, user.userName, {
-        ...user.defaultSettings,
+        ...user.defaultSettings
       });
     }
   }, [createCall, credentials, user]);

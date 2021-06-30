@@ -9,6 +9,7 @@ import useDevices from '../../hooks/useDevices';
 import AudioSettings from '../AudioSetting';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
 import { useParams } from 'react-router';
@@ -30,25 +31,11 @@ export default function WaitingRoom({ location }) {
   const [localVideo, setLocalVideo] = useState(
     user.defaultSettings.publishVideo
   );
+  const [localVideoSource, setLocalVideoSource] = useState(undefined);
+  const [localAudioSource, setLocalAudioSource] = useState(undefined);
   const [devices, setDevices] = useState(null);
   let [audioDevice, setAudioDevice] = useState('');
   let [videoDevice, setVideoDevice] = useState('');
-
-  const handleChangeAudio = event => {
-    console.log(event.target);
-    setAudioDevice(event.target.value);
-    const audioDeviceId = devices.audioInputDevices.find(
-      device => device.label === event.target.value
-    ).deviceId;
-    previewPublisher.setAudioDevice(audioDeviceId);
-  };
-  const handleChangeVideo = event => {
-    setVideoDevice(event.target.value);
-    const videoDeviceId = devices.videoInputDevices.find(
-      device => device.label === event.target.value
-    ).deviceId;
-    previewPublisher.setVideoDevice(videoDeviceId);
-  };
 
   const {
     createPreview,
@@ -57,6 +44,48 @@ export default function WaitingRoom({ location }) {
     logLevel
   } = usePreviewPublisher();
   const { deviceInfo } = useDevices();
+
+  const handleChangeAudio = event => {
+    setAudioDevice(event.target.value);
+    const audioDeviceId = devices.audioInputDevices.find(
+      device => device.label === event.target.value
+    ).deviceId;
+    previewPublisher.setAudioDevice(audioDeviceId);
+    setLocalAudioSource(audioDeviceId);
+  };
+
+  const handleChangeVideo = event => {
+    setVideoDevice(event.target.value);
+    const videoDeviceId = devices.videoInputDevices.find(
+      device => device.label === event.target.value
+    ).deviceId;
+    previewPublisher.setVideoDevice(videoDeviceId);
+    setLocalVideoSource(videoDeviceId);
+  };
+
+  // const handleChangeVideo = React.useCallback(
+  //   e => {
+  //     setVideoDevice(e.target.value);
+  //     const videoDeviceId = devices.videoInputDevices.find(
+  //       device => device.label === e.target.value
+  //     ).deviceId;
+  //     previewPublisher.setVideoDevice(videoDeviceId);
+  //     setLocalVideoSource(videoDeviceId);
+  //   },
+  //   [previewPublisher, setVideoDevice, devices, setLocalVideoSource]
+  // );
+
+  // const handleChangeAudio = React.useCallback(
+  //   e => {
+  //     setAudioDevice(event.target.value);
+  //     const audioDeviceId = devices.audioInputDevices.find(
+  //       device => device.label === event.target.value
+  //     ).deviceId;
+  //     previewPublisher.setAudioDevice(audioDeviceId);
+  //     setLocalAudioSource(audioDeviceId);
+  //   },
+  //   [previewPublisher, setAudioDevice, devices, setLocalAudioSource]
+  // );
 
   const handleJoinClick = () => {
     if (validateForm()) {
@@ -113,17 +142,28 @@ export default function WaitingRoom({ location }) {
   useEffect(() => {
     if (
       localAudio !== user.defaultSettings.publishAudio ||
-      localVideo !== user.defaultSettings.publishVideo
+      localVideo !== user.defaultSettings.publishVideo ||
+      localAudioSource ||
+      localVideoSource
     ) {
       setUser({
         ...user,
         defaultSettings: {
           publishAudio: localAudio,
-          publishVideo: localVideo
+          publishVideo: localVideo,
+          audioSource: localAudioSource ? localAudioSource : undefined,
+          videoSource: localVideoSource ? localVideoSource : undefined
         }
       });
     }
-  }, [localAudio, localVideo, user, setUser]);
+  }, [
+    localAudio,
+    localVideo,
+    user,
+    setUser,
+    localAudioSource,
+    localVideoSource
+  ]);
 
   useEffect(() => {
     if (userName !== user.userName) {
@@ -132,16 +172,23 @@ export default function WaitingRoom({ location }) {
   }, [userName, user, setUser]);
 
   useEffect(() => {
-    if (deviceInfo) {
-      setDevices(deviceInfo);
-      console.log(deviceInfo.audioInputDevices[0]);
-      setAudioDevice(deviceInfo?.audioInputDevices?.[0]?.label);
-      setVideoDevice(deviceInfo?.videoInputDevices?.[0]?.label);
-    }
-    // console.log(deviceInfo.audioInputDevices[0].label);
-
-    //
-  }, [deviceInfo]);
+    setTimeout(async () => {
+      if (previewPublisher && deviceInfo) {
+        setDevices(deviceInfo);
+        const currentAudioDevice = await previewPublisher.getAudioDevice();
+        const currentVideoDevice = await previewPublisher.getVideoDevice();
+        setAudioDevice(currentAudioDevice.label);
+        setVideoDevice(currentVideoDevice.label);
+        console.log(currentAudioDevice);
+      }
+    }, 1000);
+  }, [
+    deviceInfo,
+    previewPublisher,
+    setAudioDevice,
+    setVideoDevice,
+    setDevices
+  ]);
 
   useEffect(() => {
     console.log('UseEffect - localAudio', localAudio);
@@ -218,7 +265,7 @@ export default function WaitingRoom({ location }) {
             onChange={onChangeParticipantName}
             onKeyDown={onKeyDown}
           />
-          <div>
+          <div className={classes.mediaSources}>
             <TextField
               id="standard-select-currency"
               defaultValue="audio"
@@ -227,7 +274,7 @@ export default function WaitingRoom({ location }) {
               label="Audio Source"
               value={audioDevice}
               onChange={handleChangeAudio}
-              helperText="Please select your Audio device"
+              // helperText="Please select your Audio device"
             >
               {devices &&
                 devices.audioInputDevices.map(option => (
@@ -237,7 +284,7 @@ export default function WaitingRoom({ location }) {
                 ))}
             </TextField>
           </div>
-          <div>
+          <div className={classes.mediaSources}>
             <TextField
               id="standard-select-currency"
               defaultValue="video"
@@ -246,7 +293,7 @@ export default function WaitingRoom({ location }) {
               label="Video Source"
               value={videoDevice}
               onChange={handleChangeVideo}
-              helperText="Please select your video device"
+              // helperText="Please select your video device"
             >
               {devices &&
                 devices.videoInputDevices.map(option => (
