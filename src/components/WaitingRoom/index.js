@@ -45,47 +45,47 @@ export default function WaitingRoom({ location }) {
   } = usePreviewPublisher();
   const { deviceInfo } = useDevices();
 
-  const handleAudioSource = event => {
-    setAudioDevice(event.target.value);
-    const audioDeviceId = devices.audioInputDevices.find(
-      device => device.label === event.target.value
-    ).deviceId;
-    previewPublisher.setAudioDevice(audioDeviceId);
-    setLocalAudioSource(audioDeviceId);
-  };
+  // const handleAudioSource = event => {
+  //   setAudioDevice(event.target.value);
+  //   const audioDeviceId = devices.audioInputDevices.find(
+  //     device => device.label === event.target.value
+  //   ).deviceId;
+  //   previewPublisher.setAudioDevice(audioDeviceId);
+  //   setLocalAudioSource(audioDeviceId);
+  // };
 
-  const handleVideoSource = event => {
-    setVideoDevice(event.target.value);
-    const videoDeviceId = devices.videoInputDevices.find(
-      device => device.label === event.target.value
-    ).deviceId;
-    previewPublisher.setVideoDevice(videoDeviceId);
-    setLocalVideoSource(videoDeviceId);
-  };
+  // const handleVideoSource = event => {
+  //   setVideoDevice(event.target.value);
+  //   const videoDeviceId = devices.videoInputDevices.find(
+  //     device => device.label === event.target.value
+  //   ).deviceId;
+  //   previewPublisher.setVideoDevice(videoDeviceId);
+  //   setLocalVideoSource(videoDeviceId);
+  // };
 
-  // const handleChangeVideo = React.useCallback(
-  //   e => {
-  //     setVideoDevice(e.target.value);
-  //     const videoDeviceId = devices.videoInputDevices.find(
-  //       device => device.label === e.target.value
-  //     ).deviceId;
-  //     previewPublisher.setVideoDevice(videoDeviceId);
-  //     setLocalVideoSource(videoDeviceId);
-  //   },
-  //   [previewPublisher, setVideoDevice, devices, setLocalVideoSource]
-  // );
+  const handleVideoSource = React.useCallback(
+    e => {
+      setVideoDevice(e.target.value);
+      const videoDeviceId = devices.videoInputDevices.find(
+        device => device.label === e.target.value
+      ).deviceId;
+      previewPublisher.setVideoDevice(videoDeviceId);
+      setLocalVideoSource(videoDeviceId);
+    },
+    [previewPublisher, setVideoDevice, devices, setLocalVideoSource]
+  );
 
-  // const handleChangeAudio = React.useCallback(
-  //   e => {
-  //     setAudioDevice(event.target.value);
-  //     const audioDeviceId = devices.audioInputDevices.find(
-  //       device => device.label === event.target.value
-  //     ).deviceId;
-  //     previewPublisher.setAudioDevice(audioDeviceId);
-  //     setLocalAudioSource(audioDeviceId);
-  //   },
-  //   [previewPublisher, setAudioDevice, devices, setLocalAudioSource]
-  // );
+  const handleAudioSource = React.useCallback(
+    e => {
+      setAudioDevice(e.target.value);
+      const audioDeviceId = devices.audioInputDevices.find(
+        device => device.label === e.target.value
+      ).deviceId;
+      previewPublisher.setAudioDevice(audioDeviceId);
+      setLocalAudioSource(audioDeviceId);
+    },
+    [previewPublisher, setAudioDevice, devices, setLocalAudioSource]
+  );
 
   const handleJoinClick = () => {
     if (validateForm()) {
@@ -284,22 +284,26 @@ export default function WaitingRoom({ location }) {
                 ))}
             </TextField>
           </div> */}
-          <FormControl>
-            <InputLabel id="demo-simple-select-label">Audio</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={audioDevice}
-              onChange={handleAudioSource}
-            >
-              {devices &&
-                devices.audioInputDevices.map(option => (
-                  <MenuItem key={option.label} value={option.label}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
+          <div className={classes.mediaSources}>
+            <FormControl>
+              <InputLabel id="demo-simple-select-label">Audio</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={audioDevice}
+                onChange={handleAudioSource}
+                defaultValue=""
+              >
+                {devices &&
+                  devices.audioInputDevices.map(option => (
+                    <MenuItem key={option.label} value={option.label}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </div>
+
           <FormControl>
             <InputLabel id="video">Video</InputLabel>
             <Select
@@ -307,6 +311,7 @@ export default function WaitingRoom({ location }) {
               id="demo-simple-select"
               value={videoDevice}
               onChange={handleVideoSource}
+              defaultValue=""
             >
               {devices &&
                 devices.videoInputDevices.map(option => (
@@ -316,26 +321,6 @@ export default function WaitingRoom({ location }) {
                 ))}
             </Select>
           </FormControl>
-
-          {/* <div className={classes.mediaSources}>
-            <TextField
-              id="video-source"
-              defaultValue="video"
-              // autowidth
-              select
-              label="Video Source"
-              value={videoDevice}
-              onChange={handleVideoSource}
-              // helperText="Please select your video device"
-            >
-              {devices &&
-                devices.videoInputDevices.map(option => (
-                  <MenuItem key={option.label} value={option.label}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-            </TextField>
-          </div> */}
         </form>
         <div
           id="waiting-room-video-container"
