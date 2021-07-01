@@ -11,7 +11,6 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import VideoSettings from '../VideoSetting';
 import { UserContext } from '../../context/UserContext';
-import { useParams } from 'react-router';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 export default function WaitingRoom({ location }) {
@@ -32,7 +31,7 @@ export default function WaitingRoom({ location }) {
   );
   const [localVideoSource, setLocalVideoSource] = useState(undefined);
   const [localAudioSource, setLocalAudioSource] = useState(undefined);
-  const [devices, setDevices] = useState(null);
+  /* const [devices, setDevices] = useState(null); */
   let [audioDevice, setAudioDevice] = useState('');
   let [videoDevice, setVideoDevice] = useState('');
 
@@ -46,27 +45,23 @@ export default function WaitingRoom({ location }) {
   const { deviceInfo } = useDevices();
 
   const handleVideoSource = React.useCallback(
-    e => {
+    (e) => {
+      const videoDeviceId = e.target.value;
       setVideoDevice(e.target.value);
-      const videoDeviceId = devices.videoInputDevices.find(
-        device => device.label === e.target.value
-      ).deviceId;
       previewPublisher.setVideoDevice(videoDeviceId);
       setLocalVideoSource(videoDeviceId);
     },
-    [previewPublisher, setVideoDevice, devices, setLocalVideoSource]
+    [previewPublisher, setVideoDevice, setLocalVideoSource]
   );
 
   const handleAudioSource = React.useCallback(
-    e => {
-      setAudioDevice(e.target.value);
-      const audioDeviceId = devices.audioInputDevices.find(
-        device => device.label === e.target.value
-      ).deviceId;
+    (e) => {
+      const audioDeviceId = e.target.value;
+      setAudioDevice(audioDeviceId);
       previewPublisher.setAudioDevice(audioDeviceId);
       setLocalAudioSource(audioDeviceId);
     },
-    [previewPublisher, setAudioDevice, devices, setLocalAudioSource]
+    [previewPublisher, setAudioDevice, setLocalAudioSource]
   );
 
   const handleJoinClick = () => {
@@ -86,7 +81,7 @@ export default function WaitingRoom({ location }) {
     return true;
   };
 
-  const onChangeRoomName = e => {
+  const onChangeRoomName = (e) => {
     const roomName = e.target.value;
     if (roomName === '' || roomName.trim() === '') {
       // Space detected
@@ -97,7 +92,7 @@ export default function WaitingRoom({ location }) {
     setRoomName(roomName);
   };
 
-  const onChangeParticipantName = e => {
+  const onChangeParticipantName = (e) => {
     const userName = e.target.value;
     if (userName === '' || userName.trim() === '') {
       // Space detected
@@ -107,17 +102,17 @@ export default function WaitingRoom({ location }) {
     setUserName(e.target.value);
   };
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (e.keyCode === 13) {
       handleJoinClick();
     }
   };
 
-  const handleAudioChange = React.useCallback(e => {
+  const handleAudioChange = React.useCallback((e) => {
     setLocalAudio(e.target.checked);
   }, []);
 
-  const handleVideoChange = React.useCallback(e => {
+  const handleVideoChange = React.useCallback((e) => {
     setLocalVideo(e.target.checked);
   }, []);
 
@@ -153,25 +148,23 @@ export default function WaitingRoom({ location }) {
     }
   }, [userName, user, setUser]);
 
-  useEffect(async () => {
-    if (previewMediaCreated && deviceInfo) {
-      setDevices(deviceInfo);
-      const currentAudioDevice = await previewPublisher.getAudioDevice();
-      const currentVideoDevice = await previewPublisher.getVideoDevice();
-      setAudioDevice(currentAudioDevice.label);
-      setVideoDevice(currentVideoDevice.label);
+  useEffect(() => {
+    if (previewPublisher && previewMediaCreated && deviceInfo) {
+      previewPublisher.getAudioDevice().then((currentAudioDevice) => {
+        setAudioDevice(currentAudioDevice.deviceId);
+      });
+      const currentVideoDevice = previewPublisher.getVideoDevice();
+      setVideoDevice(currentVideoDevice.deviceId);
     }
   }, [
     deviceInfo,
     previewPublisher,
     setAudioDevice,
     setVideoDevice,
-    setDevices,
     previewMediaCreated
   ]);
 
   useEffect(() => {
-    console.log('UseEffect - localAudio', localAudio);
     if (previewPublisher) {
       if (localAudio && !previewPublisher.isAudioEnabled()) {
         previewPublisher.enableAudio();
@@ -247,12 +240,11 @@ export default function WaitingRoom({ location }) {
                 id="demo-simple-select"
                 value={audioDevice}
                 onChange={handleAudioSource}
-                defaultValue=""
               >
-                {devices &&
-                  devices.audioInputDevices.map(option => (
-                    <MenuItem key={option.label} value={option.label}>
-                      {option.label}
+                {deviceInfo &&
+                  deviceInfo.audioInputDevices.map((device) => (
+                    <MenuItem key={device.deviceId} value={device.deviceId}>
+                      {device.label}
                     </MenuItem>
                   ))}
               </Select>
@@ -266,12 +258,11 @@ export default function WaitingRoom({ location }) {
               id="demo-simple-select"
               value={videoDevice}
               onChange={handleVideoSource}
-              defaultValue=""
             >
-              {devices &&
-                devices.videoInputDevices.map(option => (
-                  <MenuItem key={option.label} value={option.label}>
-                    {option.label}
+              {deviceInfo &&
+                deviceInfo.videoInputDevices.map((device) => (
+                  <MenuItem key={device.deviceId} value={device.deviceId}>
+                    {device.label}
                   </MenuItem>
                 ))}
             </Select>
