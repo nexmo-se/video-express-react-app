@@ -16,7 +16,7 @@ import ListAudioSources from 'components/ListAudioSources';
 
 const ITEM_HEIGHT = 48;
 
-export default function settingsButton({ classes, room }) {
+export default function SettingsButton({ classes, room }) {
   // const [modalStyle] = useState(getModalStyle);
   const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
