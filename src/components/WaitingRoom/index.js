@@ -250,23 +250,24 @@ export default function WaitingRoom({ location }) {
               </Select>
             </FormControl>
           </div>
-
-          <FormControl>
-            <InputLabel id="video">Video</InputLabel>
-            <Select
-              labelId="video"
-              id="demo-simple-select"
-              value={videoDevice}
-              onChange={handleVideoSource}
-            >
-              {deviceInfo &&
-                deviceInfo.videoInputDevices.map((device) => (
-                  <MenuItem key={device.deviceId} value={device.deviceId}>
-                    {device.label}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
+          <div className={classes.mediaSources}>
+            <FormControl>
+              <InputLabel id="video">Video</InputLabel>
+              <Select
+                labelId="video"
+                id="demo-simple-select"
+                value={videoDevice}
+                onChange={handleVideoSource}
+              >
+                {deviceInfo &&
+                  deviceInfo.videoInputDevices.map((device) => (
+                    <MenuItem key={device.deviceId} value={device.deviceId}>
+                      {device.label}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </div>
         </form>
         <div
           id="waiting-room-video-container"
