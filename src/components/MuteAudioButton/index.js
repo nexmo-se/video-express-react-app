@@ -3,12 +3,7 @@ import MicOffIcon from '@material-ui/icons/MicOff';
 import { IconButton } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 
-export default function MuteAudioButton({
-  toggleAudio,
-  hasAudio,
-  classes,
-  publisherIsSpeaking,
-}) {
+export default function MuteAudioButton({ toggleAudio, hasAudio, classes }) {
   const title = hasAudio ? 'Disable Microphone' : 'Enable Microphone';
   return (
     <Tooltip title={title} aria-label="add">
@@ -24,7 +19,6 @@ export default function MuteAudioButton({
         className={`${classes.toolbarButtons} ${
           !hasAudio ? classes.disabledButton : ''
         }
-          ${hasAudio && publisherIsSpeaking ? classes.activeButtonIcon : ''}
         `}
       >
         {!hasAudio ? (

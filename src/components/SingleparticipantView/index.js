@@ -6,39 +6,34 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Tooltip from '@material-ui/core/Tooltip';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import styles from './styles';
+import useCopyMeetingUrl from '../../hooks/useCopyMeetingUrl';
 
 export default function SingleParticipantView({ roomName }) {
-  const urlRef = useRef();
+  const { copyUrl } = useCopyMeetingUrl();
   const classes = styles();
-  const [copiedMeetingUrl, setCopiedMeetingUrl] = useState(false);
+  const [title, setTitle] = React.useState('Copy');
 
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
-    setOpen(prev => !prev);
+    setTitle('Copied');
+    copyUrl();
   };
-
-  const handleClickAway = () => {
+  const handleClose = () => {
     setOpen(false);
+    //DELAYING THE title change as otherwise it's visible for the user
+    setTimeout(() => {
+      setTitle('Copy');
+    }, 500);
   };
 
-  //Maybe use a ref instead
-  const copyUrl = () => {
-    //https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
-    const url = window.location.href;
-    navigator.clipboard.writeText(url).then(
-      () => {
-        setOpen(prev => !prev);
-
-        console.log('Copy successfully');
-      },
-      () => {
-        console.log('Copy failed');
-      }
-    );
+  const handleOpen = () => {
+    setOpen(true);
   };
+
   return (
     <div className={classes.banner}>
       <Card className={classes.card} variant="outlined">
@@ -64,19 +59,21 @@ export default function SingleParticipantView({ roomName }) {
           />
         </CardContent>
         <CardActions>
-          <ClickAwayListener onClickAway={handleClickAway}>
+          <Tooltip
+            open={open}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            title={title}
+          >
             <Button
               edge="end"
               color="primary"
               variant="contained"
-              onClick={copyUrl}
+              onClick={handleClick}
             >
               Copy meeting URL
-              {open ? (
-                <div className={classes.acCopySuccess}>Copied</div>
-              ) : null}
             </Button>
-          </ClickAwayListener>
+          </Tooltip>
         </CardActions>
       </Card>
     </div>
