@@ -25,7 +25,7 @@ export default function ToolBar({
   const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
-  const [numberoFParticipants, setNumberOfParticipants] = useState(0);
+  const [numberOfParticipants, setNumberOfParticipants] = useState(0);
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
@@ -96,7 +96,7 @@ export default function ToolBar({
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}
         classes={classes}
-        publisherIsSpeaking={publisherIsSpeaking}
+        /* publisherIsSpeaking={publisherIsSpeaking} */
       />
       <MuteVideoButton
         toggleVideo={toggleVideo}

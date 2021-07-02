@@ -20,7 +20,7 @@ export default function VideoRoom() {
     participants,
     connected,
     networkStatus,
-    publisherIsSpeaking,
+    /* publisherIsSpeaking, */
   } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
@@ -74,7 +74,7 @@ export default function VideoRoom() {
         room={room}
         participants={participants}
         connected={connected}
-        publisherIsSpeaking={publisherIsSpeaking}
+        /* publisherIsSpeaking={publisherIsSpeaking} */
       ></ToolBar>
     </div>
   );

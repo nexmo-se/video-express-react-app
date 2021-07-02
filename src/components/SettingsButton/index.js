@@ -33,7 +33,7 @@ export default function settingsButton({ classes, room }) {
     setOpenModal(false);
   };
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -41,7 +41,7 @@ export default function settingsButton({ classes, room }) {
     setAnchorEl(null);
   };
 
-  const handleClickLayout = event => {
+  const handleClickLayout = (event) => {
     setAnchorElLayout(event.currentTarget);
   };
 
@@ -50,7 +50,7 @@ export default function settingsButton({ classes, room }) {
     setAnchorEl(null);
   };
 
-  const handleLayOutChange = layout => {
+  const handleLayOutChange = (layout) => {
     if (room) {
       room.setLayoutMode(layout);
     }
@@ -98,7 +98,7 @@ export default function settingsButton({ classes, room }) {
         />
         {/* </div> */}
 
-        <MenuItem onClick={handleOpen}>
+        {/* <MenuItem onClick={handleOpen}>
           <ListItemIcon>
             <SettingsVoiceIcon fontSize="small" />
           </ListItemIcon>
@@ -114,7 +114,7 @@ export default function settingsButton({ classes, room }) {
             <VideoCallIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit">Change Video Source</Typography>
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </div>
   );
