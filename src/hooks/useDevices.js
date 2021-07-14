@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import * as MP from '@vonage/multiparty';
 
 export default function useDevices() {
   const [deviceInfo, setDeviceInfo] = useState({

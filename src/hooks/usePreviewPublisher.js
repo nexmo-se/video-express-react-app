@@ -44,7 +44,7 @@ export default function usePreviewPublisher() {
           targetElement: targetEl,
           publisherProperties
         });
-        setPreviewMediaCreated(true); // todo to remove when accessAllowed events are fixed
+        // setPreviewMediaCreated(true); // todo to remove when accessAllowed events are fixed
         console.log('[Preview Created] - ', previewPublisher);
       } catch (err) {
         console.log('[createPreview]', err);
