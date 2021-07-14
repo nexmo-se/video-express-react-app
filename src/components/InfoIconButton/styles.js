@@ -27,6 +27,13 @@ export default makeStyles(theme => ({
     flexDirection: 'column'
   },
   header: {
-    margin: 'auto'
+    margin: 'auto',
+    marginTop: '6px'
+  },
+  versionLabel: {
+    marginLeft: '15px'
+  },
+  listItem: {
+    paddingTop: '2px'
   }
 }));

@@ -4,6 +4,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/Info';
 import Typography from '@material-ui/core/Typography';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
+import MoreIcon from '@material-ui/icons/More';
+import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
+import HouseIcon from '@material-ui/icons/House';
 
 import React from 'react';
 import styles from './styles';
@@ -13,6 +16,8 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import useCopyMeetingUrl from '../../hooks/useCopyMeetingUrl';
 
 export default function InfoIconButton({ classes }) {
@@ -31,6 +36,9 @@ export default function InfoIconButton({ classes }) {
     setState(!state);
   };
 
+  const ListItemLink = props => {
+    return <ListItem button component="a" {...props} />;
+  };
   const titleToolTip = 'Meeting Info';
 
   const handleClick = () => {
@@ -81,6 +89,40 @@ export default function InfoIconButton({ classes }) {
             </Tooltip>
 
             <Divider />
+            <Typography className={localClasses.header} variant="h5">
+              App info
+            </Typography>
+            <ListItem>
+              <ListItemIcon>
+                <MoreIcon variant="contained" color="primary" />
+              </ListItemIcon>
+              <ListItemText
+                className={localClasses.versionLabel}
+                primary={`Version ` + process.env.REACT_APP_VERSION}
+              />
+            </ListItem>
+            <ListItem className={localClasses.listItem}>
+              <ListItemIcon>
+                <HouseIcon variant="contained" color="primary" />
+              </ListItemIcon>
+              <ListItemLink
+                href="https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app"
+                target="_blank"
+              >
+                <ListItemText primary="Source code" />
+              </ListItemLink>
+            </ListItem>
+            <ListItem className={localClasses.listItem}>
+              <ListItemIcon>
+                <ChildFriendlyIcon variant="contained" color="primary" />
+              </ListItemIcon>
+              <ListItemLink
+                href="https://www.npmjs.com/package/@vonage/multiparty"
+                target="_blank"
+              >
+                <ListItemText primary="npm Toolkit" />
+              </ListItemLink>
+            </ListItem>
           </div>
         </List>
       </Drawer>
