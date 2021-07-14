@@ -123,6 +123,7 @@ export default function InfoIconButton({ classes }) {
                 <ListItemText primary="npm Toolkit" />
               </ListItemLink>
             </ListItem>
+            <Divider />
           </div>
         </List>
       </Drawer>
