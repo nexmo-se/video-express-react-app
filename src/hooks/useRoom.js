@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import _ from 'lodash';
+import * as MP from "@vonage/multiparty";
 
 export default function useRoom() {
   let roomRef = useRef(null);
@@ -11,12 +12,12 @@ export default function useRoom() {
   const [publisherIsSpeaking, setPublisherIsSpeaking] = useState(false);
 
   const addParticipants = ({ participant }) => {
-    setParticipants((prev) => [...prev, participant]);
+    setParticipants(prev => [...prev, participant]);
   };
 
   const removeParticipants = ({ participant }) => {
-    setParticipants((prev) =>
-      prev.filter((prevparticipant) => prevparticipant.id !== participant.id)
+    setParticipants(prev =>
+      prev.filter(prevparticipant => prevparticipant.id !== participant.id)
     );
   };
 
@@ -50,7 +51,7 @@ export default function useRoom() {
   //     []
   //   );
 
-  const onAudioLevel = React.useCallback((audioLevel) => {
+  const onAudioLevel = React.useCallback(audioLevel => {
     let movingAvg = null;
     if (movingAvg === null || movingAvg <= audioLevel) {
       movingAvg = audioLevel;
@@ -71,7 +72,7 @@ export default function useRoom() {
     if (roomRef.current.camera) {
       roomRef.current.camera.on(
         'audioLevelUpdated',
-        _.throttle((event) => onAudioLevel(event), 250)
+        _.throttle(event => onAudioLevel(event), 250)
       );
     }
   };
@@ -87,7 +88,6 @@ export default function useRoom() {
         throw new Error('Check your credentials');
       }
 
-      const MP = window.MP;
       roomRef.current = new MP.Room({
         apiKey: apikey,
         sessionId: sessionId,
@@ -95,9 +95,10 @@ export default function useRoom() {
         roomContainer: 'roomContainer',
         //useLayoutManager: true,
         managedLayoutOptions: {
+          layoutMode: 'grid',
           cameraPublisherContainer: 'roomContainer',
-          screenPublisherContainer: 'roomContainer',
-        },
+          screenPublisherContainer: 'roomContainer'
+        }
       });
       // const connectionEventHandlers = {
       //   connected: onConnected
@@ -123,6 +124,9 @@ export default function useRoom() {
         setNetworkStatus('disconnected');
         console.log('Room: disconnected');
       });
+      roomRef.current.on('activeSpeakerChanged', participant => {
+        console.log('Active speaker changed', participant);
+      });
 
       roomRef.current.on('reconnected', () => {
         setNetworkStatus('reconnected');
@@ -132,7 +136,7 @@ export default function useRoom() {
         setNetworkStatus('reconnecting');
         console.log('Room: reconnecting');
       });
-      roomRef.current.on('participantJoined', (participant) => {
+      roomRef.current.on('participantJoined', participant => {
         //   addParticipant();
         addParticipants({ participant: participant });
         console.log('Room: participant joined: ', participant);
@@ -145,10 +149,10 @@ export default function useRoom() {
         style: {
           buttonDisplayMode: 'off',
           nameDisplayMode: 'auto',
-          audioLevelDisplayMode: 'off',
+          audioLevelDisplayMode: 'off'
         },
         name: userName,
-        showControls: true,
+        showControls: true
       });
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
@@ -159,7 +163,7 @@ export default function useRoom() {
           setScreen(roomRef.current.screen);
           addPublisherCameraEvents();
         })
-        .catch((e) => console.log(e));
+        .catch(e => console.log(e));
     },
     []
   );
@@ -172,7 +176,7 @@ export default function useRoom() {
     room: roomRef.current,
     participants,
     networkStatus,
-    publisherIsSpeaking,
+    publisherIsSpeaking
     /*     startScreenSharing,
     stopScreenSharing, */
   };

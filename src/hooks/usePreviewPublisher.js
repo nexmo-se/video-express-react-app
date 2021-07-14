@@ -1,10 +1,10 @@
 import React, { useState, useRef, useCallback, useContext } from 'react';
 import { DEVICE_ACCESS_STATUS } from './../components/constants';
+import * as MP from '@vonage/multiparty';
 
 export default function usePreviewPublisher() {
   let previewPublisher = useRef();
   let [logLevel, setLogLevel] = useState(0);
-  const MP = window.MP;
   const [previewMediaCreated, setPreviewMediaCreated] = useState(false);
   const [accessAllowed, setAccessAllowed] = useState(
     DEVICE_ACCESS_STATUS.PENDING
@@ -50,7 +50,7 @@ export default function usePreviewPublisher() {
         console.log('[createPreview]', err);
       }
     },
-    [MP.PreviewPublisher, calculateAudioLevel]
+    [calculateAudioLevel]
   );
 
   const destroyPreview = useCallback(() => {
