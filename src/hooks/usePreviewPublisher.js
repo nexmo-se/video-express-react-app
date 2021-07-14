@@ -1,9 +1,9 @@
 import React, { useState, useRef, useCallback, useContext } from 'react';
+import * as MP from '@vonage/multiparty';
 
 export default function usePreviewPublisher() {
   let previewPublisher = useRef();
   let [logLevel, setLogLevel] = useState(0);
-  const MP = window.MP;
 
   const calculateAudioLevel = React.useCallback((audioLevel) => {
     let movingAvg = null;
@@ -28,19 +28,19 @@ export default function usePreviewPublisher() {
         });
         await previewPublisher.current.previewMedia({
           targetElement: targetEl,
-          publisherProperties,
+          publisherProperties
         });
         console.log('[Preview Created] - ', previewPublisher);
       } catch (err) {
         console.log('[createPreview]', err);
       }
     },
-    [MP.PreviewPublisher, calculateAudioLevel]
+    [calculateAudioLevel]
   );
 
   const destroyPreview = useCallback(() => {
     if (previewPublisher && previewPublisher.current) {
-      previewPublisher.current.destroyPreviewPublisher();
+      previewPublisher.current.destroy();
       console.log('[destroyPreview] - ', previewPublisher);
     }
   }, []);
@@ -49,6 +49,6 @@ export default function usePreviewPublisher() {
     previewPublisher: previewPublisher.current,
     createPreview,
     destroyPreview,
-    logLevel,
+    logLevel
   };
 }
