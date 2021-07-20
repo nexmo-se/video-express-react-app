@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useContext } from 'react';
 import { DEVICE_ACCESS_STATUS } from './../components/constants';
+import useDevices from '../hooks/useDevices';
 import * as MP from '@vonage/multiparty';
 
 export default function usePreviewPublisher() {
@@ -9,6 +10,7 @@ export default function usePreviewPublisher() {
   const [accessAllowed, setAccessAllowed] = useState(
     DEVICE_ACCESS_STATUS.PENDING
   );
+  const { deviceInfo, getDevices } = useDevices();
 
   const calculateAudioLevel = React.useCallback((audioLevel) => {
     let movingAvg = null;
@@ -34,7 +36,7 @@ export default function usePreviewPublisher() {
         previewPublisher.current.on('accessAllowed', (audioLevel) => {
           console.log('[createPreview] - accessAllowed');
           setAccessAllowed(DEVICE_ACCESS_STATUS.ACCEPTED);
-          setPreviewMediaCreated(true);
+          getDevices();
         });
         previewPublisher.current.on('accessDenied', (audioLevel) => {
           console.log('[createPreview] - accessDenied');
@@ -44,8 +46,11 @@ export default function usePreviewPublisher() {
           targetElement: targetEl,
           publisherProperties
         });
-        // setPreviewMediaCreated(true); // todo to remove when accessAllowed events are fixed
-        console.log('[Preview Created] - ', previewPublisher);
+        setPreviewMediaCreated(true);
+        console.log(
+          '[Preview Created] - ',
+          previewPublisher.current.getVideoDevice()
+        );
       } catch (err) {
         console.log('[createPreview]', err);
       }
@@ -66,6 +71,7 @@ export default function usePreviewPublisher() {
     destroyPreview,
     logLevel,
     previewMediaCreated,
-    accessAllowed
+    accessAllowed,
+    deviceInfo
   };
 }
