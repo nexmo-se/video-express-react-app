@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import _ from 'lodash';
-import * as MP from "@vonage/multiparty";
+import * as MP from '@vonage/multiparty';
 
 export default function useRoom() {
   let roomRef = useRef(null);
@@ -10,6 +10,7 @@ export default function useRoom() {
   const [participants, setParticipants] = useState([]);
   const [networkStatus, setNetworkStatus] = useState(null);
   const [publisherIsSpeaking, setPublisherIsSpeaking] = useState(false);
+  const [cameraPublishing, setCameraPublishing] = useState(false);
 
   const addParticipants = ({ participant }) => {
     setParticipants(prev => [...prev, participant]);
@@ -74,6 +75,10 @@ export default function useRoom() {
         'audioLevelUpdated',
         _.throttle(event => onAudioLevel(event), 250)
       );
+      // roomRef.current.camera.on('created', () => {
+      //   setCameraPublishing(true);
+      //   console.log('camera publishing now');
+      // });
     }
   };
 
@@ -123,6 +128,10 @@ export default function useRoom() {
       roomRef.current.on('disconnected', () => {
         setNetworkStatus('disconnected');
         console.log('Room: disconnected');
+      });
+      roomRef.current.camera.on('created', () => {
+        setCameraPublishing(true);
+        console.log('camera publishing now');
       });
       roomRef.current.on('activeSpeakerChanged', participant => {
         console.log('Active speaker changed', participant);
@@ -176,7 +185,8 @@ export default function useRoom() {
     room: roomRef.current,
     participants,
     networkStatus,
-    publisherIsSpeaking
+    publisherIsSpeaking,
+    cameraPublishing
     /*     startScreenSharing,
     stopScreenSharing, */
   };

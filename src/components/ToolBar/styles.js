@@ -30,6 +30,13 @@ export default makeStyles(theme => ({
     backgroundColor: '#32353A',
     color: '#fff'
   },
+  arrowButton: {
+    borderRadius: '5em',
+    height: '50px',
+    width: '50px',
+    backgroundColor: '#32353A',
+    color: '#fff'
+  },
   infoButton: {
     position: 'absolute',
     left: '0',
@@ -39,6 +46,9 @@ export default makeStyles(theme => ({
     width: '50px',
     backgroundColor: '#32353A',
     color: '#fff'
+  },
+  groupButton: {
+    margin: '8px'
   },
   disabledButton: {
     backgroundColor: theme.palette.activeButtons.red,

@@ -3,22 +3,155 @@ import VideoCam from '@material-ui/icons/Videocam';
 import VideocamOff from '@material-ui/icons/VideocamOff';
 import { IconButton } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
+import useDevices from '../../hooks/useDevices';
 
-export default function MuteVideoButton({ classes, hasVideo, toggleVideo }) {
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import React from 'react';
+import styles from './styles.js';
+
+export default function MuteVideoButton({
+  classes,
+  hasVideo,
+  toggleVideo,
+  getVideoSource,
+  cameraPublishing,
+  changeVideoSource
+}) {
   const title = hasVideo ? 'Disable Camera' : 'Enable Camera';
   console.log('[MuteVideoButton] - hasVideo', hasVideo);
+  const { deviceInfo } = useDevices();
+  const [devicesAvailable, setDevicesAvailable] = React.useState(null);
+  const [options, setOptions] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const localClasses = styles();
+
+  React.useEffect(() => {
+    setDevicesAvailable(deviceInfo.videoInputDevices);
+
+    if (cameraPublishing) {
+      const currentDeviceId = getVideoSource()?.deviceId;
+
+      const IndexOfSelectedElement = devicesAvailable.indexOf(
+        devicesAvailable.find(e => e.deviceId === currentDeviceId)
+      );
+      setSelectedIndex(IndexOfSelectedElement);
+    }
+  }, [cameraPublishing, getVideoSource, deviceInfo]);
+
+  React.useEffect(() => {
+    if (devicesAvailable) {
+      const videoDevicesAvailable = devicesAvailable.map(e => {
+        return e.label;
+      });
+      setOptions(videoDevicesAvailable);
+    }
+  }, [devicesAvailable]);
+
+  const handleChangeVideoSource = (event, index) => {
+    setSelectedIndex(index);
+    setOpen(false);
+    const videoDeviceId = devicesAvailable.find(
+      device => device.label === event.target.textContent
+    ).deviceId;
+    changeVideoSource(videoDeviceId);
+  };
+
+  const handleToggle = e => {
+    setOpen(prevOpen => !prevOpen);
+  };
+
+  const handleClose = event => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
-    <Tooltip title={title} aria-label="add">
-      <IconButton
-        edge="start"
-        aria-label="videoCamera"
-        onClick={toggleVideo}
-        className={`${classes.toolbarButtons} ${
-          !hasVideo ? classes.disabledButton : ''
-        }`}
+    <>
+      <ButtonGroup
+        className={classes.groupButton}
+        // className={`${classes.groupButton} ${classes.toolbarButtons}`}
+        disableElevation
+        variant="contained"
+        // color="secondary"
+        ref={anchorRef}
+        aria-label="split button"
       >
-        {!hasVideo ? <VideocamOff /> : <VideoCam />}
-      </IconButton>
-    </Tooltip>
+        {/* <Button onClick={handleClick}>{options[selectedIndex]}</Button> */}
+        <Tooltip title={title} aria-label="add">
+          <IconButton
+            onClick={toggleVideo}
+            edge="start"
+            aria-label="videoCamera"
+            size="small"
+            className={`${classes.arrowButton} ${
+              !hasVideo ? classes.disabledButton : ''
+            }`}
+          >
+            {!hasVideo ? <VideocamOff /> : <VideoCam />}
+          </IconButton>
+        </Tooltip>
+        <IconButton
+          // color="secondary"
+          size="small"
+          aria-controls={open ? 'split-button-menu' : undefined}
+          aria-expanded={open ? 'true' : undefined}
+          aria-label="select merge strategy"
+          aria-haspopup="menu"
+          onClick={handleToggle}
+          className={classes.arrowButton}
+        >
+          <ArrowDropDownIcon />
+        </IconButton>
+      </ButtonGroup>
+
+      <Popper
+        open={open}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === 'bottom' ? 'center top' : 'center bottom'
+            }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList id="split-button-menu">
+                  {options.map((option, index) => (
+                    <MenuItem
+                      key={option}
+                      selected={index === selectedIndex}
+                      onClick={event => handleChangeVideoSource(event, index)}
+                      classes={{
+                        selected: localClasses.selected,
+                        root: localClasses.root
+                      }}
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </>
   );
 }

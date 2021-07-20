@@ -13,6 +13,12 @@ export default makeStyles(theme => ({
     borderRadius: 5,
     width: '360px'
   },
+  formControl: {
+    width: '100%'
+  },
+  mediaSources: {
+    marginBottom: '10px'
+  },
   waitingRoomVideoPreview: {
     display: 'flex',
     justifyContent: 'center',
