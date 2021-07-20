@@ -13,12 +13,12 @@ export default function useRoom() {
   const [cameraPublishing, setCameraPublishing] = useState(false);
 
   const addParticipants = ({ participant }) => {
-    setParticipants(prev => [...prev, participant]);
+    setParticipants((prev) => [...prev, participant]);
   };
 
   const removeParticipants = ({ participant }) => {
-    setParticipants(prev =>
-      prev.filter(prevparticipant => prevparticipant.id !== participant.id)
+    setParticipants((prev) =>
+      prev.filter((prevparticipant) => prevparticipant.id !== participant.id)
     );
   };
 
@@ -52,7 +52,7 @@ export default function useRoom() {
   //     []
   //   );
 
-  const onAudioLevel = React.useCallback(audioLevel => {
+  const onAudioLevel = React.useCallback((audioLevel) => {
     let movingAvg = null;
     if (movingAvg === null || movingAvg <= audioLevel) {
       movingAvg = audioLevel;
@@ -73,7 +73,7 @@ export default function useRoom() {
     if (roomRef.current.camera) {
       roomRef.current.camera.on(
         'audioLevelUpdated',
-        _.throttle(event => onAudioLevel(event), 250)
+        _.throttle((event) => onAudioLevel(event), 250)
       );
       // roomRef.current.camera.on('created', () => {
       //   setCameraPublishing(true);
@@ -100,9 +100,7 @@ export default function useRoom() {
         roomContainer: 'roomContainer',
         //useLayoutManager: true,
         managedLayoutOptions: {
-          layoutMode: 'grid',
-          cameraPublisherContainer: 'roomContainer',
-          screenPublisherContainer: 'roomContainer'
+          layoutMode: 'grid'
         }
       });
       // const connectionEventHandlers = {
@@ -133,7 +131,7 @@ export default function useRoom() {
         setCameraPublishing(true);
         console.log('camera publishing now');
       });
-      roomRef.current.on('activeSpeakerChanged', participant => {
+      roomRef.current.on('activeSpeakerChanged', (participant) => {
         console.log('Active speaker changed', participant);
       });
 
@@ -145,7 +143,7 @@ export default function useRoom() {
         setNetworkStatus('reconnecting');
         console.log('Room: reconnecting');
       });
-      roomRef.current.on('participantJoined', participant => {
+      roomRef.current.on('participantJoined', (participant) => {
         //   addParticipant();
         addParticipants({ participant: participant });
         console.log('Room: participant joined: ', participant);
@@ -170,9 +168,9 @@ export default function useRoom() {
           setConnected(true);
           setCamera(roomRef.current.camera);
           setScreen(roomRef.current.screen);
-          addPublisherCameraEvents();
+          // addPublisherCameraEvents();
         })
-        .catch(e => console.log(e));
+        .catch((e) => console.log(e));
     },
     []
   );
