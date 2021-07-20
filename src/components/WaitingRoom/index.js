@@ -5,13 +5,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import useStyles from './styles';
 import usePreviewPublisher from '../../hooks/usePreviewPublisher';
-import useDevices from '../../hooks/useDevices';
 import AudioSettings from '../AudioSetting';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import VideoSettings from '../VideoSetting';
+import DeviceAccessAlert from '../DeviceAccessAlert';
 import { UserContext } from '../../context/UserContext';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { DEVICE_ACCESS_STATUS } from './../constants';
 
 export default function WaitingRoom({ location }) {
   const classes = useStyles();
@@ -40,9 +41,10 @@ export default function WaitingRoom({ location }) {
     destroyPreview,
     previewPublisher,
     logLevel,
-    previewMediaCreated
+    previewMediaCreated,
+    deviceInfo,
+    accessAllowed
   } = usePreviewPublisher();
-  const { deviceInfo } = useDevices();
 
   const handleVideoSource = React.useCallback(
     (e) => {
@@ -150,10 +152,12 @@ export default function WaitingRoom({ location }) {
 
   useEffect(() => {
     if (previewPublisher && previewMediaCreated && deviceInfo) {
+      console.log('useEffect - preview', deviceInfo);
       previewPublisher.getAudioDevice().then((currentAudioDevice) => {
         setAudioDevice(currentAudioDevice.deviceId);
       });
       const currentVideoDevice = previewPublisher.getVideoDevice();
+      console.log('currentVideoDevice', currentVideoDevice);
       setVideoDevice(currentVideoDevice.deviceId);
     }
   }, [
@@ -195,109 +199,117 @@ export default function WaitingRoom({ location }) {
   }, [createPreview, destroyPreview]);
 
   return (
-    <div className={classes.waitingRoomContainer}>
-      <Grid container direction="column" justify="center" alignItems="center">
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            disabled={roomToJoin !== ''}
-            id="room-name"
-            label="Room Name"
-            name="roomName"
-            autoComplete="Room Name"
-            error={isRoomNameInvalid}
-            autoFocus
-            helperText={roomName === '' ? 'Empty Field' : ' '}
-            value={roomName}
-            onChange={onChangeRoomName}
-            onKeyDown={onKeyDown}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            id="publisher-name"
-            label="Name"
-            name="name"
-            error={isUserNameInvalid}
-            required
-            autoComplete="Name"
-            helperText={userName === '' ? 'Empty Field' : ' '}
-            value={userName}
-            onChange={onChangeParticipantName}
-            onKeyDown={onKeyDown}
-          />
-          <div className={classes.mediaSources}>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">
-                Select Audio
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={audioDevice}
-                onChange={handleAudioSource}
-              >
-                {deviceInfo &&
-                  deviceInfo.audioInputDevices.map((device) => (
-                    <MenuItem key={device.deviceId} value={device.deviceId}>
-                      {device.label}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
+    <>
+      <div className={classes.waitingRoomContainer}>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              disabled={roomToJoin !== ''}
+              id="room-name"
+              label="Room Name"
+              name="roomName"
+              autoComplete="Room Name"
+              error={isRoomNameInvalid}
+              autoFocus
+              helperText={roomName === '' ? 'Empty Field' : ' '}
+              value={roomName}
+              onChange={onChangeRoomName}
+              onKeyDown={onKeyDown}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="publisher-name"
+              label="Name"
+              name="name"
+              error={isUserNameInvalid}
+              required
+              autoComplete="Name"
+              helperText={userName === '' ? 'Empty Field' : ' '}
+              value={userName}
+              onChange={onChangeParticipantName}
+              onKeyDown={onKeyDown}
+            />
+            <div className={classes.mediaSources}>
+              {deviceInfo && previewMediaCreated && (
+                <FormControl>
+                  <InputLabel id="demo-simple-select-label">
+                    Select Audio Source
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={audioDevice}
+                    onChange={handleAudioSource}
+                  >
+                    {deviceInfo.audioInputDevices.map((device) => (
+                      <MenuItem key={device.deviceId} value={device.deviceId}>
+                        {device.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+
+              {deviceInfo && previewMediaCreated && (
+                <FormControl>
+                  <InputLabel id="video">Select Video Source</InputLabel>
+                  {deviceInfo.videoInputDevices && (
+                    <Select
+                      labelId="video"
+                      id="demo-simple-select"
+                      value={videoDevice}
+                      onChange={handleVideoSource}
+                    >
+                      {deviceInfo.videoInputDevices.map((device) => (
+                        <MenuItem key={device.deviceId} value={device.deviceId}>
+                          {device.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                </FormControl>
+              )}
+            </div>
+          </form>
+          <div
+            id="waiting-room-video-container"
+            className={classes.waitingRoomVideoPreview}
+            ref={waitingRoomVideoContainer}
+          ></div>
+          <div className={classes.deviceContainer}>
+            <AudioSettings
+              className={classes.deviceSettings}
+              hasAudio={localAudio}
+              onAudioChange={handleAudioChange}
+            />
+            <LinearProgress variant="determinate" value={logLevel} />
+            <VideoSettings
+              className={classes.deviceSettings}
+              hasVideo={localVideo}
+              onVideoChange={handleVideoChange}
+            />
           </div>
-          <div className={classes.mediaSources}>
-            <FormControl>
-              <InputLabel id="video">Video</InputLabel>
-              <Select
-                labelId="video"
-                id="demo-simple-select"
-                value={videoDevice}
-                onChange={handleVideoSource}
-              >
-                {deviceInfo &&
-                  deviceInfo.videoInputDevices.map((device) => (
-                    <MenuItem key={device.deviceId} value={device.deviceId}>
-                      {device.label}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-          </div>
-        </form>
-        <div
-          id="waiting-room-video-container"
-          className={classes.waitingRoomVideoPreview}
-          ref={waitingRoomVideoContainer}
-        ></div>
-        <div className={classes.deviceContainer}>
-          <AudioSettings
-            className={classes.deviceSettings}
-            hasAudio={localAudio}
-            onAudioChange={handleAudioChange}
-          />
-          <LinearProgress variant="determinate" value={logLevel} />
-          <VideoSettings
-            className={classes.deviceSettings}
-            hasVideo={localVideo}
-            onVideoChange={handleVideoChange}
-          />
-        </div>
-      </Grid>
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleJoinClick}
-          disabled={!roomName || !userName}
-        >
-          Join Call
-        </Button>
-      </Grid>
-    </div>
+        </Grid>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleJoinClick}
+            disabled={!roomName || !userName}
+          >
+            Join Call
+          </Button>
+        </Grid>
+      </div>
+      {accessAllowed !== DEVICE_ACCESS_STATUS.ACCEPTED && (
+        <DeviceAccessAlert accessStatus={accessAllowed}></DeviceAccessAlert>
+      )}
+    </>
   );
 }
