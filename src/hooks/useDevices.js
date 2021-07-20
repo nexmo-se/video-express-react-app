@@ -1,45 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import * as MP from '@vonage/multiparty';
 
 export default function useDevices() {
   const [deviceInfo, setDeviceInfo] = useState({
     audioInputDevices: [],
     videoInputDevices: [],
-    audioOutputDevices: [],
+    audioOutputDevices: []
   });
 
+  const getDevices = useCallback(async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+      console.log('enumerateDevices() not supported.');
+      return;
+    }
+    try {
+      const devices = await MP.getDevices();
+      const audioInputDevices = devices.filter(
+        (d) => d.kind.toLowerCase() === 'audioinput'
+      );
+      const audioOutputDevices = devices.filter(
+        (d) => d.kind.toLowerCase() === 'audiooutput'
+      );
+      const videoInputDevices = devices.filter(
+        (d) => d.kind.toLowerCase() === 'videoinput'
+      );
+      console.log('Devices', devices);
+      setDeviceInfo({
+        audioInputDevices,
+        videoInputDevices,
+        audioOutputDevices
+      });
+      // });
+    } catch (err) {
+      console.log('[loadDevices] - ', err);
+    }
+  }, []);
+
   useEffect(() => {
-    const getDevices = () => {
-      if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
-        console.log('enumerateDevices() not supported.');
-        return;
-      }
-      try {
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-          const audioInputDevices = devices.filter(
-            (d) => d.kind.toLowerCase() === 'audioinput'
-          );
-          const audioOutputDevices = devices.filter(
-            (d) => d.kind.toLowerCase() === 'audiooutput'
-          );
-          const videoInputDevices = devices.filter(
-            (d) => d.kind.toLowerCase() === 'videoinput'
-          );
-          setDeviceInfo({
-            audioInputDevices,
-            videoInputDevices,
-            audioOutputDevices,
-          });
-        });
-      } catch (err) {
-        console.log('[loadDevices] - ', err);
-      }
-    };
     navigator.mediaDevices.addEventListener('devicechange', getDevices);
     getDevices();
 
     return () => {
       navigator.mediaDevices.removeEventListener('devicechange', getDevices);
     };
-  }, []);
-  return deviceInfo;
+  }, [getDevices]);
+
+  return { deviceInfo, getDevices };
 }
