@@ -4,27 +4,36 @@ import { useHistory } from 'react-router-dom';
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
+import SettingsButton from 'components/SettingsButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
 import { useParams } from 'react-router';
 
-export default function ToolBar({ room, participants, connected, publisherIsSpeaking }) {
+import InfoIconButton from 'components/InfoIconButton';
+
+export default function ToolBar({
+  room,
+  participants,
+  connected,
+  cameraPublishing
+}) {
   const { roomName } = useParams();
   const { push } = useHistory();
   const [hasAudio, setHasAudio] = useState(true);
   const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
+  const [numberOfParticipants, setNumberOfParticipants] = useState(0);
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map((participant) => participant.camera.disableAudio());
+      participants.map(participant => participant.camera.disableAudio());
 
       setAllMuted(true);
     } else {
-      participants.map((participant) => participant.camera.enableAudio());
+      participants.map(participant => participant.camera.enableAudio());
       setAllMuted(false);
     }
   };
@@ -55,6 +64,26 @@ export default function ToolBar({ room, participants, connected, publisherIsSpea
     }
   };
 
+  const getVideoSource = () => {
+    if (room && room.camera) {
+      return room.camera.getVideoDevice();
+    }
+  };
+
+  const changeVideoSource = videoId => {
+    room.camera.setVideoDevice(videoId);
+  };
+  const changeAudioSource = audioId => {
+    room.camera.setAudioDevice(audioId);
+  };
+
+  const getAudioSource = async () => {
+    if (room && room.camera) {
+      const audioDevice = await room.camera.getAudioDevice();
+      return audioDevice.deviceId;
+    }
+  };
+
   const endCall = () => {
     if (room) {
       push(`${roomName}/${room.roomId}/end`);
@@ -74,18 +103,29 @@ export default function ToolBar({ room, participants, connected, publisherIsSpea
     }
   }, [connected, room]);
 
+  // useEffect(() => {
+  //   setNumberOfParticipants(participants.length);
+  // }, [participants]);
+
   return (
     <div className={classes.toolbarContainer}>
+      <InfoIconButton classes={classes} />
       <MuteAudioButton
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}
         classes={classes}
-        publisherIsSpeaking={publisherIsSpeaking}
+        changeAudioSource={changeAudioSource}
+        getAudioSource={getAudioSource}
+        cameraPublishing={cameraPublishing}
+        /* publisherIsSpeaking={publisherIsSpeaking} */
       />
       <MuteVideoButton
         toggleVideo={toggleVideo}
         hasVideo={hasVideo}
         classes={classes}
+        getVideoSource={getVideoSource}
+        cameraPublishing={cameraPublishing}
+        changeVideoSource={changeVideoSource}
       />
       <RecordingButton room={room} classes={classes} />
       <ScreenSharingButton room={room} classes={classes} />
@@ -94,6 +134,7 @@ export default function ToolBar({ room, participants, connected, publisherIsSpea
         areAllMuted={areAllMuted}
         classes={classes}
       />
+      <SettingsButton classes={classes} room={room} />
       <EndCallButton classes={classes} handleEndCall={endCall} />
     </div>
   );

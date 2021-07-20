@@ -1,9 +1,16 @@
 import React, { useState, useRef, useCallback, useContext } from 'react';
+import { DEVICE_ACCESS_STATUS } from './../components/constants';
+import useDevices from '../hooks/useDevices';
+import * as MP from '@vonage/multiparty';
 
 export default function usePreviewPublisher() {
   let previewPublisher = useRef();
   let [logLevel, setLogLevel] = useState(0);
-  const MP = window.MP;
+  const [previewMediaCreated, setPreviewMediaCreated] = useState(false);
+  const [accessAllowed, setAccessAllowed] = useState(
+    DEVICE_ACCESS_STATUS.PENDING
+  );
+  const { deviceInfo, getDevices } = useDevices();
 
   const calculateAudioLevel = React.useCallback((audioLevel) => {
     let movingAvg = null;
@@ -26,21 +33,34 @@ export default function usePreviewPublisher() {
         previewPublisher.current.on('audioLevelUpdated', (audioLevel) => {
           calculateAudioLevel(audioLevel);
         });
+        previewPublisher.current.on('accessAllowed', (audioLevel) => {
+          console.log('[createPreview] - accessAllowed');
+          setAccessAllowed(DEVICE_ACCESS_STATUS.ACCEPTED);
+          getDevices();
+        });
+        previewPublisher.current.on('accessDenied', (audioLevel) => {
+          console.log('[createPreview] - accessDenied');
+          setAccessAllowed(DEVICE_ACCESS_STATUS.REJECTED);
+        });
         await previewPublisher.current.previewMedia({
           targetElement: targetEl,
-          publisherProperties,
+          publisherProperties
         });
-        console.log('[Preview Created] - ', previewPublisher);
+        setPreviewMediaCreated(true);
+        console.log(
+          '[Preview Created] - ',
+          previewPublisher.current.getVideoDevice()
+        );
       } catch (err) {
         console.log('[createPreview]', err);
       }
     },
-    [MP.PreviewPublisher, calculateAudioLevel]
+    [calculateAudioLevel]
   );
 
   const destroyPreview = useCallback(() => {
     if (previewPublisher && previewPublisher.current) {
-      previewPublisher.current.destroyPreviewPublisher();
+      previewPublisher.current.destroy();
       console.log('[destroyPreview] - ', previewPublisher);
     }
   }, []);
@@ -50,5 +70,8 @@ export default function usePreviewPublisher() {
     createPreview,
     destroyPreview,
     logLevel,
+    previewMediaCreated,
+    accessAllowed,
+    deviceInfo
   };
 }
