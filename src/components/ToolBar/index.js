@@ -17,7 +17,7 @@ export default function ToolBar({
   room,
   participants,
   connected,
-  publisherIsSpeaking
+  cameraPublishing
 }) {
   const { roomName } = useParams();
   const { push } = useHistory();
@@ -64,14 +64,32 @@ export default function ToolBar({
     }
   };
 
+  const getVideoSource = () => {
+    if (room && room.camera) {
+      return room.camera.getVideoDevice();
+    }
+  };
+
+  const changeVideoSource = videoId => {
+    room.camera.setVideoDevice(videoId);
+  };
+  const changeAudioSource = audioId => {
+    room.camera.setAudioDevice(audioId);
+  };
+
+  const getAudioSource = async () => {
+    if (room && room.camera) {
+      const audioDevice = await room.camera.getAudioDevice();
+      return audioDevice.deviceId;
+    }
+  };
+
   const endCall = () => {
     if (room) {
       push(`${roomName}/${room.roomId}/end`);
       room.leave();
     }
   };
-
-  const handleCopyUrl = () => {};
 
   useEffect(() => {
     console.log('[toolbar] useEffect - Connected', connected);
@@ -96,12 +114,18 @@ export default function ToolBar({
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}
         classes={classes}
+        changeAudioSource={changeAudioSource}
+        getAudioSource={getAudioSource}
+        cameraPublishing={cameraPublishing}
         /* publisherIsSpeaking={publisherIsSpeaking} */
       />
       <MuteVideoButton
         toggleVideo={toggleVideo}
         hasVideo={hasVideo}
         classes={classes}
+        getVideoSource={getVideoSource}
+        cameraPublishing={cameraPublishing}
+        changeVideoSource={changeVideoSource}
       />
       <RecordingButton room={room} classes={classes} />
       <ScreenSharingButton room={room} classes={classes} />

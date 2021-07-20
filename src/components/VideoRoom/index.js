@@ -20,6 +20,7 @@ export default function VideoRoom() {
     participants,
     connected,
     networkStatus,
+    cameraPublishing
     /* publisherIsSpeaking, */
   } = useRoom();
   const roomContainer = useRef();
@@ -74,6 +75,7 @@ export default function VideoRoom() {
         room={room}
         participants={participants}
         connected={connected}
+        cameraPublishing={cameraPublishing}
         /* publisherIsSpeaking={publisherIsSpeaking} */
       ></ToolBar>
     </div>
