@@ -47,6 +47,9 @@ export default makeStyles(theme => ({
     backgroundColor: '#32353A',
     color: '#fff'
   },
+  groupButton: {
+    margin: '8px'
+  },
   disabledButton: {
     backgroundColor: theme.palette.activeButtons.red,
     '&:hover': {

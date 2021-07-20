@@ -79,6 +79,8 @@ export default function MuteVideoButton({
   return (
     <>
       <ButtonGroup
+        className={classes.groupButton}
+        // className={`${classes.groupButton} ${classes.toolbarButtons}`}
         disableElevation
         variant="contained"
         // color="secondary"

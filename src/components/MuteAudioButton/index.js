@@ -86,12 +86,11 @@ export default function MuteAudioButton({
     <>
       <ButtonGroup
         disableElevation
+        className={classes.groupButton}
         variant="contained"
-        // color="secondary"
         ref={anchorRef}
         aria-label="split button"
       >
-        {/* <Button onClick={handleClick}>{options[selectedIndex]}</Button> */}
         <Tooltip title={title} aria-label="add">
           <IconButton
             edge="start"
