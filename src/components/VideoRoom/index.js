@@ -36,7 +36,7 @@ export default function VideoRoom() {
           token: data.token
         });
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err);
         console.log(err);
       });
@@ -67,9 +67,9 @@ export default function VideoRoom() {
       >
         <NetworkToast networkStatus={networkStatus} />
         {/* <MuteParticipantsButton /> */}
-        {participants.length === 0 ? (
+        {/* {participants.length === 0 ? (
           <SingleParticipantView roomName={roomName} />
-        ) : null}
+        ) : null} */}
       </div>
       <ToolBar
         room={room}
