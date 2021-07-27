@@ -104,23 +104,6 @@ export default function useRoom() {
           layoutMode: 'grid'
         }
       });
-      // const connectionEventHandlers = {
-      //   connected: onConnected
-      //   // disconnected: onDisconnected,
-      //   // participantJoined: onParticipantJoined
-      //   //streamDestroyed: onStreamDestroyed
-      // };
-      // if (roomRef.current) {
-      //   roomRef.current.on({
-      //     connected: onConnected
-      //   });
-      // }
-
-      //   const streamEventHandlers = {
-      //     created: onStreamCreated
-
-      //     //streamDestroyed: onStreamDestroyed
-      //   };
       roomRef.current.on('connected', () => {
         console.log('Room: connected');
       });
@@ -186,7 +169,5 @@ export default function useRoom() {
     networkStatus,
     publisherIsSpeaking,
     cameraPublishing
-    /*     startScreenSharing,
-    stopScreenSharing, */
   };
 }

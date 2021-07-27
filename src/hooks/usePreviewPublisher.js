@@ -12,7 +12,7 @@ export default function usePreviewPublisher() {
   );
   const { deviceInfo, getDevices } = useDevices();
 
-  const calculateAudioLevel = React.useCallback(audioLevel => {
+  const calculateAudioLevel = React.useCallback((audioLevel) => {
     let movingAvg = null;
     if (movingAvg === null || movingAvg <= audioLevel) {
       movingAvg = audioLevel;
@@ -30,15 +30,15 @@ export default function usePreviewPublisher() {
         const publisherProperties = Object.assign({}, publisherOptions);
         console.log('[createPreview]', publisherProperties);
         previewPublisher.current = new MP.PreviewPublisher(targetEl);
-        previewPublisher.current.on('audioLevelUpdated', audioLevel => {
+        previewPublisher.current.on('audioLevelUpdated', (audioLevel) => {
           calculateAudioLevel(audioLevel);
         });
-        previewPublisher.current.on('accessAllowed', audioLevel => {
+        previewPublisher.current.on('accessAllowed', (audioLevel) => {
           console.log('[createPreview] - accessAllowed');
           setAccessAllowed(DEVICE_ACCESS_STATUS.ACCEPTED);
           getDevices();
         });
-        previewPublisher.current.on('accessDenied', audioLevel => {
+        previewPublisher.current.on('accessDenied', (audioLevel) => {
           console.log('[createPreview] - accessDenied');
           setAccessAllowed(DEVICE_ACCESS_STATUS.REJECTED);
         });
@@ -56,7 +56,7 @@ export default function usePreviewPublisher() {
         console.log('[createPreview]', err);
       }
     },
-    [calculateAudioLevel]
+    [calculateAudioLevel, getDevices]
   );
 
   const destroyPreview = useCallback(() => {

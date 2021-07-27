@@ -48,7 +48,36 @@ The application needs to communicate with our server to start/stop and get a lis
 
 #### Hooks
 
-// TODO
+This project uses React Hooks, in particular it uses React Hooks and Contexts:
+
+#### UseRoom
+
+The src/hooks/useRoom.js hook handles the Room object of the MultiParty Toolkit. The main functions are:
+
+- createCall: given the credentials (APIKeys, SessionId and Token), the function connects to the Opentok servers, add the event listeners (onStreamCreated and onStreamDestroyed). The function calls `new MP.Room({})` function from the Multiparty Toolkit: [https://tokbox.com/developer/multiparty/reference/room.html](https://tokbox.com/developer/multiparty/reference/room.html).
+- addParticipants: adds the participants in the local `participants` state. 
+- removeParticipants: removes the participants in the local `participants` state.
+
+#### UsePreviewPublishers
+
+The src/hooks/usePreviewPublishers hook handles the [previewPublishers](https://tokbox.com/developer/multiparty/reference/preview-publisher.html). The previewPublisher is used in the waiting room page to show the preview of audio and camera streams.
+
+- createPreview: creates the local preview publisher and handles the `accessAllowed` and `accessDenied`. 
+- destroyPreview: destroys the local preview publisher. This is called when we change view from Waiting room to the VideoCall View.
+
+#### UseDevices
+
+The src/hooks/useDevices hook handles the `MP.getDevices` function ([https://tokbox.com/developer/multiparty/reference/get-devices.html](https://tokbox.com/developer/multiparty/reference/get-devices.html)). The hook sets `audioInputDevices`, `audioOutputDevices` and `videoInputDevices` in the `deviceInfo` state variable.
+
+#### UseScreenSharing
+
+The src/hooks/useScreenSharing hook handles the [ScreenPublisher](https://tokbox.com/developer/multiparty/reference/screen-publisher.html) object.
+
+- startScreenSharing: this function calls the `startScreensharing` to start the screen sharing. It also adds the events such as `started`, `stopped` and `accessDenied` to handle the different user's actions.
+- stopScreenSharing: this function stops the screen sharing stream.
+
+
+
 
 ### Main Components
 
