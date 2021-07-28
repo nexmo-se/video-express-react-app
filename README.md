@@ -9,10 +9,8 @@ This application shows how to build a multi-party video app with [Vonage Multipa
 
 ## Prerequisites
 
-You must have the following installed:
-
-1. Node.js v12+
-2. NPM v6+ (comes installed with newer Node versions)
+- [Node.js v14.11.0+](https://nodejs.org/en/)
+- [React v17.0.2+](https://reactjs.org/)
 
 ## Installation
 
@@ -29,6 +27,7 @@ The app has the following features:
 - [x] Screen sharing
 - [x] Room Name + Participant Name selection
 - [x] Device Selection
+- [x] Network warnings once the user is reconnected/reconencting or disconencted
 - [x] Layout Change (Active Speaker/Grid View)
 - [x] Enable/disable camera
 - [x] Mute/unmute mic
@@ -53,44 +52,59 @@ The application needs to communicate with our server to start/stop and get a lis
 
 This project uses React Hooks, in particular it uses React Hooks and Contexts:
 
-#### UseRoom
+##### UseRoom
 
 The src/hooks/useRoom.js hook handles the Room object of the MultiParty Toolkit. The main functions are:
 
 - createCall: given the credentials (APIKeys, SessionId and Token), the function connects to the Opentok servers, add the event listeners (onStreamCreated and onStreamDestroyed). The function calls `new MP.Room({})` function from the Multiparty Toolkit: [https://tokbox.com/developer/multiparty/reference/room.html](https://tokbox.com/developer/multiparty/reference/room.html).
-- addParticipants: adds the participants in the local `participants` state. 
+- addParticipants: adds the participants in the local `participants` state.
 - removeParticipants: removes the participants in the local `participants` state.
 
-#### UsePreviewPublishers
+##### UsePreviewPublisher
 
-The src/hooks/usePreviewPublishers hook handles the [previewPublishers](https://tokbox.com/developer/multiparty/reference/preview-publisher.html). The previewPublisher is used in the waiting room page to show the preview of audio and camera streams.
+The src/hooks/usePreviewPublisher hook handles the [previewPublishers](https://tokbox.com/developer/multiparty/reference/preview-publisher.html). The previewPublisher is used in the waiting room page to show the preview of audio and camera streams.
 
-- createPreview: creates the local preview publisher and handles the `accessAllowed` and `accessDenied`. 
+- createPreview: creates the local preview publisher and handles the `accessAllowed` and `accessDenied`.
 - destroyPreview: destroys the local preview publisher. This is called when we change view from Waiting room to the VideoCall View.
 
-#### UseDevices
+##### UseDevices
 
 The src/hooks/useDevices hook handles the `MP.getDevices` function ([https://tokbox.com/developer/multiparty/reference/get-devices.html](https://tokbox.com/developer/multiparty/reference/get-devices.html)). The hook sets `audioInputDevices`, `audioOutputDevices` and `videoInputDevices` in the `deviceInfo` state variable.
 
-#### UseScreenSharing
+##### UseScreenSharing
 
 The src/hooks/useScreenSharing hook handles the [ScreenPublisher](https://tokbox.com/developer/multiparty/reference/screen-publisher.html) object.
 
 - startScreenSharing: this function calls the `startScreensharing` to start the screen sharing. It also adds the events such as `started`, `stopped` and `accessDenied` to handle the different user's actions.
 - stopScreenSharing: this function stops the screen sharing stream.
 
+#### Main Components
 
+##### Waiting Room
 
+This component leverages the [UsePreviewPublisher](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/blob/main/src/hooks/usePreviewPublisher.js) hook to show a media preview of the user and the [UseDevices](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/blob/main/src/hooks/UseDevices.js) hook to allow the user choose the microphone and camera
 
-### Main Components
+##### ToolBar
 
-// TODO. Explain waiting room, videoRoom and ToolBar components and how they use the hooks
+The ToolBar component contains all the buttons along with the logic to mute audio/video, handle screen sharing change devices and layout and mute participants.
 
-## Using the app
+##### Video Room
 
-//TODO. Is this section necessary?
+It's the main component of the application. It contains the ToolBar and the network indicator. Once the component is mounted, it will request the credentials from the server to start the video call.
 
 ## Screenshots
+
+### Waiting Room
+
+![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/Preview.png?raw=true)
+
+### End Meeting View
+
+![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/endMeetingView.png?raw=true)
+
+### Single Participant
+
+![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/singleParticipant.png?raw=true)
 
 ## Deploy to Heroku
 
