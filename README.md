@@ -93,9 +93,17 @@ It's the main component of the application. It contains the ToolBar and the netw
 
 ## Screenshots
 
-###Waiting Room
+### Waiting Room
 
 ![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/Preview.png?raw=true)
+
+### End Meeting View
+
+![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/endMeetingView.png?raw=true)
+
+### Single Participant
+
+![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/singleParticipant.png?raw=true)
 
 ## Deploy to Heroku
 
