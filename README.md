@@ -93,6 +93,10 @@ It's the main component of the application. It contains the ToolBar and the netw
 
 ## Screenshots
 
+###Waiting Room
+
+![Waiting Room](/Users/jmolinasanz/Desktop/video-api-multiparty-sdk-sample-app/public/images/Preview.png)
+
 ## Deploy to Heroku
 
 // TODO
