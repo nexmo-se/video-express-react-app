@@ -9,7 +9,10 @@ This application shows how to build a multi-party video app with [Vonage Multipa
 
 ## Prerequisites
 
-//TODO
+You must have the following installed:
+
+1. Node.js v12+
+2. NPM v6+ (comes installed with newer Node versions)
 
 ## Installation
 
@@ -91,4 +94,6 @@ The src/hooks/useScreenSharing hook handles the [ScreenPublisher](https://tokbox
 
 ## Deploy to Heroku
 
-// TODO
+
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
