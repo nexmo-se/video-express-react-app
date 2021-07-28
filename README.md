@@ -95,7 +95,7 @@ It's the main component of the application. It contains the ToolBar and the netw
 
 ###Waiting Room
 
-![Waiting Room](/Users/jmolinasanz/Desktop/video-api-multiparty-sdk-sample-app/public/images/Preview.png)
+![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/Preview.png?raw=true)
 
 ## Deploy to Heroku
 
