@@ -9,7 +9,8 @@ This application shows how to build a multi-party video app with [Vonage Multipa
 
 ## Prerequisites
 
-//TODO
+- [Node.js v14.11.0+](https://nodejs.org/en/)
+- [React v17.0.2+](https://reactjs.org/)
 
 ## Installation
 
