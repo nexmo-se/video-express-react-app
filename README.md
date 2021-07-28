@@ -83,11 +83,11 @@ The src/hooks/useScreenSharing hook handles the [ScreenPublisher](https://tokbox
 
 This component leverages the [UsePreviewPublisher](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/blob/main/src/hooks/usePreviewPublisher.js) hook to show a media preview of the user and the [UseDevices](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/blob/main/src/hooks/UseDevices.js) hook to allow the user choose the microphone and camera
 
-###### ToolBar
+##### ToolBar
 
 The ToolBar component contains all the buttons along with the logic to mute audio/video, handle screen sharing change devices and layout and mute participants.
 
-###### Video Room
+##### Video Room
 
 It's the main component of the application. It contains the ToolBar and the network indicator. Once the component is mounted, it will request the credentials from the server to start the video call.
 
