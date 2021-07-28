@@ -24,7 +24,6 @@ export default function useDevices() {
       const videoInputDevices = devices.filter(
         (d) => d.kind.toLowerCase() === 'videoinput'
       );
-      console.log('Devices', devices);
       setDeviceInfo({
         audioInputDevices,
         videoInputDevices,

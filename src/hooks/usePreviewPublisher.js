@@ -46,6 +46,7 @@ export default function usePreviewPublisher() {
           targetElement: targetEl,
           publisherProperties
         });
+
         setPreviewMediaCreated(true);
         console.log(
           '[Preview Created] - ',
@@ -55,7 +56,7 @@ export default function usePreviewPublisher() {
         console.log('[createPreview]', err);
       }
     },
-    [calculateAudioLevel]
+    [calculateAudioLevel, getDevices]
   );
 
   const destroyPreview = useCallback(() => {

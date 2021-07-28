@@ -1,0 +1,18 @@
+{
+    "name": "Video API Multiparty Toolkit Sample App",
+    "description": "A sample app using the new Multiparty Toolkit",
+    "repository": "https://github.com/nexmo-se/video-api-multiparty-toolkit-sample-app.git",
+    "logo": "https://node-js-sample.herokuapp.com/node.png",
+    "keywords": ["vonage", "video", "react"],
+    "env": {
+        "REACT_APP_API_URL_PRODUCTION": {
+          "description": "The production URL for the Application"
+        },
+        "VIDEO_API_API_KEY": {
+          "description": "Video API - APIKEY"
+        },
+        "VIDEO_API_API_SECRET": {
+            "description": "Video API - API SECRET"
+        }
+      }
+  }
