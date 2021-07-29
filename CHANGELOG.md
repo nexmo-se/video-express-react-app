@@ -1,3 +1,7 @@
+# 0.1.3 (Jul 29, 2021)
+
+-Fixed bug about not being able to reset userName and roomName[Issue 47](https://github.com/nexmo-se/video-api-multiparty-toolkit-sample-app/issues/47)
+
 # 0.1.2 (Jul 21, 2021)
 
 - Removed SingleView Participant with Copy Meeting Link
@@ -10,4 +14,3 @@
 # 0.1.0 (Jul 20, 2021)
 
 - First version Released 🚀
-

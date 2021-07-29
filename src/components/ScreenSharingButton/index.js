@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import ScreenShare from '@material-ui/icons/ScreenShare';
 import StopScreenShare from '@material-ui/icons/StopScreenShare';
 import { IconButton } from '@material-ui/core';

@@ -1,8 +1,6 @@
 import { IconButton } from '@material-ui/core';
 import { useState } from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import VideoCallIcon from '@material-ui/icons/VideoCall';
-import SettingsVoiceIcon from '@material-ui/icons/SettingsVoice';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import Menu from '@material-ui/core/Menu';
@@ -11,25 +9,14 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import Typography from '@material-ui/core/Typography';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import LayoutOptions from 'components/LayoutOptions';
-import ListAudioSources from 'components/ListAudioSources';
 
 const ITEM_HEIGHT = 48;
 
 export default function SettingsButton({ classes, room }) {
-  // const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [anchorElLayout, setAnchorElLayout] = useState(null);
   const openSubMenu = Boolean(anchorElLayout);
-
-  // const handleOpen = () => {
-  //   setOpenModal(true);
-  //   handleClose();
-  // };
-
-  // const handleCloseModal = () => {
-  //   setOpenModal(false);
-  // };
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
