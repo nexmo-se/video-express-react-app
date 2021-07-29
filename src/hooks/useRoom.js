@@ -22,36 +22,6 @@ export default function useRoom() {
     );
   };
 
-  // const onConnected = useCallback(
-  //   // roomRef.current.on('connected', () => {
-  //   console.log(
-  //     'Room.CameraPublisher - connected viniendo de donde tiene que venir'
-  //   ),
-  //   // }),
-  //   []
-  // );
-
-  //   const onParticipantJoined = useCallback(
-  //     // roomRef.current.on('connected', () => {
-  //     console.log('Room.CameraPublisher - participant joined'),
-  //     // }),
-  //     []
-  //   );
-
-  //   const onStreamCreated = useCallback(
-  //     // roomRef.current.on('connected', () => {
-  //     console.log('Room.CameraPublisher - stream created'),
-  //     // }),
-  //     []
-  //   );
-
-  //   const onDisconnected = useCallback(
-  //     // roomRef.current.on('connected', () => {
-  //     console.log('Room.CameraPublisher - disconnected'),
-  //     // }),
-  //     []
-  //   );
-
   const onAudioLevel = React.useCallback(audioLevel => {
     let movingAvg = null;
     if (movingAvg === null || movingAvg <= audioLevel) {
@@ -66,7 +36,6 @@ export default function useRoom() {
     } else {
       setPublisherIsSpeaking(false);
     }
-    /* setLogLevel(Math.min(Math.max(currentLogLevel, 0), 1) * 100); */
   }, []);
 
   const addPublisherCameraEvents = () => {
@@ -75,10 +44,6 @@ export default function useRoom() {
         'audioLevelUpdated',
         _.throttle(event => onAudioLevel(event), 250)
       );
-      // roomRef.current.camera.on('created', () => {
-      //   setCameraPublishing(true);
-      //   console.log('camera publishing now');
-      // });
     }
   };
 
@@ -99,7 +64,6 @@ export default function useRoom() {
         token: token,
         roomContainer: 'roomContainer',
         maxVideoParticipantsOnScreen: 10,
-        //useLayoutManager: true,
         managedLayoutOptions: {
           layoutMode: 'grid'
         }
@@ -128,7 +92,6 @@ export default function useRoom() {
         console.log('Room: reconnecting');
       });
       roomRef.current.on('participantJoined', participant => {
-        //   addParticipant();
         addParticipants({ participant: participant });
         console.log('Room: participant joined: ', participant);
       });
@@ -152,7 +115,6 @@ export default function useRoom() {
           setConnected(true);
           setCamera(roomRef.current.camera);
           setScreen(roomRef.current.screen);
-          // addPublisherCameraEvents();
         })
         .catch(e => console.log(e));
     },

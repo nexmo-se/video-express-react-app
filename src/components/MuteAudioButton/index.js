@@ -3,8 +3,6 @@ import MicOffIcon from '@material-ui/icons/MicOff';
 import { IconButton } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { useCallback } from 'react';
-
 import useDevices from '../../hooks/useDevices';
 
 import ButtonGroup from '@material-ui/core/ButtonGroup';
