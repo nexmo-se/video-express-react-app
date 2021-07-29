@@ -27,7 +27,7 @@ The app has the following features:
 - [x] Screen sharing
 - [x] Room Name + Participant Name selection
 - [x] Device Selection
-- [x] Network warnings once the user is reconnected/reconencting or disconencted
+- [x] Network warnings once the user is reconnected/reconnecting or disconnected
 - [x] Layout Change (Active Speaker/Grid View)
 - [x] Enable/disable camera
 - [x] Mute/unmute mic
@@ -96,16 +96,16 @@ It's the main component of the application. It contains the ToolBar and the netw
 
 ### Waiting Room
 
-![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/Preview.png?raw=true)
+![Waiting Room](public/images/Preview.png?raw=true)
 
 ### End Meeting View
 
-![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/endMeetingView.png?raw=true)
+![Waiting Room](public/images/endMeetingView.png?raw=true)
 
 ### Single Participant
 
-![Waiting Room](https://github.com/nexmo-se/video-api-multiparty-sdk-sample-app/public/images/singleParticipant.png?raw=true)
+![Waiting Room](public/images/singleParticipant.png?raw=true)
 
 ## Deploy to Heroku
 
-// TODO
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/nexmo-se/video-api-multiparty-toolkit-sample-app.git)

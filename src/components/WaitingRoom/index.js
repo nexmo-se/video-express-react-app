@@ -85,9 +85,10 @@ export default function WaitingRoom({ location }) {
 
   const onChangeRoomName = e => {
     const roomName = e.target.value;
+    console.log('onChangeRoomName', roomName);
     if (roomName === '' || roomName.trim() === '') {
       // Space detected
-      // setRoomName(roomName);
+      setRoomName('');
       return;
     }
     console.log('onChangeRoomName', roomName);
@@ -99,10 +100,11 @@ export default function WaitingRoom({ location }) {
     const userName = e.target.value;
     if (userName === '' || userName.trim() === '') {
       // Space detected
+      setUserName('');
       return;
     }
     setIsUserNameInvalid(false);
-    setUserName(e.target.value);
+    setUserName(userName);
   };
 
   const onKeyDown = e => {
