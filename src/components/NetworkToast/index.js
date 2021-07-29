@@ -34,7 +34,7 @@ export default function NetworkToast({ networkStatus }) {
     );
   };
 
-  const handleClose = (reason) => {
+  const handleClose = reason => {
     if (reason === 'clickaway') {
       return;
     }
@@ -51,16 +51,15 @@ export default function NetworkToast({ networkStatus }) {
         className={classes.anchorOriginTopCenter}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'center',
+          horizontal: 'center'
         }}
         ContentProps={{
           classes: {
             root: classes.root,
-            action: classes.action,
-          },
+            action: classes.action
+          }
         }}
         open={open}
-        // autoHideDuration={6000}
         onClose={handleClose}
         message={
           <div className={classes.snackBarContent}>

@@ -29,32 +29,13 @@ export default function ListLayOutOptions({
     };
   }
 
-  // const [value, setValue] = React.useState('Grid');
-
-  // const handleChange = event => {
-  //   console.log(event.target.value);
-  //   setValue(event.target.value);
-  //   if (room) {
-  //     console.log(room);
-  //     room.setLayoutMode(event.target.value);
-  //   }
-  // };
-
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      {/* <ListLayOutOptions room={room} /> */}
       <FormControl component="fieldset">
         <FormLabel component="legend">Layout</FormLabel>
-        <RadioGroup
-          aria-label="gender"
-          name="gender1"
-          value="perro"
-          // onChange={handleChange}
-        >
+        <RadioGroup aria-label="gender" name="gender1" value="perro">
           <FormControlLabel value="Mic 1" control={<Radio />} label="Mic 1" />
           <FormControlLabel value="Mic 2" control={<Radio />} label="Mic 2" />
-          {/* <FormControlLabel value="other" control={<Radio />} label="Other" />
-        <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
         </RadioGroup>
       </FormControl>
     </div>
@@ -71,11 +52,6 @@ export default function ListLayOutOptions({
           {body}
         </Modal>
       </div>
-
-      {/* <h3 id="simple-modal-title">Change Layout</h3> */}
-
-      {/* <h4>Active Speaker</h4>
-      <h4>Grid</h4> */}
     </div>
   );
 }

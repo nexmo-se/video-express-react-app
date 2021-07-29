@@ -4,7 +4,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import SettingsVoiceIcon from '@material-ui/icons/SettingsVoice';
 import Tooltip from '@material-ui/core/Tooltip';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,23 +16,22 @@ import ListAudioSources from 'components/ListAudioSources';
 const ITEM_HEIGHT = 48;
 
 export default function SettingsButton({ classes, room }) {
-  // const [modalStyle] = useState(getModalStyle);
-  const [openModal, setOpenModal] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [anchorElLayout, setAnchorElLayout] = useState(null);
   const openSubMenu = Boolean(anchorElLayout);
 
-  const handleOpen = () => {
-    setOpenModal(true);
-    handleClose();
-  };
+  // const handleOpen = () => {
+  //   setOpenModal(true);
+  //   handleClose();
+  // };
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
+  // const handleCloseModal = () => {
+  //   setOpenModal(false);
+  // };
 
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -41,7 +39,7 @@ export default function SettingsButton({ classes, room }) {
     setAnchorEl(null);
   };
 
-  const handleClickLayout = (event) => {
+  const handleClickLayout = event => {
     setAnchorElLayout(event.currentTarget);
   };
 
@@ -50,12 +48,11 @@ export default function SettingsButton({ classes, room }) {
     setAnchorEl(null);
   };
 
-  const handleLayOutChange = (layout) => {
+  const handleLayOutChange = layout => {
     if (room) {
       room.setLayoutMode(layout);
     }
   };
-
   return (
     <div>
       <Tooltip title="Options">
@@ -88,7 +85,6 @@ export default function SettingsButton({ classes, room }) {
           </ListItemIcon>
           <Typography variant="inherit">Change layout</Typography>
         </MenuItem>
-        {/* <div> */}
         <LayoutOptions
           room={room}
           handleCloseLayout={handleCloseLayout}
@@ -96,25 +92,6 @@ export default function SettingsButton({ classes, room }) {
           open={openSubMenu}
           anchorElLayout={anchorElLayout}
         />
-        {/* </div> */}
-
-        {/* <MenuItem onClick={handleOpen}>
-          <ListItemIcon>
-            <SettingsVoiceIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit">Change Audio Source</Typography>
-        </MenuItem>
-        <ListAudioSources
-          handleCloseModal={handleCloseModal}
-          openModal={openModal}
-          classes={classes}
-        />
-        <MenuItem>
-          <ListItemIcon>
-            <VideoCallIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit">Change Video Source</Typography>
-        </MenuItem> */}
       </Menu>
     </div>
   );

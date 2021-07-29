@@ -18,7 +18,6 @@ import UserNameRoute from './components/UserNameRoute';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { ThemeProvider } from '@material-ui/styles';
 import { useMemo, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
 
 let primary = process.env.REACT_APP_PALETTE_PRIMARY || '#b779ff';
 let secondary = process.env.REACT_APP_PALETTE_SECONDARY || '#d6219c';

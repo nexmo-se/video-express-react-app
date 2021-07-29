@@ -1,5 +1,4 @@
 import { IconButton } from '@material-ui/core';
-// import styles from './styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/Info';
 import Typography from '@material-ui/core/Typography';
@@ -54,11 +53,7 @@ export default function InfoIconButton({ classes }) {
 
   return (
     <div>
-      <Tooltip
-        // className={localClasses.toolTip}
-        title={titleToolTip}
-        aria-label="add"
-      >
+      <Tooltip title={titleToolTip} aria-label="add">
         <IconButton
           onClick={toggleDrawer()}
           edge="start"

@@ -103,10 +103,6 @@ export default function ToolBar({
     }
   }, [connected, room]);
 
-  // useEffect(() => {
-  //   setNumberOfParticipants(participants.length);
-  // }, [participants]);
-
   return (
     <div className={classes.toolbarContainer}>
       <InfoIconButton classes={classes} />
@@ -117,7 +113,6 @@ export default function ToolBar({
         changeAudioSource={changeAudioSource}
         getAudioSource={getAudioSource}
         cameraPublishing={cameraPublishing}
-        /* publisherIsSpeaking={publisherIsSpeaking} */
       />
       <MuteVideoButton
         toggleVideo={toggleVideo}

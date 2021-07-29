@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import VideoCam from '@material-ui/icons/Videocam';
 import VideocamOff from '@material-ui/icons/VideocamOff';
 import { IconButton } from '@material-ui/core';
@@ -80,14 +79,11 @@ export default function MuteVideoButton({
     <>
       <ButtonGroup
         className={classes.groupButton}
-        // className={`${classes.groupButton} ${classes.toolbarButtons}`}
         disableElevation
         variant="contained"
-        // color="secondary"
         ref={anchorRef}
         aria-label="split button"
       >
-        {/* <Button onClick={handleClick}>{options[selectedIndex]}</Button> */}
         <Tooltip title={title} aria-label="add">
           <IconButton
             onClick={toggleVideo}
@@ -102,7 +98,6 @@ export default function MuteVideoButton({
           </IconButton>
         </Tooltip>
         <IconButton
-          // color="secondary"
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
           aria-expanded={open ? 'true' : undefined}

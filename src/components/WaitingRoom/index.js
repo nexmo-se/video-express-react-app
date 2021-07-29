@@ -47,7 +47,7 @@ export default function WaitingRoom({ location }) {
   } = usePreviewPublisher();
 
   const handleVideoSource = React.useCallback(
-    (e) => {
+    e => {
       const videoDeviceId = e.target.value;
       setVideoDevice(e.target.value);
       previewPublisher.setVideoDevice(videoDeviceId);
@@ -57,7 +57,7 @@ export default function WaitingRoom({ location }) {
   );
 
   const handleAudioSource = React.useCallback(
-    (e) => {
+    e => {
       const audioDeviceId = e.target.value;
       setAudioDevice(audioDeviceId);
       previewPublisher.setAudioDevice(audioDeviceId);
@@ -83,10 +83,11 @@ export default function WaitingRoom({ location }) {
     return true;
   };
 
-  const onChangeRoomName = (e) => {
+  const onChangeRoomName = e => {
     const roomName = e.target.value;
     if (roomName === '' || roomName.trim() === '') {
       // Space detected
+      // setRoomName(roomName);
       return;
     }
     console.log('onChangeRoomName', roomName);
@@ -94,7 +95,7 @@ export default function WaitingRoom({ location }) {
     setRoomName(roomName);
   };
 
-  const onChangeParticipantName = (e) => {
+  const onChangeParticipantName = e => {
     const userName = e.target.value;
     if (userName === '' || userName.trim() === '') {
       // Space detected
@@ -104,17 +105,17 @@ export default function WaitingRoom({ location }) {
     setUserName(e.target.value);
   };
 
-  const onKeyDown = (e) => {
+  const onKeyDown = e => {
     if (e.keyCode === 13) {
       handleJoinClick();
     }
   };
 
-  const handleAudioChange = React.useCallback((e) => {
+  const handleAudioChange = React.useCallback(e => {
     setLocalAudio(e.target.checked);
   }, []);
 
-  const handleVideoChange = React.useCallback((e) => {
+  const handleVideoChange = React.useCallback(e => {
     setLocalVideo(e.target.checked);
   }, []);
 
@@ -153,7 +154,7 @@ export default function WaitingRoom({ location }) {
   useEffect(() => {
     if (previewPublisher && previewMediaCreated && deviceInfo) {
       console.log('useEffect - preview', deviceInfo);
-      previewPublisher.getAudioDevice().then((currentAudioDevice) => {
+      previewPublisher.getAudioDevice().then(currentAudioDevice => {
         setAudioDevice(currentAudioDevice.deviceId);
       });
       const currentVideoDevice = previewPublisher.getVideoDevice();
@@ -247,7 +248,7 @@ export default function WaitingRoom({ location }) {
                     value={audioDevice}
                     onChange={handleAudioSource}
                   >
-                    {deviceInfo.audioInputDevices.map((device) => (
+                    {deviceInfo.audioInputDevices.map(device => (
                       <MenuItem key={device.deviceId} value={device.deviceId}>
                         {device.label}
                       </MenuItem>
@@ -266,7 +267,7 @@ export default function WaitingRoom({ location }) {
                       value={videoDevice}
                       onChange={handleVideoSource}
                     >
-                      {deviceInfo.videoInputDevices.map((device) => (
+                      {deviceInfo.videoInputDevices.map(device => (
                         <MenuItem key={device.deviceId} value={device.deviceId}>
                           {device.label}
                         </MenuItem>

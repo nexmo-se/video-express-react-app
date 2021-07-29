@@ -6,9 +6,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import useScreenSharing from '../../hooks/useScreenSharing';
 
 export default function ScreenSharingButton({ classes, room }) {
-  /* const [isScreenSharing, setScreenSharing] = useState(false); */
-  const { isScreenSharing, startScreenSharing, stopScreenSharing } =
-    useScreenSharing({ room });
+  const {
+    isScreenSharing,
+    startScreenSharing,
+    stopScreenSharing
+  } = useScreenSharing({ room });
 
   const handleScreenSharing = () => {
     isScreenSharing ? stopScreenSharing() : startScreenSharing();

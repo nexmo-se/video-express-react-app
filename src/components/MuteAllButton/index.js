@@ -6,9 +6,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 export default function muteAllButton({ handleMuteAll, areAllMuted, classes }) {
   const title = areAllMuted ? 'Unmute Participants' : 'Mute Participants';
   return (
-    // <button className="buttons" onClick={handleMuteAll}>
-    //   Mute all
-    // </button>
     <Tooltip title={title} aria-label="add">
       <IconButton
         edge="start"
