@@ -7,9 +7,7 @@ export default function useScreenSharing({ room }) {
   const startScreenSharing = useCallback(async () => {
     if (room) {
       try {
-        await room.startScreensharing();
         const { screen } = room;
-        console.log('[startScreensharing]- ', screen);
         /* setIsScreenSharing(true); */
         screen.on('started', () => {
           console.log('[useScreensharing] -  The screen sharing has started!');
@@ -29,6 +27,8 @@ export default function useScreenSharing({ room }) {
           setScreen(null);
           setIsScreenSharing(false);
         });
+        await room.startScreensharing();
+        console.log('[startScreensharing]- ', screen);
       } catch (e) {
         console.log('[useScreensharing] - startScreenSharing error:', e);
       }
