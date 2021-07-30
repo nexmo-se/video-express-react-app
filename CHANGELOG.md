@@ -1,3 +1,7 @@
+# 0.1.4 (Jul 30, 2021)
+
+- Fixed: screensharing events were not triggered because of wrong order of the screen initialising. 
+
 # 0.1.3 (Jul 29, 2021)
 
 - Fixed bug about not being able to reset userName and roomName - [Issue 47](https://github.com/nexmo-se/video-api-multiparty-toolkit-sample-app/issues/47)
