@@ -5,9 +5,8 @@ import styles from './styles.js';
 import useRoom from '../../hooks/useRoom';
 import { UserContext } from '../../context/UserContext';
 
-import SingleParticipantView from '../SingleparticipantView/index';
 import ToolBar from 'components/ToolBar';
-import MuteParticipantsButton from 'components/MuteparticipantButton';
+
 import NetworkToast from 'components/NetworkToast';
 
 export default function VideoRoom() {
@@ -20,7 +19,7 @@ export default function VideoRoom() {
     participants,
     connected,
     networkStatus,
-    publisherIsSpeaking,
+    cameraPublishing
   } = useRoom();
   const roomContainer = useRef();
   const classes = styles();
@@ -32,10 +31,10 @@ export default function VideoRoom() {
         setCredentials({
           apikey: data.apiKey,
           sessionId: data.sessionId,
-          token: data.token,
+          token: data.token
         });
       })
-      .catch((err) => {
+      .catch(err => {
         setError(err);
         console.log(err);
       });
@@ -45,7 +44,7 @@ export default function VideoRoom() {
     if (credentials) {
       console.log(user);
       createCall(credentials, roomContainer.current, user.userName, {
-        ...user.defaultSettings,
+        ...user.defaultSettings
       });
     }
   }, [createCall, credentials, user]);
@@ -65,16 +64,12 @@ export default function VideoRoom() {
         ref={roomContainer}
       >
         <NetworkToast networkStatus={networkStatus} />
-        {/* <MuteParticipantsButton /> */}
-        {participants.length === 0 ? (
-          <SingleParticipantView roomName={roomName} />
-        ) : null}
       </div>
       <ToolBar
         room={room}
         participants={participants}
         connected={connected}
-        publisherIsSpeaking={publisherIsSpeaking}
+        cameraPublishing={cameraPublishing}
       ></ToolBar>
     </div>
   );

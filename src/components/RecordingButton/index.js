@@ -11,7 +11,7 @@ export default function RecordingButton({ classes, room }) {
   const [archiveId, setArchiveId] = useState(null);
   const localClasses = styles();
 
-  const handleRecordingStart = async (sessionId) => {
+  const handleRecordingStart = async sessionId => {
     console.log('starting to record');
     try {
       const data = await startRecording(sessionId);
@@ -23,11 +23,10 @@ export default function RecordingButton({ classes, room }) {
     } catch (e) {
       console.log(e);
       setRecording(false);
-      //todo handle error
     }
   };
 
-  const handleRecordingStop = async (archiveId) => {
+  const handleRecordingStop = async archiveId => {
     console.log('stopping the recording');
     console.log(archiveId);
     try {
@@ -38,7 +37,6 @@ export default function RecordingButton({ classes, room }) {
           console.log(archiveId, status);
           setRecording(false);
         }
-        // todo what happens here?
       }
     } catch (e) {
       console.log(e);

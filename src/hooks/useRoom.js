@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import _ from 'lodash';
+import * as MP from '@vonage/multiparty';
 
 export default function useRoom() {
   let roomRef = useRef(null);
@@ -9,48 +10,19 @@ export default function useRoom() {
   const [participants, setParticipants] = useState([]);
   const [networkStatus, setNetworkStatus] = useState(null);
   const [publisherIsSpeaking, setPublisherIsSpeaking] = useState(false);
+  const [cameraPublishing, setCameraPublishing] = useState(false);
 
   const addParticipants = ({ participant }) => {
-    setParticipants((prev) => [...prev, participant]);
+    setParticipants(prev => [...prev, participant]);
   };
 
   const removeParticipants = ({ participant }) => {
-    setParticipants((prev) =>
-      prev.filter((prevparticipant) => prevparticipant.id !== participant.id)
+    setParticipants(prev =>
+      prev.filter(prevparticipant => prevparticipant.id !== participant.id)
     );
   };
 
-  // const onConnected = useCallback(
-  //   // roomRef.current.on('connected', () => {
-  //   console.log(
-  //     'Room.CameraPublisher - connected viniendo de donde tiene que venir'
-  //   ),
-  //   // }),
-  //   []
-  // );
-
-  //   const onParticipantJoined = useCallback(
-  //     // roomRef.current.on('connected', () => {
-  //     console.log('Room.CameraPublisher - participant joined'),
-  //     // }),
-  //     []
-  //   );
-
-  //   const onStreamCreated = useCallback(
-  //     // roomRef.current.on('connected', () => {
-  //     console.log('Room.CameraPublisher - stream created'),
-  //     // }),
-  //     []
-  //   );
-
-  //   const onDisconnected = useCallback(
-  //     // roomRef.current.on('connected', () => {
-  //     console.log('Room.CameraPublisher - disconnected'),
-  //     // }),
-  //     []
-  //   );
-
-  const onAudioLevel = React.useCallback((audioLevel) => {
+  const onAudioLevel = React.useCallback(audioLevel => {
     let movingAvg = null;
     if (movingAvg === null || movingAvg <= audioLevel) {
       movingAvg = audioLevel;
@@ -64,14 +36,13 @@ export default function useRoom() {
     } else {
       setPublisherIsSpeaking(false);
     }
-    /* setLogLevel(Math.min(Math.max(currentLogLevel, 0), 1) * 100); */
   }, []);
 
   const addPublisherCameraEvents = () => {
     if (roomRef.current.camera) {
       roomRef.current.camera.on(
         'audioLevelUpdated',
-        _.throttle((event) => onAudioLevel(event), 250)
+        _.throttle(event => onAudioLevel(event), 250)
       );
     }
   };
@@ -87,41 +58,29 @@ export default function useRoom() {
         throw new Error('Check your credentials');
       }
 
-      const MP = window.MP;
       roomRef.current = new MP.Room({
         apiKey: apikey,
         sessionId: sessionId,
         token: token,
         roomContainer: 'roomContainer',
-        //useLayoutManager: true,
+        maxVideoParticipantsOnScreen: 10,
         managedLayoutOptions: {
-          cameraPublisherContainer: 'roomContainer',
-          screenPublisherContainer: 'roomContainer',
-        },
+          layoutMode: 'grid'
+        }
       });
-      // const connectionEventHandlers = {
-      //   connected: onConnected
-      //   // disconnected: onDisconnected,
-      //   // participantJoined: onParticipantJoined
-      //   //streamDestroyed: onStreamDestroyed
-      // };
-      // if (roomRef.current) {
-      //   roomRef.current.on({
-      //     connected: onConnected
-      //   });
-      // }
-
-      //   const streamEventHandlers = {
-      //     created: onStreamCreated
-
-      //     //streamDestroyed: onStreamDestroyed
-      //   };
       roomRef.current.on('connected', () => {
         console.log('Room: connected');
       });
       roomRef.current.on('disconnected', () => {
         setNetworkStatus('disconnected');
         console.log('Room: disconnected');
+      });
+      roomRef.current.camera.on('created', () => {
+        setCameraPublishing(true);
+        console.log('camera publishing now');
+      });
+      roomRef.current.on('activeSpeakerChanged', participant => {
+        console.log('Active speaker changed', participant);
       });
 
       roomRef.current.on('reconnected', () => {
@@ -132,8 +91,7 @@ export default function useRoom() {
         setNetworkStatus('reconnecting');
         console.log('Room: reconnecting');
       });
-      roomRef.current.on('participantJoined', (participant) => {
-        //   addParticipant();
+      roomRef.current.on('participantJoined', participant => {
         addParticipants({ participant: participant });
         console.log('Room: participant joined: ', participant);
       });
@@ -145,10 +103,10 @@ export default function useRoom() {
         style: {
           buttonDisplayMode: 'off',
           nameDisplayMode: 'auto',
-          audioLevelDisplayMode: 'off',
+          audioLevelDisplayMode: 'off'
         },
         name: userName,
-        showControls: true,
+        showControls: true
       });
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
@@ -157,9 +115,8 @@ export default function useRoom() {
           setConnected(true);
           setCamera(roomRef.current.camera);
           setScreen(roomRef.current.screen);
-          addPublisherCameraEvents();
         })
-        .catch((e) => console.log(e));
+        .catch(e => console.log(e));
     },
     []
   );
@@ -173,7 +130,6 @@ export default function useRoom() {
     participants,
     networkStatus,
     publisherIsSpeaking,
-    /*     startScreenSharing,
-    stopScreenSharing, */
+    cameraPublishing
   };
 }
