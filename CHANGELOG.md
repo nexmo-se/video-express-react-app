@@ -1,3 +1,7 @@
+# 0.1.5 (Aug 04, 2021)
+
+- Feature: added mobile support for the toolbar. 
+
 # 0.1.4 (Jul 30, 2021)
 
 - Fixed: screensharing events were not triggered because of wrong order of the screen initialising. 
