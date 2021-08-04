@@ -131,7 +131,7 @@ export default function ToolBar({
     </div>
   ) : (
     <div className={classes.toolbarContainer}>
-      <InfoIconButton classes={classes} />
+      <InfoIconButton />
       <MuteAudioButton
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}

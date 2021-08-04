@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { blueGrey } from '@material-ui/core/colors';
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
   waitingRoomContainer: {
     position: 'absolute',
     left: '50%',
@@ -17,7 +17,9 @@ export default makeStyles(theme => ({
     width: '100%'
   },
   mediaSources: {
-    marginBottom: '10px'
+    marginBottom: '10px',
+    display: 'flex',
+    flexDirection: 'column'
   },
   waitingRoomVideoPreview: {
     display: 'flex',
