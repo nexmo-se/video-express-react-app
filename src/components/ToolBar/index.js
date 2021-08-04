@@ -19,7 +19,10 @@ export default function ToolBar({
   room,
   participants,
   connected,
-  cameraPublishing
+  cameraPublishing,
+  isScreenSharing,
+  startScreenSharing,
+  stopScreenSharing
 }) {
   const { roomName } = useParams();
   const theme = useTheme();
@@ -33,11 +36,11 @@ export default function ToolBar({
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map(participant => participant.camera.disableAudio());
+      participants.map((participant) => participant.camera.disableAudio());
 
       setAllMuted(true);
     } else {
-      participants.map(participant => participant.camera.enableAudio());
+      participants.map((participant) => participant.camera.enableAudio());
       setAllMuted(false);
     }
   };
@@ -74,10 +77,10 @@ export default function ToolBar({
     }
   };
 
-  const changeVideoSource = videoId => {
+  const changeVideoSource = (videoId) => {
     room.camera.setVideoDevice(videoId);
   };
-  const changeAudioSource = audioId => {
+  const changeAudioSource = (audioId) => {
     room.camera.setAudioDevice(audioId);
   };
 
@@ -149,7 +152,12 @@ export default function ToolBar({
         changeVideoSource={changeVideoSource}
       />
       <RecordingButton room={room} classes={classes} />
-      <ScreenSharingButton room={room} classes={classes} />
+      <ScreenSharingButton
+        isScreenSharing={isScreenSharing}
+        startScreenSharing={startScreenSharing}
+        stopScreenSharing={stopScreenSharing}
+        classes={classes}
+      />
       <MuteAll
         handleMuteAll={handleMuteAll}
         areAllMuted={areAllMuted}
