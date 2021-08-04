@@ -22,11 +22,22 @@ export default makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3)
   },
+  toolbarMobileContainer: {
+    backgroundColor: theme.palette.toolbarBackground.main,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: '60px',
+    margin: theme.spacing(2),
+    borderRadius: '25px',
+  },
   toolbarButtons: {
     margin: theme.spacing(1),
     borderRadius: '5em',
-    height: '50px',
-    width: '50px',
     backgroundColor: '#32353A',
     color: '#fff'
   },

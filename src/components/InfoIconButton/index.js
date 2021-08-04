@@ -19,7 +19,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import useCopyMeetingUrl from '../../hooks/useCopyMeetingUrl';
 
-export default function InfoIconButton({ classes }) {
+export default function InfoIconButton() {
   const { copyUrl } = useCopyMeetingUrl();
   const localClasses = styles();
   const [state, setState] = React.useState(false);

@@ -38,7 +38,7 @@ export default function MuteAudioButton({
   React.useEffect(() => {
     setDevicesAvailable(deviceInfo.audioInputDevices);
 
-    if (cameraPublishing) {
+    if (cameraPublishing && devicesAvailable) {
       getAudioSource().then(id => setAudioDeviceId(id));
 
       const indexOfSelectedElement = devicesAvailable.indexOf(
@@ -47,7 +47,7 @@ export default function MuteAudioButton({
 
       setSelectedIndex(indexOfSelectedElement);
     }
-  }, [cameraPublishing, getAudioSource, deviceInfo, audioDeviceId]);
+  }, [cameraPublishing, getAudioSource, deviceInfo, audioDeviceId, devicesAvailable]);
 
   React.useEffect(() => {
     if (devicesAvailable) {
