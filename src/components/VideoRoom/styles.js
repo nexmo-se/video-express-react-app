@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
   callContainer: {
     height: '100vh',
     position: 'relative',
@@ -23,6 +23,26 @@ export default makeStyles(theme => ({
     bottom: 0,
     left: 0,
     right: 0
+  },
+  screenSharingContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 9
+  },
+  screenSharingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'rgba(0,0,0,0.4)',
+    zIndex: 9,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '22px',
+    color: '#fff'
   }
 
   /* .roomContainer > .OT_subscriber {
