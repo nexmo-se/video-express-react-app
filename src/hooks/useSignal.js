@@ -1,12 +1,6 @@
 import React from 'react';
 
 export default function useSignal({ room }) {
-  room.on('signal:text', event => {
-    console.log(event);
-    // if (event.isSentByMe) return;
-    addMessageToList(event.data);
-  });
-
   //   const addMessageToList = (message, listOfMessages) => {
   //     return [listOfMessages, message];
   //   };
@@ -23,8 +17,23 @@ export default function useSignal({ room }) {
     }
   }, []);
 
+  const signalListener = React.useCallback(({ data }) => {
+    console.log(data);
+    // const jsonData = JSON.parse(data);
+    console.log('signalListener', data);
+  }, []);
+
+  React.useEffect(() => {
+    if (room) {
+      room.on('signal:text', signalListener);
+    }
+    return function cleanup() {
+      if (room) room.off('signal:text', signalListener);
+    };
+  }, [room, signalListener]);
+
   return {
-    sendSignal,
-    addMessageToList
+    sendSignal
+    // addMessageToList
   };
 }

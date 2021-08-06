@@ -7,7 +7,7 @@ import useRoom from '../../hooks/useRoom';
 const Chat = ({ room }) => {
   const [chatMessages, setChatMessages] = React.useState([]);
   React.useEffect(() => {}, [room]);
-  const { sendSignal, addMessageToList } = useSignal({ room });
+  const { sendSignal } = useSignal({ room });
 
   const sendMessage = () => {
     console.log('sending signal');
