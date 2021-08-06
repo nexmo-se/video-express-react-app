@@ -15,8 +15,8 @@ import InfoIconButton from 'components/InfoIconButton';
 
 export default function ToolBar({
   room,
-  participants,
   connected,
+  participants,
   cameraPublishing
 }) {
   const { roomName } = useParams();
@@ -25,7 +25,6 @@ export default function ToolBar({
   const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
-  const [numberOfParticipants, setNumberOfParticipants] = useState(0);
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
@@ -101,11 +100,17 @@ export default function ToolBar({
       setHasAudio(isAudioEnabled);
       setHasVideo(isVideoEnabled);
     }
+    // if (room) console.log(getParticipantsList());
   }, [connected, room]);
+
+  // useEffect(() => {
+  //   console.log(room);x
+  //   setParticipants(getParticipantsList());
+  // }, [room]);
 
   return (
     <div className={classes.toolbarContainer}>
-      <InfoIconButton classes={classes} />
+      <InfoIconButton classes={classes} participants={participants} />
       <MuteAudioButton
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}

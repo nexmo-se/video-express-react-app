@@ -10,13 +10,13 @@ export default function useScreenSharing({ room }) {
         await room.startScreensharing();
         const { screen } = room;
         console.log('[startScreensharing]- ', screen);
-        /* setIsScreenSharing(true); */
+        setIsScreenSharing(true);
         screen.on('started', () => {
           console.log('[useScreensharing] -  The screen sharing has started!');
           setScreen(screen);
           setIsScreenSharing(true);
         });
-        screen.on('stopped', (reason) => {
+        screen.on('stopped', reason => {
           console.log(
             '[useScreensharing] - The screen sharing stopped because: ',
             reason
@@ -24,7 +24,7 @@ export default function useScreenSharing({ room }) {
           setScreen(null);
           setIsScreenSharing(false);
         });
-        screen.on('accessDenied', (reason) => {
+        screen.on('accessDenied', reason => {
           console.log('[useScreensharing] - Access Denied', reason);
           setScreen(null);
           setIsScreenSharing(false);
