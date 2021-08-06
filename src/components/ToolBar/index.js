@@ -110,7 +110,11 @@ export default function ToolBar({
 
   return (
     <div className={classes.toolbarContainer}>
-      <InfoIconButton classes={classes} participants={participants} />
+      <InfoIconButton
+        classes={classes}
+        participants={participants}
+        room={room}
+      />
       <MuteAudioButton
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}

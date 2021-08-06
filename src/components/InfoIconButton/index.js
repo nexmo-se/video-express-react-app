@@ -15,7 +15,7 @@ import Drawer from '@material-ui/core/Drawer';
 
 import SideMenu from '../SideMenu';
 
-export default function InfoIconButton({ classes, participants }) {
+export default function InfoIconButton({ classes, participants, room }) {
   const titleToolTip = 'Meeting Info';
   const localClasses = styles();
   const [state, setState] = React.useState(false);
@@ -44,7 +44,7 @@ export default function InfoIconButton({ classes, participants }) {
         </IconButton>
       </Tooltip>
       <Drawer open={state} onClose={toggleDrawer(false)}>
-        <SideMenu participants={participants}></SideMenu>
+        <SideMenu room={room} participants={participants}></SideMenu>
       </Drawer>
     </div>
   );

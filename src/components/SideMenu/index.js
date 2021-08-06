@@ -46,10 +46,8 @@ function TabPanel(props) {
   );
 }
 
-const SideMenu = ({ participants }) => {
+const SideMenu = ({ participants, room }) => {
   const [counter, setCounter] = React.useState(0);
-  const [second, setSecond] = React.useState('00');
-  const [minute, setMinute] = React.useState('00');
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -73,11 +71,6 @@ const SideMenu = ({ participants }) => {
     return () => clearInterval(intervalId);
   }, [counter]);
 
-  //   useEffect(() => {
-  //     if (participants) setParticipants(participants);
-  //     console.log(participants);
-  //   }, [participants]);
-
   return (
     <div>
       <AppBar position="static">
@@ -92,7 +85,7 @@ const SideMenu = ({ participants }) => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Chat />
+        <Chat room={room} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <MeetingInfo />
