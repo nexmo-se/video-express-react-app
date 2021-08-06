@@ -5,17 +5,9 @@ import useSignal from '../../hooks/useSignal';
 import useRoom from '../../hooks/useRoom';
 
 const Chat = ({ room }) => {
+  const [chatMessages, setChatMessages] = React.useState([]);
   React.useEffect(() => {}, [room]);
-  const { sendSignal } = useSignal({ room });
-
-  room.on('signal:text', event => {
-    console.log(event);
-    if (event.isSentByMe) return;
-    // // createNewChatMessage(event.data, event.from.name);
-    // else {
-    //   resetUnreadCounter();
-    // }
-  });
+  const { sendSignal, addMessageToList } = useSignal({ room });
 
   const sendMessage = () => {
     console.log('sending signal');
