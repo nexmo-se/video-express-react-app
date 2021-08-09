@@ -17,12 +17,12 @@ import InfoIconButton from 'components/InfoIconButton';
 
 export default function ToolBar({
   room,
-  participants,
   connected,
   cameraPublishing,
   isScreenSharing,
   startScreenSharing,
-  stopScreenSharing
+  stopScreenSharing,
+  participants
 }) {
   const { roomName } = useParams();
   const theme = useTheme();
@@ -108,6 +108,7 @@ export default function ToolBar({
       setHasAudio(isAudioEnabled);
       setHasVideo(isVideoEnabled);
     }
+    // if (room) console.log(getParticipantsList());
   }, [connected, room]);
 
   return isMobileWidth ? (
@@ -134,7 +135,11 @@ export default function ToolBar({
     </div>
   ) : (
     <div className={classes.toolbarContainer}>
-      <InfoIconButton />
+      <InfoIconButton
+        classes={classes}
+        participants={participants}
+        room={room}
+      />
       <MuteAudioButton
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}

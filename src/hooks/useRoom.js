@@ -13,7 +13,10 @@ export default function useRoom() {
   const [cameraPublishing, setCameraPublishing] = useState(false);
 
   const addParticipants = ({ participant }) => {
-    setParticipants((prev) => [...prev, participant]);
+    const participantWithTime = Object.assign(participant, {
+      startTime: new Date().getTime() / 1000
+    });
+    setParticipants(prev => [...prev, participantWithTime]);
   };
 
   const removeParticipants = ({ participant }) => {
