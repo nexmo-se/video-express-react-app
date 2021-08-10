@@ -10,12 +10,9 @@ export default function useSignal({ room }) {
     if (room) {
       room
         .signal({ type: type, data: data })
-        .then(response => {
-          response;
-        })
         .catch(e => e);
     }
-  }, []);
+  }, [room]);
 
   const signalListener = React.useCallback(({ data }) => {
     console.log(data);

@@ -1,6 +1,4 @@
-import { useState, useCallback, useEffect, useContext } from 'react';
-import { UserContext } from '../context/UserContext';
-/* import { v4 as uuid } from "uuid"; */
+import { useState, useCallback, useEffect } from 'react';
 
 export default function useRecording({ room }) {
   const [isRecording, setIsRecording] = useState(false);
@@ -11,7 +9,7 @@ export default function useRecording({ room }) {
         JSON.stringify({ type: 'recording', data: JSON.stringify(data) })
       );
       if (room) {
-        room.signal(payload, (err) => {
+        room.signal(payload, (err) => { // todo if someone joins later, I need to send the signal to him as well
           if (err) reject(err);
           else resolve();
         });
