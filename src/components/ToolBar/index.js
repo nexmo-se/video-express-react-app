@@ -17,12 +17,13 @@ import InfoIconButton from 'components/InfoIconButton';
 
 export default function ToolBar({
   room,
-  participants,
   connected,
   cameraPublishing,
   isScreenSharing,
   startScreenSharing,
-  stopScreenSharing
+  stopScreenSharing,
+  participants,
+  localParticipant
 }) {
   const { roomName } = useParams();
   const theme = useTheme();
@@ -32,7 +33,6 @@ export default function ToolBar({
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
   const isMobileWidth = useMediaQuery(theme.breakpoints.down('xs'));
-  const [numberOfParticipants, setNumberOfParticipants] = useState(0);
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
@@ -108,6 +108,7 @@ export default function ToolBar({
       setHasAudio(isAudioEnabled);
       setHasVideo(isVideoEnabled);
     }
+    // if (room) console.log(getParticipantsList());
   }, [connected, room]);
 
   return isMobileWidth ? (
@@ -124,17 +125,15 @@ export default function ToolBar({
         hasVideo={hasVideo}
         classes={classes}
       />
-      {/* <RecordingButton room={room} classes={classes} />
-      <ScreenSharingButton room={room} classes={classes} />
-      <MuteAll
-        handleMuteAll={handleMuteAll}
-        areAllMuted={areAllMuted}
-        classes={classes}
-      /> */}
     </div>
   ) : (
     <div className={classes.toolbarContainer}>
-      <InfoIconButton />
+      <InfoIconButton
+        classes={classes}
+        participants={participants}
+        room={room}
+        localParticipant={localParticipant}
+      />
       <MuteAudioButton
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}

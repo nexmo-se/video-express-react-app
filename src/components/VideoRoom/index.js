@@ -20,7 +20,8 @@ export default function VideoRoom() {
     participants,
     connected,
     networkStatus,
-    cameraPublishing
+    cameraPublishing,
+    localParticipant
   } = useRoom();
   const { isScreenSharing, startScreenSharing, stopScreenSharing } =
     useScreenSharing({ room });
@@ -81,6 +82,7 @@ export default function VideoRoom() {
       <ToolBar
         room={room}
         participants={participants}
+        localParticipant={localParticipant}
         connected={connected}
         cameraPublishing={cameraPublishing}
         isScreenSharing={isScreenSharing}
