@@ -102,6 +102,7 @@ const SideMenu = ({ participants, room, localParticipant }) => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
+        <div>Not active </div>
         <Chat room={room} />
       </TabPanel>
       <TabPanel value={value} index={2}>
