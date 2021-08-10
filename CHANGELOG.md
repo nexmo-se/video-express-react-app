@@ -1,4 +1,4 @@
-# 0.1.5 (Aug 10, 2021)
+# 0.1.6 (Aug 10, 2021)
 
 - add screen sharing priority on the archiving
 - add participant list on the SideNav panel 
