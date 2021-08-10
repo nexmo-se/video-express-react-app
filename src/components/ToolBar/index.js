@@ -22,7 +22,8 @@ export default function ToolBar({
   isScreenSharing,
   startScreenSharing,
   stopScreenSharing,
-  participants
+  participants,
+  localParticipant
 }) {
   const { roomName } = useParams();
   const theme = useTheme();
@@ -32,7 +33,6 @@ export default function ToolBar({
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
   const isMobileWidth = useMediaQuery(theme.breakpoints.down('xs'));
-  const [numberOfParticipants, setNumberOfParticipants] = useState(0);
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
@@ -125,13 +125,6 @@ export default function ToolBar({
         hasVideo={hasVideo}
         classes={classes}
       />
-      {/* <RecordingButton room={room} classes={classes} />
-      <ScreenSharingButton room={room} classes={classes} />
-      <MuteAll
-        handleMuteAll={handleMuteAll}
-        areAllMuted={areAllMuted}
-        classes={classes}
-      /> */}
     </div>
   ) : (
     <div className={classes.toolbarContainer}>
@@ -139,6 +132,7 @@ export default function ToolBar({
         classes={classes}
         participants={participants}
         room={room}
+        localParticipant={localParticipant}
       />
       <MuteAudioButton
         toggleAudio={toggleAudio}

@@ -6,6 +6,7 @@ export default function useRoom() {
   let roomRef = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
+  const [localParticipant, setLocalParticipant] = useState(null);
   const [connected, setConnected] = useState(false);
   const [participants, setParticipants] = useState([]);
   const [networkStatus, setNetworkStatus] = useState(null);
@@ -16,13 +17,27 @@ export default function useRoom() {
     const participantWithTime = Object.assign(participant, {
       startTime: new Date().getTime() / 1000
     });
-    setParticipants(prev => [...prev, participantWithTime]);
+    setParticipants((prev) => [...prev, participantWithTime]);
   };
 
   const removeParticipants = ({ participant }) => {
     setParticipants((prev) =>
       prev.filter((prevparticipant) => prevparticipant.id !== participant.id)
     );
+  };
+
+  const addLocalParticipant = ({ room }) => {
+    if (room) {
+      setLocalParticipant({
+        id: room.participantId,
+        name: room.participantName,
+        startTime: new Date().getTime() / 1000
+      });
+    }
+  };
+
+  const removeLocalParticipant = ({ participant }) => {
+    setParticipants(null);
   };
 
   const onAudioLevel = React.useCallback((audioLevel) => {
@@ -119,6 +134,7 @@ export default function useRoom() {
           setConnected(true);
           setCamera(roomRef.current.camera);
           setScreen(roomRef.current.screen);
+          addLocalParticipant({ room: roomRef.current });
         })
         .catch((e) => console.log(e));
     },
@@ -134,6 +150,7 @@ export default function useRoom() {
     participants,
     networkStatus,
     publisherIsSpeaking,
-    cameraPublishing
+    cameraPublishing,
+    localParticipant
   };
 }

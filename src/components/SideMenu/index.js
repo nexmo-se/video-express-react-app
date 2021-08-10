@@ -46,9 +46,8 @@ function TabPanel(props) {
   );
 }
 
-const SideMenu = ({ participants, room }) => {
+const SideMenu = ({ participants, room, localParticipant }) => {
   const [counter, setCounter] = React.useState(0);
-
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -61,15 +60,33 @@ const SideMenu = ({ participants, room }) => {
     };
   }
 
-  React.useEffect(() => {
+  /* const localParticipantsMinutesSinceJoin = () => {
+    if (localParticipant) {
+      return Math.floor(
+        (new Date().getTime() / 1000 - localParticipant.startTime) / 60
+      );
+    }
+    return 0;
+  };
+  const localParticipantsSecondsSinceJoin = () => {
+    if (localParticipant) {
+      return (
+        Math.floor(new Date().getTime() / 1000 - localParticipant.startTime) %
+        60
+      );
+    }
+    return 0;
+  }; */
+
+  /* React.useEffect(() => {
     let intervalId;
 
     intervalId = setInterval(() => {
-      setCounter(counter => counter + 1);
+      setCounter((counter) => counter + 1);
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [counter]);
+  }, [counter]); */
 
   return (
     <div>
@@ -91,43 +108,56 @@ const SideMenu = ({ participants, room }) => {
         <MeetingInfo />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {participants?.length === 0 && <div>There are no participants yet</div>}
-        {participants &&
-          participants.map(e => {
-            const minutesSinceJoin = Math.floor(
-              (new Date().getTime() / 1000 - e.startTime) / 60
-            );
-            const secondsSinceJoin =
-              Math.floor(new Date().getTime() / 1000 - e.startTime) % 60;
-            return (
-              <div>
-                <List>
+        <List>
+          {localParticipant && (
+            <>
+              <ListItem>
+                <ListItemIcon>
+                  <PersonIcon variant="contained" color="primary" />
+                </ListItemIcon>
+                <ListItemText
+                  primary={`Participant Id: ${localParticipant.id} `}
+                />
+              </ListItem>
+              {/* <ListItem>
+                <ListItemIcon>
+                  <TimerIcon variant="contained" color="primary" />
+                </ListItemIcon>
+                <ListItemText
+                  primary={`Active Time: ${localParticipantsMinutesSinceJoin()} minutes ${localParticipantsSecondsSinceJoin()} seconds`}
+                />
+              </ListItem> */}
+            </>
+          )}
+          {participants &&
+            participants?.length > 0 &&
+            participants.map((e) => {
+              /*  const minutesSinceJoin = Math.floor(
+                (new Date().getTime() / 1000 - e.startTime) / 60
+              );
+              const secondsSinceJoin =
+                Math.floor(new Date().getTime() / 1000 - e.startTime) % 60; */
+              return (
+                <>
                   <ListItem>
                     <ListItemIcon>
                       <PersonIcon variant="contained" color="primary" />
                     </ListItemIcon>
-                    <ListItemText
-                      // className={localClasses.versionLabel}
-                      primary={`Participant Id: ${e.id} `}
-                    />
+                    <ListItemText primary={`Participant Id: ${e.id} `} />
                   </ListItem>
-
-                  <ListItem>
+                  {/* <ListItem>
                     <ListItemIcon>
                       <TimerIcon variant="contained" color="primary" />
                     </ListItemIcon>
-                    Active Time:
-                    {` ${minutesSinceJoin}  minutes `}
-                    {`${secondsSinceJoin} seconds`}
-                  </ListItem>
+                    <ListItemText
+                      primary={`Active Time: ${minutesSinceJoin} minutes ${secondsSinceJoin} seconds`}
+                    />
+                  </ListItem> */}
                   <Divider />
-                </List>
-                {/* <div>Participant Id: {e.id}</div>
-                <div></div> */}
-              </div>
-            );
-          })}
-        {/* {console.log(participantList)} */}
+                </>
+              );
+            })}
+        </List>
       </TabPanel>
     </div>
   );
