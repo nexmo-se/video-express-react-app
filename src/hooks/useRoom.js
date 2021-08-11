@@ -6,6 +6,7 @@ export default function useRoom() {
   let roomRef = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
+  const [localParticipant, setLocalParticipant] = useState(null);
   const [connected, setConnected] = useState(false);
   const [participants, setParticipants] = useState([]);
   const [networkStatus, setNetworkStatus] = useState(null);
@@ -13,16 +14,33 @@ export default function useRoom() {
   const [cameraPublishing, setCameraPublishing] = useState(false);
 
   const addParticipants = ({ participant }) => {
-    setParticipants(prev => [...prev, participant]);
+    const participantWithTime = Object.assign(participant, {
+      startTime: new Date().getTime() / 1000
+    });
+    setParticipants((prev) => [...prev, participantWithTime]);
   };
 
   const removeParticipants = ({ participant }) => {
-    setParticipants(prev =>
-      prev.filter(prevparticipant => prevparticipant.id !== participant.id)
+    setParticipants((prev) =>
+      prev.filter((prevparticipant) => prevparticipant.id !== participant.id)
     );
   };
 
-  const onAudioLevel = React.useCallback(audioLevel => {
+  const addLocalParticipant = ({ room }) => {
+    if (room) {
+      setLocalParticipant({
+        id: room.participantId,
+        name: room.participantName,
+        startTime: new Date().getTime() / 1000
+      });
+    }
+  };
+
+  const removeLocalParticipant = ({ participant }) => {
+    setParticipants(null);
+  };
+
+  const onAudioLevel = React.useCallback((audioLevel) => {
     let movingAvg = null;
     if (movingAvg === null || movingAvg <= audioLevel) {
       movingAvg = audioLevel;
@@ -42,7 +60,7 @@ export default function useRoom() {
     if (roomRef.current.camera) {
       roomRef.current.camera.on(
         'audioLevelUpdated',
-        _.throttle(event => onAudioLevel(event), 250)
+        _.throttle((event) => onAudioLevel(event), 250)
       );
     }
   };
@@ -65,7 +83,8 @@ export default function useRoom() {
         roomContainer: 'roomContainer',
         maxVideoParticipantsOnScreen: 10,
         managedLayoutOptions: {
-          layoutMode: 'grid'
+          layoutMode: 'grid',
+          screenPublisherContainer: 'screenSharingContainer'
         }
       });
       roomRef.current.on('connected', () => {
@@ -79,7 +98,7 @@ export default function useRoom() {
         setCameraPublishing(true);
         console.log('camera publishing now');
       });
-      roomRef.current.on('activeSpeakerChanged', participant => {
+      roomRef.current.on('activeSpeakerChanged', (participant) => {
         console.log('Active speaker changed', participant);
       });
 
@@ -91,7 +110,7 @@ export default function useRoom() {
         setNetworkStatus('reconnecting');
         console.log('Room: reconnecting');
       });
-      roomRef.current.on('participantJoined', participant => {
+      roomRef.current.on('participantJoined', (participant) => {
         addParticipants({ participant: participant });
         console.log('Room: participant joined: ', participant);
       });
@@ -115,8 +134,9 @@ export default function useRoom() {
           setConnected(true);
           setCamera(roomRef.current.camera);
           setScreen(roomRef.current.screen);
+          addLocalParticipant({ room: roomRef.current });
         })
-        .catch(e => console.log(e));
+        .catch((e) => console.log(e));
     },
     []
   );
@@ -130,6 +150,7 @@ export default function useRoom() {
     participants,
     networkStatus,
     publisherIsSpeaking,
-    cameraPublishing
+    cameraPublishing,
+    localParticipant
   };
 }

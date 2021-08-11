@@ -27,13 +27,17 @@ const createSessionandToken = () => {
 
 const createArchive = (session) => {
   return new Promise((resolve, reject) => {
-    opentok.startArchive(session, function (error, archive) {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(archive);
+    opentok.startArchive(
+      session,
+      { layout: { screenshareType: 'horizontalPresentation' } },
+      function (error, archive) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(archive);
+        }
       }
-    });
+    );
   });
 };
 
@@ -89,5 +93,5 @@ module.exports = {
   generateToken,
   initiateArchiving,
   stopArchiving,
-  listArchives,
+  listArchives
 };

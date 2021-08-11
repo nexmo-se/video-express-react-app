@@ -8,6 +8,7 @@ import { UserContext } from '../../context/UserContext';
 import ToolBar from 'components/ToolBar';
 
 import NetworkToast from 'components/NetworkToast';
+import useScreenSharing from '../../hooks/useScreenSharing';
 
 export default function VideoRoom() {
   const { user } = useContext(UserContext);
@@ -19,8 +20,11 @@ export default function VideoRoom() {
     participants,
     connected,
     networkStatus,
-    cameraPublishing
+    cameraPublishing,
+    localParticipant
   } = useRoom();
+  const { isScreenSharing, startScreenSharing, stopScreenSharing } =
+    useScreenSharing({ room });
   const roomContainer = useRef();
   const classes = styles();
   let { roomName } = useParams();
@@ -34,7 +38,7 @@ export default function VideoRoom() {
           token: data.token
         });
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err);
         console.log(err);
       });
@@ -64,12 +68,26 @@ export default function VideoRoom() {
         ref={roomContainer}
       >
         <NetworkToast networkStatus={networkStatus} />
+        <div
+          id="screenSharingContainer"
+          className={classes.screenSharingContainer}
+        >
+          {isScreenSharing && (
+            <div className={classes.screenSharingOverlay}>
+              You Are Screensharing
+            </div>
+          )}
+        </div>
       </div>
       <ToolBar
         room={room}
         participants={participants}
+        localParticipant={localParticipant}
         connected={connected}
         cameraPublishing={cameraPublishing}
+        isScreenSharing={isScreenSharing}
+        startScreenSharing={startScreenSharing}
+        stopScreenSharing={stopScreenSharing}
       ></ToolBar>
     </div>
   );

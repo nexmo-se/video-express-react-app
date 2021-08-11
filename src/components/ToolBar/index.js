@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
@@ -10,30 +11,36 @@ import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
 import { useParams } from 'react-router';
+import { useTheme } from '@material-ui/core';
 
 import InfoIconButton from 'components/InfoIconButton';
 
 export default function ToolBar({
   room,
-  participants,
   connected,
-  cameraPublishing
+  cameraPublishing,
+  isScreenSharing,
+  startScreenSharing,
+  stopScreenSharing,
+  participants,
+  localParticipant
 }) {
   const { roomName } = useParams();
+  const theme = useTheme();
   const { push } = useHistory();
   const [hasAudio, setHasAudio] = useState(true);
   const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
-  const [numberOfParticipants, setNumberOfParticipants] = useState(0);
+  const isMobileWidth = useMediaQuery(theme.breakpoints.down('xs'));
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map(participant => participant.camera.disableAudio());
+      participants.map((participant) => participant.camera.disableAudio());
 
       setAllMuted(true);
     } else {
-      participants.map(participant => participant.camera.enableAudio());
+      participants.map((participant) => participant.camera.enableAudio());
       setAllMuted(false);
     }
   };
@@ -70,10 +77,10 @@ export default function ToolBar({
     }
   };
 
-  const changeVideoSource = videoId => {
+  const changeVideoSource = (videoId) => {
     room.camera.setVideoDevice(videoId);
   };
-  const changeAudioSource = audioId => {
+  const changeAudioSource = (audioId) => {
     room.camera.setAudioDevice(audioId);
   };
 
@@ -101,11 +108,32 @@ export default function ToolBar({
       setHasAudio(isAudioEnabled);
       setHasVideo(isVideoEnabled);
     }
+    // if (room) console.log(getParticipantsList());
   }, [connected, room]);
 
-  return (
+  return isMobileWidth ? (
+    <div className={classes.toolbarMobileContainer}>
+      <MuteAudioButton
+        toggleAudio={toggleAudio}
+        hasAudio={hasAudio}
+        classes={classes}
+        /* publisherIsSpeaking={publisherIsSpeaking} */
+      />
+      <EndCallButton classes={classes} handleEndCall={endCall} />
+      <MuteVideoButton
+        toggleVideo={toggleVideo}
+        hasVideo={hasVideo}
+        classes={classes}
+      />
+    </div>
+  ) : (
     <div className={classes.toolbarContainer}>
-      <InfoIconButton classes={classes} />
+      <InfoIconButton
+        classes={classes}
+        participants={participants}
+        room={room}
+        localParticipant={localParticipant}
+      />
       <MuteAudioButton
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}
@@ -123,7 +151,12 @@ export default function ToolBar({
         changeVideoSource={changeVideoSource}
       />
       <RecordingButton room={room} classes={classes} />
-      <ScreenSharingButton room={room} classes={classes} />
+      <ScreenSharingButton
+        isScreenSharing={isScreenSharing}
+        startScreenSharing={startScreenSharing}
+        stopScreenSharing={stopScreenSharing}
+        classes={classes}
+      />
       <MuteAll
         handleMuteAll={handleMuteAll}
         areAllMuted={areAllMuted}

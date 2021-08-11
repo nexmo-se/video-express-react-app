@@ -39,8 +39,6 @@ export default function EndCall() {
         <h2>This is an amazing meeting</h2>
         <h2>I hope you have had fun with us</h2>
 
-        <p>Here is a perfect spot for adding colourful details</p>
-        <p>Memorable insights and bla,bla,bla</p>
         <IconButton
           onClick={redirectNewMeeting}
           className={classes.new__meeting}

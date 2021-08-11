@@ -1,3 +1,9 @@
+# 0.1.5 (Aug 10, 2021)
+
+- Feature: added mobile support for the toolbar.
+- add screen sharing priority on the archiving
+- add participant list on the SideNav panel 
+
 # 0.1.4 (Jul 30, 2021)
 
 - Fixed: screensharing events were not triggered because of wrong order of the screen initialising. 
