@@ -5,7 +5,9 @@ import ChatIcon from '@material-ui/icons/Chat';
 import ContactsIcon from '@material-ui/icons/Contacts';
 
 const ChatMessages = ({ chatMessages }) => {
-  // useEffect(() => {
+  const messagesEndRef = React.useRef(null);
+
+  // React.useEffect(() => {
   //   scrollToLastMessage();
   // }, [chatMessages]);
 
@@ -20,17 +22,19 @@ const ChatMessages = ({ chatMessages }) => {
         chatMessages.length &&
         chatMessages.map(e => {
           return (
-            // <div className={classes.chatContainer}>
-            //   <div className={e.isSentByMe ? classes.mine : classes.others}>
-            //     {e.data}
-            //   </div>
-            // </div>
-            <div className={classes.messageContainer}>
+            <div ref={messagesEndRef} className={classes.messageContainer}>
               <div className={classes.chatAvatar}>
                 <ContactsIcon className={classes.iconChat} />
                 <Typography color="textSecondary" variant="subtitle1">
                   {e?.from ? `${e.from.camera._stream.name}:` : 'Me:'}
-                  <span className={classes.time}>{e.date}</span>
+                  {/* <span className={classes.time}>{e.date}</span> */}
+                </Typography>
+                <Typography
+                  className={classes.time}
+                  color="textSecondary"
+                  variant="subtitle1"
+                >
+                  {e.date}
                 </Typography>
               </div>
               <div className={classes.chatAvatar}>
@@ -42,6 +46,9 @@ const ChatMessages = ({ chatMessages }) => {
             </div>
           );
         })}
+      {chatMessages && chatMessages.length === 0 && (
+        <div>There are no messages</div>
+      )}
     </div>
   );
 };

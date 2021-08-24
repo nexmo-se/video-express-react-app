@@ -29,7 +29,6 @@ export default makeStyles(theme => ({
     marginRight: '5px'
   },
   time: {
-    position: 'absolute',
-    right: '40px'
+    marginLeft: 'auto'
   }
 }));

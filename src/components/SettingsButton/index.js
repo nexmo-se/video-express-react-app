@@ -42,7 +42,7 @@ export default function SettingsButton({ classes, room }) {
   };
   return (
     <div>
-      <Tooltip title="Options">
+      <Tooltip title="Change Layout">
         <IconButton
           aria-label="more"
           aria-controls="long-menu"
@@ -50,7 +50,7 @@ export default function SettingsButton({ classes, room }) {
           className={classes.toolbarButtons}
           onClick={handleClick}
         >
-          <MoreVertIcon />
+          <DashboardIcon />
         </IconButton>
       </Tooltip>
       <Menu

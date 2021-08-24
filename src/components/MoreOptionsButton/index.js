@@ -7,6 +7,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreIcon from '@material-ui/icons/More';
 import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
 import HouseIcon from '@material-ui/icons/House';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import React from 'react';
 import styles from './styles';
@@ -17,14 +18,14 @@ import SideMenu from '../SideMenu';
 
 import useSignal from '../../hooks/useSignal';
 
-export default function InfoIconButton({
+export default function MoreOptionsButton({
   classes,
   participants,
   room,
   localParticipant
 }) {
   const { listOfMessages } = useSignal({ room });
-  const titleToolTip = 'Meeting Info';
+  const titleToolTip = 'More options';
   const localClasses = styles();
   const [state, setState] = React.useState(false);
 
@@ -48,11 +49,16 @@ export default function InfoIconButton({
           aria-label="mic"
           className={localClasses.infoButton}
         >
-          <InfoIcon fontSize="inherit" />
+          <MoreVertIcon fontSize="inherit" />
         </IconButton>
       </Tooltip>
-      <Drawer open={state} onClose={toggleDrawer(false)}>
+      <Drawer
+        open={state}
+        onClose={toggleDrawer(false)}
+        classes={{ paper: localClasses.paper }}
+      >
         <SideMenu
+          className={localClasses.root}
           room={room}
           participants={participants}
           localParticipant={localParticipant}

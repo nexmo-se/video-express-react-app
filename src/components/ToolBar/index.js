@@ -13,7 +13,7 @@ import styles from './styles';
 import { useParams } from 'react-router';
 import { useTheme } from '@material-ui/core';
 
-import InfoIconButton from 'components/InfoIconButton';
+import MoreOptionsButton from 'components/MoreOptionsButton';
 
 export default function ToolBar({
   room,
@@ -36,11 +36,11 @@ export default function ToolBar({
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map((participant) => participant.camera.disableAudio());
+      participants.map(participant => participant.camera.disableAudio());
 
       setAllMuted(true);
     } else {
-      participants.map((participant) => participant.camera.enableAudio());
+      participants.map(participant => participant.camera.enableAudio());
       setAllMuted(false);
     }
   };
@@ -77,10 +77,10 @@ export default function ToolBar({
     }
   };
 
-  const changeVideoSource = (videoId) => {
+  const changeVideoSource = videoId => {
     room.camera.setVideoDevice(videoId);
   };
-  const changeAudioSource = (audioId) => {
+  const changeAudioSource = audioId => {
     room.camera.setAudioDevice(audioId);
   };
 
@@ -128,7 +128,7 @@ export default function ToolBar({
     </div>
   ) : (
     <div className={classes.toolbarContainer}>
-      <InfoIconButton
+      <MoreOptionsButton
         classes={classes}
         participants={participants}
         room={room}
