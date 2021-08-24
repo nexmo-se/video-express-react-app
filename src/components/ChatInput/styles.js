@@ -2,6 +2,8 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 export default makeStyles((theme: Theme) =>
   createStyles({
     wrapForm: {
+      position: 'absolute',
+      bottom: '0',
       display: 'flex',
       justifyContent: 'center',
       width: '95%',

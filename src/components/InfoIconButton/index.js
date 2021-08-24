@@ -15,17 +15,20 @@ import Drawer from '@material-ui/core/Drawer';
 
 import SideMenu from '../SideMenu';
 
+import useSignal from '../../hooks/useSignal';
+
 export default function InfoIconButton({
   classes,
   participants,
   room,
   localParticipant
 }) {
+  const { listOfMessages } = useSignal({ room });
   const titleToolTip = 'Meeting Info';
   const localClasses = styles();
   const [state, setState] = React.useState(false);
 
-  const toggleDrawer = () => (event) => {
+  const toggleDrawer = () => event => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
@@ -53,6 +56,7 @@ export default function InfoIconButton({
           room={room}
           participants={participants}
           localParticipant={localParticipant}
+          listOfMessages={listOfMessages}
         ></SideMenu>
       </Drawer>
     </div>

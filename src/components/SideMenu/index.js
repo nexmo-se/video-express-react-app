@@ -46,7 +46,7 @@ function TabPanel(props) {
   );
 }
 
-const SideMenu = ({ participants, room, localParticipant }) => {
+const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
   const [counter, setCounter] = React.useState(0);
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -61,32 +61,32 @@ const SideMenu = ({ participants, room, localParticipant }) => {
   }
 
   /* const localParticipantsMinutesSinceJoin = () => {
-    if (localParticipant) {
-      return Math.floor(
-        (new Date().getTime() / 1000 - localParticipant.startTime) / 60
-      );
-    }
-    return 0;
-  };
-  const localParticipantsSecondsSinceJoin = () => {
-    if (localParticipant) {
-      return (
-        Math.floor(new Date().getTime() / 1000 - localParticipant.startTime) %
-        60
-      );
-    }
-    return 0;
-  }; */
+   if (localParticipant) {
+     return Math.floor(
+       (new Date().getTime() / 1000 - localParticipant.startTime) / 60
+     );
+   }
+   return 0;
+ };
+ const localParticipantsSecondsSinceJoin = () => {
+   if (localParticipant) {
+     return (
+       Math.floor(new Date().getTime() / 1000 - localParticipant.startTime) %
+       60
+     );
+   }
+   return 0;
+ }; */
 
   /* React.useEffect(() => {
-    let intervalId;
-
-    intervalId = setInterval(() => {
-      setCounter((counter) => counter + 1);
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, [counter]); */
+   let intervalId;
+ 
+   intervalId = setInterval(() => {
+     setCounter((counter) => counter + 1);
+   }, 1000);
+ 
+   return () => clearInterval(intervalId);
+ }, [counter]); */
 
   return (
     <div>
@@ -102,8 +102,8 @@ const SideMenu = ({ participants, room, localParticipant }) => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <div>Not active </div>
-        <Chat room={room} />
+        {/* <div>Not active </div> */}
+        <Chat room={room} listOfMessages={listOfMessages} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <MeetingInfo />
@@ -121,23 +121,23 @@ const SideMenu = ({ participants, room, localParticipant }) => {
                 />
               </ListItem>
               {/* <ListItem>
-                <ListItemIcon>
-                  <TimerIcon variant="contained" color="primary" />
-                </ListItemIcon>
-                <ListItemText
-                  primary={`Active Time: ${localParticipantsMinutesSinceJoin()} minutes ${localParticipantsSecondsSinceJoin()} seconds`}
-                />
-              </ListItem> */}
+               <ListItemIcon>
+                 <TimerIcon variant="contained" color="primary" />
+               </ListItemIcon>
+               <ListItemText
+                 primary={`Active Time: ${localParticipantsMinutesSinceJoin()} minutes ${localParticipantsSecondsSinceJoin()} seconds`}
+               />
+             </ListItem> */}
             </>
           )}
           {participants &&
             participants?.length > 0 &&
-            participants.map((e) => {
+            participants.map(e => {
               /*  const minutesSinceJoin = Math.floor(
-                (new Date().getTime() / 1000 - e.startTime) / 60
-              );
-              const secondsSinceJoin =
-                Math.floor(new Date().getTime() / 1000 - e.startTime) % 60; */
+               (new Date().getTime() / 1000 - e.startTime) / 60
+             );
+             const secondsSinceJoin =
+               Math.floor(new Date().getTime() / 1000 - e.startTime) % 60; */
               return (
                 <>
                   <ListItem>
@@ -147,13 +147,13 @@ const SideMenu = ({ participants, room, localParticipant }) => {
                     <ListItemText primary={`Participant Id: ${e.id} `} />
                   </ListItem>
                   {/* <ListItem>
-                    <ListItemIcon>
-                      <TimerIcon variant="contained" color="primary" />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={`Active Time: ${minutesSinceJoin} minutes ${secondsSinceJoin} seconds`}
-                    />
-                  </ListItem> */}
+                   <ListItemIcon>
+                     <TimerIcon variant="contained" color="primary" />
+                   </ListItemIcon>
+                   <ListItemText
+                     primary={`Active Time: ${minutesSinceJoin} minutes ${secondsSinceJoin} seconds`}
+                   />
+                 </ListItem> */}
                   <Divider />
                 </>
               );

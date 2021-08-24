@@ -11,6 +11,12 @@ export default makeStyles((theme: Theme) =>
       bottom: 25,
       left: 0,
       right: 0
+    },
+    chatMessages: {
+      overflowY: 'scroll',
+      // position: 'absolute',
+      height: '600px'
+      // overflowY: 'scroll'
     }
   })
 );
