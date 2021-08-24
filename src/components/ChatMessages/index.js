@@ -7,13 +7,13 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 const ChatMessages = ({ chatMessages }) => {
   const messagesEndRef = React.useRef(null);
 
-  // React.useEffect(() => {
-  //   scrollToLastMessage();
-  // }, [chatMessages]);
+  React.useEffect(() => {
+    scrollToLastMessage();
+  }, [chatMessages]);
 
-  // const scrollToLastMessage = () => {
-  //   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  // };
+  const scrollToLastMessage = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const classes = styles();
   return (
