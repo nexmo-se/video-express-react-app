@@ -13,8 +13,10 @@ import DeviceAccessAlert from '../DeviceAccessAlert';
 import { UserContext } from '../../context/UserContext';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { DEVICE_ACCESS_STATUS } from './../constants';
+import useRedirectHttps from 'hooks/useRedirectHttps';
 
 export default function WaitingRoom({ location }) {
+  const { redirectHttps } = useRedirectHttps();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
@@ -119,6 +121,10 @@ export default function WaitingRoom({ location }) {
 
   const handleVideoChange = React.useCallback(e => {
     setLocalVideo(e.target.checked);
+  }, []);
+
+  useEffect(() => {
+    redirectHttps();
   }, []);
 
   useEffect(() => {
