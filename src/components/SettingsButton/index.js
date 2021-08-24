@@ -50,7 +50,7 @@ export default function SettingsButton({ classes, room }) {
           className={classes.toolbarButtons}
           onClick={handleClick}
         >
-          <DashboardIcon />
+          <MoreVertIcon />
         </IconButton>
       </Tooltip>
       <Menu

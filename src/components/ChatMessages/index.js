@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles';
 import { Typography, emphasize } from '@material-ui/core';
-import ChatIcon from '@material-ui/icons/Chat';
+
 import ContactsIcon from '@material-ui/icons/Contacts';
 
 const ChatMessages = ({ chatMessages }) => {
@@ -38,7 +38,7 @@ const ChatMessages = ({ chatMessages }) => {
                 </Typography>
               </div>
               <div className={classes.chatAvatar}>
-                <ChatIcon className={classes.iconChat} />
+                {/* <ChatIcon className={classes.iconChat} /> */}
                 <Typography color="textPrimary" variant="body1">
                   {e.data}
                 </Typography>

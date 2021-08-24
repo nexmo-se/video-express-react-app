@@ -7,7 +7,8 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreIcon from '@material-ui/icons/More';
 import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
 import HouseIcon from '@material-ui/icons/House';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+import ChatIcon from '@material-ui/icons/Chat';
 
 import React from 'react';
 import styles from './styles';
@@ -25,7 +26,7 @@ export default function MoreOptionsButton({
   localParticipant
 }) {
   const { listOfMessages } = useSignal({ room });
-  const titleToolTip = 'More options';
+  const titleToolTip = 'Chat';
   const localClasses = styles();
   const [state, setState] = React.useState(false);
 
@@ -49,7 +50,7 @@ export default function MoreOptionsButton({
           aria-label="mic"
           className={localClasses.infoButton}
         >
-          <MoreVertIcon fontSize="inherit" />
+          <ChatIcon fontSize="inherit" />
         </IconButton>
       </Tooltip>
       <Drawer
