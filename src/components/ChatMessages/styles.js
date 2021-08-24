@@ -27,5 +27,9 @@ export default makeStyles(theme => ({
   },
   iconChat: {
     marginRight: '5px'
+  },
+  time: {
+    position: 'absolute',
+    right: '40px'
   }
 }));

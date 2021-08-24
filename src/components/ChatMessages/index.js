@@ -5,6 +5,14 @@ import ChatIcon from '@material-ui/icons/Chat';
 import ContactsIcon from '@material-ui/icons/Contacts';
 
 const ChatMessages = ({ chatMessages }) => {
+  // useEffect(() => {
+  //   scrollToLastMessage();
+  // }, [chatMessages]);
+
+  // const scrollToLastMessage = () => {
+  //   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // };
+
   const classes = styles();
   return (
     <div>
@@ -22,6 +30,7 @@ const ChatMessages = ({ chatMessages }) => {
                 <ContactsIcon className={classes.iconChat} />
                 <Typography color="textSecondary" variant="subtitle1">
                   {e?.from ? `${e.from.camera._stream.name}:` : 'Me:'}
+                  <span className={classes.time}>{e.date}</span>
                 </Typography>
               </div>
               <div className={classes.chatAvatar}>

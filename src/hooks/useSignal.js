@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 export default function useSignal({ room }) {
   const [listOfMessages, setListOfMessages] = React.useState([]);
@@ -17,12 +18,13 @@ export default function useSignal({ room }) {
 
   const signalListener = React.useCallback(({ data, isSentByMe, from }) => {
     // console.log(data);
-    addMessageToList(data, isSentByMe, from);
+    const date = moment(new Date().getTime()).format('HH:mm');
+    addMessageToList(data, isSentByMe, from, date);
     // console.log('who sent it' + isSentByMe);
   }, []);
 
-  const addMessageToList = React.useCallback((data, isSentByMe, from) => {
-    setListOfMessages(prev => [...prev, { data, isSentByMe, from }]);
+  const addMessageToList = React.useCallback((data, isSentByMe, from, date) => {
+    setListOfMessages(prev => [...prev, { data, isSentByMe, from, date }]);
   }, []);
 
   React.useEffect(() => {
