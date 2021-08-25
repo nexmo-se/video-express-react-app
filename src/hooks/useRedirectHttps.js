@@ -10,7 +10,7 @@ export default function useRedirectHttps() {
       window.location.href = window.location.href
         .toString()
         .replace('http://', 'https://');
-    }
+    } else return;
   }, []);
 
   return {
