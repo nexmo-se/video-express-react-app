@@ -126,7 +126,7 @@ export default function useRoom() {
           nameDisplayMode: 'auto',
           audioLevelDisplayMode: 'off'
         },
-        // name: userName,
+        name: userName,
         showControls: true
       });
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
