@@ -26,7 +26,7 @@ const ChatMessages = ({ chatMessages }) => {
               <div className={classes.chatAvatar}>
                 <ContactsIcon className={classes.iconChat} />
                 <Typography color="textSecondary" variant="subtitle1">
-                  {e?.from ? `${e.from.camera._stream.name}:` : 'Me:'}
+                  {e?.from?.name ? `${e.from.name}:` : 'Me:'}
                   {/* <span className={classes.time}>{e.date}</span> */}
                 </Typography>
                 <Typography

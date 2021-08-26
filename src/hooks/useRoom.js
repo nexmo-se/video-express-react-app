@@ -14,10 +14,10 @@ export default function useRoom() {
   const [cameraPublishing, setCameraPublishing] = useState(false);
 
   const addParticipants = ({ participant }) => {
-    // const participantWithTime = Object.assign(participant, {
-    //   startTime: new Date().getTime() / 1000
-    // });
-    setParticipants(prev => [...prev, participant]);
+    const participantWithTime = Object.assign({}, participant, {
+      startTime: new Date().getTime() / 1000
+    });
+    setParticipants(prev => [...prev, participantWithTime]);
   };
 
   const removeParticipants = ({ participant }) => {
@@ -82,6 +82,7 @@ export default function useRoom() {
         token: token,
         roomContainer: 'roomContainer',
         maxVideoParticipantsOnScreen: 10,
+        participantName: userName,
         managedLayoutOptions: {
           layoutMode: 'grid',
           screenPublisherContainer: 'screenSharingContainer'
@@ -117,7 +118,7 @@ export default function useRoom() {
       });
       roomRef.current.on('participantLeft', (participant, reason) => {
         removeParticipants({ participant: participant });
-        console.log('Room: participant left', participant.name, reason);
+        console.log('Room: participant left', participant, reason);
       });
       const finalPublisherOptions = Object.assign({}, publisherOptions, {
         style: {
@@ -125,7 +126,7 @@ export default function useRoom() {
           nameDisplayMode: 'auto',
           audioLevelDisplayMode: 'off'
         },
-        name: userName,
+        // name: userName,
         showControls: true
       });
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
