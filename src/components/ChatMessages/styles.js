@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
   mine: {
     left: '0'
     // position: 'absolute'
@@ -25,6 +25,11 @@ export default makeStyles(theme => ({
     backgroundColor: theme.palette.primary.main,
     overflowY: 'scroll'
   },
+  myMessage: {
+    background: '#fff',
+    border: `2px solid ${theme.palette.primary.main}`
+  },
+
   iconChat: {
     marginRight: '5px'
   },

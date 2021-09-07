@@ -18,6 +18,7 @@ import TimerIcon from '@material-ui/icons/Timer';
 
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -38,16 +39,15 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
+        <Container>
+          <Box>{children}</Box>
+        </Container>
       )}
     </div>
   );
 }
 
 const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
-  const [counter, setCounter] = React.useState(0);
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -59,34 +59,6 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
       'aria-controls': `simple-tabpanel-${index}`
     };
   }
-
-  /* const localParticipantsMinutesSinceJoin = () => {
-   if (localParticipant) {
-     return Math.floor(
-       (new Date().getTime() / 1000 - localParticipant.startTime) / 60
-     );
-   }
-   return 0;
- };
- const localParticipantsSecondsSinceJoin = () => {
-   if (localParticipant) {
-     return (
-       Math.floor(new Date().getTime() / 1000 - localParticipant.startTime) %
-       60
-     );
-   }
-   return 0;
- }; */
-
-  /* React.useEffect(() => {
-   let intervalId;
- 
-   intervalId = setInterval(() => {
-     setCounter((counter) => counter + 1);
-   }, 1000);
- 
-   return () => clearInterval(intervalId);
- }, [counter]); */
 
   React.useEffect(() => {
     console.log(room.participants);
@@ -135,7 +107,7 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
           )}
           {participants &&
             participants?.length > 0 &&
-            participants.map(e => {
+            participants.map((e) => {
               /*  const minutesSinceJoin = Math.floor(
                (new Date().getTime() / 1000 - e.startTime) / 60
              );

@@ -7,15 +7,14 @@ import ChatMessages from '../ChatMessages';
 const Chat = ({ room, listOfMessages }) => {
   const { sendSignal } = useSignal({ room });
 
-  const sendMessage = text => {
-    console.log('sending signal');
+  const sendMessage = (text) => {
     if (room) sendSignal(text, 'text');
   };
 
   const classes = styles();
 
   return (
-    <div className={classes.chatMessages}>
+    <div className={classes.chatContainer}>
       <ChatMessages
         chatClass={classes.chatMessages}
         chatMessages={listOfMessages}

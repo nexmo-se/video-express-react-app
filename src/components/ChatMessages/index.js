@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './styles';
-import { Typography, emphasize } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import ContactsIcon from '@material-ui/icons/Contacts';
 
-const ChatMessages = ({ chatMessages }) => {
+const ChatMessages = ({ chatMessages, chatClass }) => {
   const messagesEndRef = React.useRef(null);
+  console.log('chatMessages', chatMessages);
 
   React.useEffect(() => {
     scrollToLastMessage();
@@ -17,38 +18,42 @@ const ChatMessages = ({ chatMessages }) => {
 
   const classes = styles();
   return (
-    <div>
-      {chatMessages &&
-        chatMessages.length > 0 &&
-        chatMessages.map(e => {
-          return (
-            <div ref={messagesEndRef} className={classes.messageContainer}>
-              <div className={classes.chatAvatar}>
-                <ContactsIcon className={classes.iconChat} />
-                <Typography color="textSecondary" variant="subtitle1">
-                  {e?.from?.name ? `${e.from.name}:` : 'Me:'}
-                  {/* <span className={classes.time}>{e.date}</span> */}
-                </Typography>
-                <Typography
-                  className={classes.time}
-                  color="textSecondary"
-                  variant="subtitle1"
-                >
-                  {e.date}
-                </Typography>
+    <div className={chatClass}>
+      {chatMessages && chatMessages.length > 0
+        ? chatMessages.map((msg, key) => {
+            return (
+              <div
+                ref={messagesEndRef}
+                className={`${classes.messageContainer} ${
+                  msg?.from?.name ? '' : classes.myMessage
+                }`}
+                key={key}
+              >
+                <div className={classes.chatAvatar}>
+                  <ContactsIcon className={classes.iconChat} />
+                  <Typography color="textSecondary" variant="subtitle1">
+                    {msg?.from?.name ? `${msg.from.name}:` : 'Me:'}
+                    {/* <span className={classes.time}>{msg.date}</span> */}
+                  </Typography>
+                  <Typography
+                    className={classes.time}
+                    color="textSecondary"
+                    variant="subtitle1"
+                  >
+                    {msg.date}
+                  </Typography>
+                </div>
+                <div className={classes.chatAvatar}>
+                  {/* <ChatIcon className={classes.iconChat} /> */}
+                  <Typography color="textPrimary" variant="body1">
+                    {msg.data}
+                  </Typography>
+                </div>
               </div>
-              <div className={classes.chatAvatar}>
-                {/* <ChatIcon className={classes.iconChat} /> */}
-                <Typography color="textPrimary" variant="body1">
-                  {e.data}
-                </Typography>
-              </div>
-            </div>
-          );
-        })}
-      {chatMessages && chatMessages.length === 0 && (
-        <div>There are no messages</div>
-      )}
+            );
+          })
+        : chatMessages &&
+          chatMessages.length === 0 && <div>There are no messages</div>}
     </div>
   );
 };

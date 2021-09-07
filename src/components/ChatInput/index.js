@@ -8,7 +8,7 @@ const ChatInput = ({ sendMessage }) => {
   const classes = styles();
   const [text, setText] = React.useState('');
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     // e.preventDefault();
     if (e.keyCode === 13) {
       e.preventDefault();
@@ -17,10 +17,11 @@ const ChatInput = ({ sendMessage }) => {
     }
   };
 
-  const changeText = event => {
+  const changeText = (event) => {
     // console.log(event.target.value);
     setText(event.target.value);
   };
+  
   return (
     <>
       <form className={classes.wrapForm} noValidate autoComplete="off">
@@ -30,7 +31,6 @@ const ChatInput = ({ sendMessage }) => {
           id="standard-text"
           label="Chat"
           className={classes.wrapText}
-          defaultValue=""
           value={text}
         />
         <Button

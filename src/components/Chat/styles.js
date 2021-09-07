@@ -1,22 +1,25 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 export default makeStyles((theme: Theme) =>
   createStyles({
-    chatInput: {
-      bottom: '0',
-      position: 'absolute',
+    chatContainer: {
       display: 'flex',
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-      position: 'absolute',
-      bottom: 25,
-      left: 0,
-      right: 0
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      height: '90vh',
+      padding: '5px 15px',
+      overflow: 'hidden'
+    },
+    chatInput: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center'
     },
     chatMessages: {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: '1 1 80%',
       overflowY: 'scroll',
-      // position: 'absolute',
-      height: '600px'
-      // overflowY: 'scroll'
+      color: '#fff'
     }
   })
 );
