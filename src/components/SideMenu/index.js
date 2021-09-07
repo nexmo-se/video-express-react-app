@@ -88,6 +88,9 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
    return () => clearInterval(intervalId);
  }, [counter]); */
 
+  React.useEffect(() => {
+    console.log(room.participants);
+  }, [room]);
   return (
     <div>
       <AppBar position="static">

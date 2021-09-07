@@ -19,7 +19,7 @@ const ChatMessages = ({ chatMessages }) => {
   return (
     <div>
       {chatMessages &&
-        chatMessages.length &&
+        chatMessages.length > 0 &&
         chatMessages.map(e => {
           return (
             <div ref={messagesEndRef} className={classes.messageContainer}>

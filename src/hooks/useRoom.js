@@ -14,10 +14,10 @@ export default function useRoom() {
   const [cameraPublishing, setCameraPublishing] = useState(false);
 
   const addParticipants = ({ participant }) => {
-    const participantWithTime = Object.assign({}, participant, {
-      startTime: new Date().getTime() / 1000
-    });
-    setParticipants(prev => [...prev, participantWithTime]);
+    // const participantWithTime = Object.assign({}, participant, {
+    //   startTime: new Date().getTime() / 1000
+    // });
+    setParticipants(prev => [...prev, participant]);
   };
 
   const removeParticipants = ({ participant }) => {
@@ -65,29 +65,8 @@ export default function useRoom() {
     }
   };
 
-  const createCall = useCallback(
-    (
-      { apikey, sessionId, token },
-      roomContainer,
-      userName,
-      publisherOptions
-    ) => {
-      if (!apikey || !sessionId || !token) {
-        throw new Error('Check your credentials');
-      }
-
-      roomRef.current = new MP.Room({
-        apiKey: apikey,
-        sessionId: sessionId,
-        token: token,
-        roomContainer: 'roomContainer',
-        maxVideoParticipantsOnScreen: 10,
-        participantName: userName,
-        managedLayoutOptions: {
-          layoutMode: 'grid',
-          screenPublisherContainer: 'screenSharingContainer'
-        }
-      });
+  const startRoomListeners = () => {
+    if (roomRef.current) {
       roomRef.current.on('connected', () => {
         console.log('Room: connected');
       });
@@ -120,6 +99,34 @@ export default function useRoom() {
         removeParticipants({ participant: participant });
         console.log('Room: participant left', participant, reason);
       });
+    }
+  };
+
+  const createCall = useCallback(
+    (
+      { apikey, sessionId, token },
+      roomContainer,
+      userName,
+      publisherOptions
+    ) => {
+      if (!apikey || !sessionId || !token) {
+        throw new Error('Check your credentials');
+      }
+
+      roomRef.current = new MP.Room({
+        apiKey: apikey,
+        sessionId: sessionId,
+        token: token,
+        roomContainer: 'roomContainer',
+        maxVideoParticipantsOnScreen: 10,
+        participantName: userName,
+        managedLayoutOptions: {
+          layoutMode: 'grid',
+          screenPublisherContainer: 'screenSharingContainer'
+        }
+      });
+      startRoomListeners();
+
       const finalPublisherOptions = Object.assign({}, publisherOptions, {
         style: {
           buttonDisplayMode: 'off',
