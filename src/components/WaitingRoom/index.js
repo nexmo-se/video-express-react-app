@@ -13,10 +13,8 @@ import DeviceAccessAlert from '../DeviceAccessAlert';
 import { UserContext } from '../../context/UserContext';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { DEVICE_ACCESS_STATUS } from './../constants';
-import useRedirectHttps from 'hooks/useRedirectHttps';
 
 export default function WaitingRoom({ location }) {
-  const { redirectHttps } = useRedirectHttps();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
@@ -67,6 +65,22 @@ export default function WaitingRoom({ location }) {
     },
     [previewPublisher, setAudioDevice, setLocalAudioSource]
   );
+
+  const redirectHttps = React.useCallback(() => {
+    const url = window.location.href;
+    console.log(url);
+    if (
+      url.toString().indexOf('http://') === 0 &&
+      url.toString().indexOf('http://localhost') !== 0
+    ) {
+      window.location.href = window.location.href
+        .toString()
+        .replace('http://', 'https://');
+    } else {
+      console.log('all good');
+      return;
+    }
+  }, []);
 
   const handleJoinClick = () => {
     if (validateForm()) {
