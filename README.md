@@ -32,6 +32,7 @@ The app has the following features:
 - [x] Enable/disable camera
 - [x] Mute/unmute mic
 - [x] Mute All
+- [x] Chat
 - [x] Archiving [Archive API](https://tokbox.com/developer/guides/archiving/)
 
 ## App Architecture
