@@ -5,7 +5,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
-import SettingsButton from 'components/SettingsButton';
+import LayOutButton from 'components/LayOutButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
@@ -162,7 +162,7 @@ export default function ToolBar({
         areAllMuted={areAllMuted}
         classes={classes}
       />
-      <SettingsButton classes={classes} room={room} />
+      <LayOutButton classes={classes} room={room} />
       <EndCallButton classes={classes} handleEndCall={endCall} />
     </div>
   );
