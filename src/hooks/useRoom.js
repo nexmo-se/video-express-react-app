@@ -14,15 +14,15 @@ export default function useRoom() {
   const [cameraPublishing, setCameraPublishing] = useState(false);
 
   const addParticipants = ({ participant }) => {
-    const participantWithTime = Object.assign(participant, {
-      startTime: new Date().getTime() / 1000
-    });
-    setParticipants((prev) => [...prev, participantWithTime]);
+    // const participantWithTime = Object.assign({}, participant, {
+    //   startTime: new Date().getTime() / 1000
+    // });
+    setParticipants(prev => [...prev, participant]);
   };
 
   const removeParticipants = ({ participant }) => {
-    setParticipants((prev) =>
-      prev.filter((prevparticipant) => prevparticipant.id !== participant.id)
+    setParticipants(prev =>
+      prev.filter(prevparticipant => prevparticipant.id !== participant.id)
     );
   };
 
@@ -40,7 +40,7 @@ export default function useRoom() {
     setParticipants(null);
   };
 
-  const onAudioLevel = React.useCallback((audioLevel) => {
+  const onAudioLevel = React.useCallback(audioLevel => {
     let movingAvg = null;
     if (movingAvg === null || movingAvg <= audioLevel) {
       movingAvg = audioLevel;
@@ -60,8 +60,45 @@ export default function useRoom() {
     if (roomRef.current.camera) {
       roomRef.current.camera.on(
         'audioLevelUpdated',
-        _.throttle((event) => onAudioLevel(event), 250)
+        _.throttle(event => onAudioLevel(event), 250)
       );
+    }
+  };
+
+  const startRoomListeners = () => {
+    if (roomRef.current) {
+      roomRef.current.on('connected', () => {
+        console.log('Room: connected');
+      });
+      roomRef.current.on('disconnected', () => {
+        setNetworkStatus('disconnected');
+        console.log('Room: disconnected');
+      });
+      roomRef.current.camera.on('created', () => {
+        setCameraPublishing(true);
+        console.log('camera publishing now');
+      });
+      roomRef.current.on('activeSpeakerChanged', participant => {
+        console.log('Active speaker changed', participant);
+      });
+
+      roomRef.current.on('reconnected', () => {
+        setNetworkStatus('reconnected');
+        console.log('Room: reconnected');
+      });
+      roomRef.current.on('reconnecting', () => {
+        setNetworkStatus('reconnecting');
+        console.log('Room: reconnecting');
+      });
+      roomRef.current.on('participantJoined', participant => {
+        console.log(participant);
+        addParticipants({ participant: participant });
+        console.log('Room: participant joined: ', participant);
+      });
+      roomRef.current.on('participantLeft', (participant, reason) => {
+        removeParticipants({ participant: participant });
+        console.log('Room: participant left', participant, reason);
+      });
     }
   };
 
@@ -82,42 +119,14 @@ export default function useRoom() {
         token: token,
         roomContainer: 'roomContainer',
         maxVideoParticipantsOnScreen: 10,
+        participantName: userName,
         managedLayoutOptions: {
           layoutMode: 'grid',
           screenPublisherContainer: 'screenSharingContainer'
         }
       });
-      roomRef.current.on('connected', () => {
-        console.log('Room: connected');
-      });
-      roomRef.current.on('disconnected', () => {
-        setNetworkStatus('disconnected');
-        console.log('Room: disconnected');
-      });
-      roomRef.current.camera.on('created', () => {
-        setCameraPublishing(true);
-        console.log('camera publishing now');
-      });
-      roomRef.current.on('activeSpeakerChanged', (participant) => {
-        console.log('Active speaker changed', participant);
-      });
+      startRoomListeners();
 
-      roomRef.current.on('reconnected', () => {
-        setNetworkStatus('reconnected');
-        console.log('Room: reconnected');
-      });
-      roomRef.current.on('reconnecting', () => {
-        setNetworkStatus('reconnecting');
-        console.log('Room: reconnecting');
-      });
-      roomRef.current.on('participantJoined', (participant) => {
-        addParticipants({ participant: participant });
-        console.log('Room: participant joined: ', participant);
-      });
-      roomRef.current.on('participantLeft', (participant, reason) => {
-        removeParticipants({ participant: participant });
-        console.log('Room: participant left', participant, reason);
-      });
       const finalPublisherOptions = Object.assign({}, publisherOptions, {
         style: {
           buttonDisplayMode: 'off',
@@ -136,7 +145,7 @@ export default function useRoom() {
           setScreen(roomRef.current.screen);
           addLocalParticipant({ room: roomRef.current });
         })
-        .catch((e) => console.log(e));
+        .catch(e => console.log(e));
     },
     []
   );

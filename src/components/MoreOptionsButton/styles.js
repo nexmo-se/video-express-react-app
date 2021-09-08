@@ -10,5 +10,8 @@ export default makeStyles(theme => ({
     width: '50px',
     backgroundColor: '#32353A',
     color: '#fff'
+  },
+  paper: {
+    overflowY: 'hidden'
   }
 }));
