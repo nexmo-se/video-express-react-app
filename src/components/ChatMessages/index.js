@@ -6,7 +6,6 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 
 const ChatMessages = ({ chatMessages, chatClass }) => {
   const messagesEndRef = React.useRef(null);
-  console.log('chatMessages', chatMessages);
 
   React.useEffect(() => {
     scrollToLastMessage();

@@ -47,7 +47,7 @@ export default function WaitingRoom({ location }) {
   } = usePreviewPublisher();
 
   const handleVideoSource = React.useCallback(
-    e => {
+    (e) => {
       const videoDeviceId = e.target.value;
       setVideoDevice(e.target.value);
       previewPublisher.setVideoDevice(videoDeviceId);
@@ -57,7 +57,7 @@ export default function WaitingRoom({ location }) {
   );
 
   const handleAudioSource = React.useCallback(
-    e => {
+    (e) => {
       const audioDeviceId = e.target.value;
       setAudioDevice(audioDeviceId);
       previewPublisher.setAudioDevice(audioDeviceId);
@@ -68,7 +68,6 @@ export default function WaitingRoom({ location }) {
 
   const redirectHttps = React.useCallback(() => {
     const url = window.location.href;
-    console.log(url);
     if (
       url.toString().indexOf('http://') === 0 &&
       url.toString().indexOf('http://localhost') !== 0
@@ -77,7 +76,6 @@ export default function WaitingRoom({ location }) {
         .toString()
         .replace('http://', 'https://');
     } else {
-      console.log('all good');
       return;
     }
   }, []);
@@ -99,20 +97,18 @@ export default function WaitingRoom({ location }) {
     return true;
   };
 
-  const onChangeRoomName = e => {
+  const onChangeRoomName = (e) => {
     const roomName = e.target.value;
-    console.log('onChangeRoomName', roomName);
     if (roomName === '' || roomName.trim() === '') {
       // Space detected
       setRoomName('');
       return;
     }
-    console.log('onChangeRoomName', roomName);
     setIsRoomNameInvalid(false);
     setRoomName(roomName);
   };
 
-  const onChangeParticipantName = e => {
+  const onChangeParticipantName = (e) => {
     const userName = e.target.value;
     if (userName === '' || userName.trim() === '') {
       // Space detected
@@ -123,17 +119,17 @@ export default function WaitingRoom({ location }) {
     setUserName(userName);
   };
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (e.keyCode === 13) {
       handleJoinClick();
     }
   };
 
-  const handleAudioChange = React.useCallback(e => {
+  const handleAudioChange = React.useCallback((e) => {
     setLocalAudio(e.target.checked);
   }, []);
 
-  const handleVideoChange = React.useCallback(e => {
+  const handleVideoChange = React.useCallback((e) => {
     setLocalVideo(e.target.checked);
   }, []);
 
@@ -175,12 +171,10 @@ export default function WaitingRoom({ location }) {
 
   useEffect(() => {
     if (previewPublisher && previewMediaCreated && deviceInfo) {
-      console.log('useEffect - preview', deviceInfo);
-      previewPublisher.getAudioDevice().then(currentAudioDevice => {
+      previewPublisher.getAudioDevice().then((currentAudioDevice) => {
         setAudioDevice(currentAudioDevice.deviceId);
       });
       const currentVideoDevice = previewPublisher.getVideoDevice();
-      console.log('currentVideoDevice', currentVideoDevice);
       setVideoDevice(currentVideoDevice.deviceId);
     }
   }, [
@@ -270,7 +264,7 @@ export default function WaitingRoom({ location }) {
                     value={audioDevice}
                     onChange={handleAudioSource}
                   >
-                    {deviceInfo.audioInputDevices.map(device => (
+                    {deviceInfo.audioInputDevices.map((device) => (
                       <MenuItem key={device.deviceId} value={device.deviceId}>
                         {device.label}
                       </MenuItem>
@@ -289,7 +283,7 @@ export default function WaitingRoom({ location }) {
                       value={videoDevice}
                       onChange={handleVideoSource}
                     >
-                      {deviceInfo.videoInputDevices.map(device => (
+                      {deviceInfo.videoInputDevices.map((device) => (
                         <MenuItem key={device.deviceId} value={device.deviceId}>
                           {device.label}
                         </MenuItem>

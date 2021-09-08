@@ -10,13 +10,13 @@ import Typography from '@material-ui/core/Typography';
 
 const ITEM_HEIGHT = 48;
 
-export default function LayOutButton({ classes, room }) {
+export default function LayoutButton({ classes, room }) {
   const localClasses = styles();
   const [layOut, setLayOut] = useState('grid');
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 

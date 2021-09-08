@@ -5,7 +5,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
-import LayOutButton from 'components/LayoutButton';
+import LayoutButton from 'components/LayoutButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
@@ -36,11 +36,11 @@ export default function ToolBar({
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
-      participants.map(participant => participant.camera.disableAudio());
+      participants.map((participant) => participant.camera.disableAudio());
 
       setAllMuted(true);
     } else {
-      participants.map(participant => participant.camera.enableAudio());
+      participants.map((participant) => participant.camera.enableAudio());
       setAllMuted(false);
     }
   };
@@ -77,10 +77,10 @@ export default function ToolBar({
     }
   };
 
-  const changeVideoSource = videoId => {
+  const changeVideoSource = (videoId) => {
     room.camera.setVideoDevice(videoId);
   };
-  const changeAudioSource = audioId => {
+  const changeAudioSource = (audioId) => {
     room.camera.setAudioDevice(audioId);
   };
 
@@ -162,7 +162,7 @@ export default function ToolBar({
         areAllMuted={areAllMuted}
         classes={classes}
       />
-      <LayOutButton classes={classes} room={room} />
+      <LayoutButton classes={classes} room={room} />
       <EndCallButton classes={classes} handleEndCall={endCall} />
     </div>
   );

@@ -12,7 +12,6 @@ export default function RecordingButton({ classes, room }) {
   const localClasses = styles();
 
   const handleRecordingStart = async sessionId => {
-    console.log('starting to record');
     try {
       const data = await startRecording(sessionId);
       if (data.status === 200 && data.data) {
@@ -21,20 +20,16 @@ export default function RecordingButton({ classes, room }) {
         setRecording(true);
       }
     } catch (e) {
-      console.log(e);
       setRecording(false);
     }
   };
 
   const handleRecordingStop = async archiveId => {
-    console.log('stopping the recording');
-    console.log(archiveId);
     try {
       if (isRecording) {
         const data = await stopRecording(archiveId);
         if (data.status === 200 && data.data) {
           const { status } = data.data;
-          console.log(archiveId, status);
           setRecording(false);
         }
       }
