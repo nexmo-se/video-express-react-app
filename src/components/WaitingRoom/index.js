@@ -218,7 +218,12 @@ export default function WaitingRoom({ location }) {
   return (
     <>
       <div className={classes.waitingRoomContainer}>
-        <Grid container direction="column" justify="center" alignItems="center">
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
@@ -313,7 +318,12 @@ export default function WaitingRoom({ location }) {
             />
           </div>
         </Grid>
-        <Grid container direction="column" justify="center" alignItems="center">
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
           <Button
             variant="contained"
             color="primary"

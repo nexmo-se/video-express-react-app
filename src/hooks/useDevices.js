@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import * as MP from '@vonage/multiparty';
+/* import * as MP from '@vonage/multiparty'; */ //todo temporary fix for 0.1.5
 
 export default function useDevices() {
   const [deviceInfo, setDeviceInfo] = useState({
@@ -14,7 +14,7 @@ export default function useDevices() {
       return;
     }
     try {
-      const devices = await MP.getDevices();
+      const devices = await window.MP.getDevices();
       const audioInputDevices = devices.filter(
         (d) => d.kind.toLowerCase() === 'audioinput'
       );
