@@ -66,6 +66,22 @@ export default function WaitingRoom({ location }) {
     [previewPublisher, setAudioDevice, setLocalAudioSource]
   );
 
+  const redirectHttps = React.useCallback(() => {
+    const url = window.location.href;
+    console.log(url);
+    if (
+      url.toString().indexOf('http://') === 0 &&
+      url.toString().indexOf('http://localhost') !== 0
+    ) {
+      window.location.href = window.location.href
+        .toString()
+        .replace('http://', 'https://');
+    } else {
+      console.log('all good');
+      return;
+    }
+  }, []);
+
   const handleJoinClick = () => {
     if (validateForm()) {
       push(`room/${roomName}`);
@@ -119,6 +135,10 @@ export default function WaitingRoom({ location }) {
 
   const handleVideoChange = React.useCallback(e => {
     setLocalVideo(e.target.checked);
+  }, []);
+
+  useEffect(() => {
+    redirectHttps();
   }, []);
 
   useEffect(() => {
