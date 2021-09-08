@@ -52,8 +52,7 @@ const ChatMessages = ({ chatMessages, chatClass }) => {
               </div>
             );
           })
-        : chatMessages &&
-          chatMessages.length === 0 && <div>There are no messages</div>}
+        : <div>There are no messages</div>}
     </div>
   );
 };
