@@ -1,3 +1,10 @@
+# 0.1.6 (Sep 08, 2021)
+
+- Update `@vonage/multiparty` to `0.15.0`
+- Add Chat feature
+- Fixed an issue with the recording icon 
+- Redirect to HTTPS by default
+
 # 0.1.5 (Aug 10, 2021)
 
 - Feature: added mobile support for the toolbar.
