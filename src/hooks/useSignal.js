@@ -1,23 +1,30 @@
 import React from 'react';
+import moment from 'moment';
 
 export default function useSignal({ room }) {
-  //   const addMessageToList = (message, listOfMessages) => {
-  //     return [listOfMessages, message];
-  //   };
+  const [listOfMessages, setListOfMessages] = React.useState([]);
 
   const sendSignal = React.useCallback((data, type) => {
     console.log('[useSignal] - sendSignal');
     if (room) {
       room
         .signal({ type: type, data: data })
+        .then(() => {
+          console.log('signal sent');
+        })
         .catch(e => e);
     }
   }, []);
 
-  const signalListener = React.useCallback(({ data }) => {
-    console.log(data);
-    // const jsonData = JSON.parse(data);
-    console.log('signalListener', data);
+  const signalListener = React.useCallback(({ data, isSentByMe, from }) => {
+    // console.log(data);
+    const date = moment(new Date().getTime()).format('HH:mm');
+    addMessageToList(data, isSentByMe, from, date);
+    // console.log('who sent it' + isSentByMe);
+  }, []);
+
+  const addMessageToList = React.useCallback((data, isSentByMe, from, date) => {
+    setListOfMessages(prev => [...prev, { data, isSentByMe, from, date }]);
   }, []);
 
   React.useEffect(() => {
@@ -29,8 +36,11 @@ export default function useSignal({ room }) {
     };
   }, [room, signalListener]);
 
+  // React.useEffect(() => {}, [listOfMessages]);
+
   return {
-    sendSignal
+    sendSignal,
+    listOfMessages
     // addMessageToList
   };
 }

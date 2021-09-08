@@ -5,7 +5,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
-import SettingsButton from 'components/SettingsButton';
+import LayoutButton from 'components/LayoutButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
@@ -13,7 +13,7 @@ import styles from './styles';
 import { useParams } from 'react-router';
 import { useTheme } from '@material-ui/core';
 
-import InfoIconButton from 'components/InfoIconButton';
+import MoreOptionsButton from 'components/MoreOptionsButton';
 
 export default function ToolBar({
   room,
@@ -128,7 +128,7 @@ export default function ToolBar({
     </div>
   ) : (
     <div className={classes.toolbarContainer}>
-      <InfoIconButton
+      <MoreOptionsButton
         classes={classes}
         participants={participants}
         room={room}
@@ -162,7 +162,7 @@ export default function ToolBar({
         areAllMuted={areAllMuted}
         classes={classes}
       />
-      <SettingsButton classes={classes} room={room} />
+      <LayoutButton classes={classes} room={room} />
       <EndCallButton classes={classes} handleEndCall={endCall} />
     </div>
   );

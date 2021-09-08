@@ -1,24 +1,22 @@
 import { IconButton } from '@material-ui/core';
 import { useState } from 'react';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Tooltip from '@material-ui/core/Tooltip';
+import styles from './styles';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import Typography from '@material-ui/core/Typography';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import LayoutOptions from 'components/LayoutOptions';
 
 const ITEM_HEIGHT = 48;
 
-export default function SettingsButton({ classes, room }) {
+export default function LayoutButton({ classes, room }) {
+  const localClasses = styles();
+  const [layOut, setLayOut] = useState('grid');
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [anchorElLayout, setAnchorElLayout] = useState(null);
-  const openSubMenu = Boolean(anchorElLayout);
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -26,23 +24,22 @@ export default function SettingsButton({ classes, room }) {
     setAnchorEl(null);
   };
 
-  const handleClickLayout = event => {
-    setAnchorElLayout(event.currentTarget);
-  };
-
-  const handleCloseLayout = () => {
-    setAnchorElLayout(null);
-    setAnchorEl(null);
-  };
-
-  const handleLayOutChange = layout => {
+  const handleLayOutChange = () => {
+    console.log(layOut);
     if (room) {
-      room.setLayoutMode(layout);
+      if (layOut === 'grid') {
+        room.setLayoutMode('active-speaker');
+        setLayOut('active-speaker');
+      } else {
+        room.setLayoutMode('grid');
+        setLayOut('grid');
+      }
     }
   };
+
   return (
     <div>
-      <Tooltip title="Options">
+      <Tooltip title="Change Layout">
         <IconButton
           aria-label="more"
           aria-controls="long-menu"
@@ -50,7 +47,7 @@ export default function SettingsButton({ classes, room }) {
           className={classes.toolbarButtons}
           onClick={handleClick}
         >
-          <MoreVertIcon />
+          <DashboardIcon />
         </IconButton>
       </Tooltip>
       <Menu
@@ -66,19 +63,18 @@ export default function SettingsButton({ classes, room }) {
           }
         }}
       >
-        <MenuItem onClick={handleClickLayout}>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <Typography variant="inherit">Change layout</Typography>
+        <MenuItem
+          className={layOut === 'grid' ? localClasses.choosen : null}
+          onClick={handleLayOutChange}
+        >
+          <Typography variant="inherit">Grid</Typography>
         </MenuItem>
-        <LayoutOptions
-          room={room}
-          handleCloseLayout={handleCloseLayout}
-          handleLayOutChange={handleLayOutChange}
-          open={openSubMenu}
-          anchorElLayout={anchorElLayout}
-        />
+        <MenuItem
+          className={layOut === 'active-speaker' ? localClasses.choosen : null}
+          onClick={handleLayOutChange}
+        >
+          <Typography variant="inherit">Active Speaker</Typography>
+        </MenuItem>
       </Menu>
     </div>
   );

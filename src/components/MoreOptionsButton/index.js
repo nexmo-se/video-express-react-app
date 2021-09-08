@@ -8,6 +8,8 @@ import MoreIcon from '@material-ui/icons/More';
 import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
 import HouseIcon from '@material-ui/icons/House';
 
+import ChatIcon from '@material-ui/icons/Chat';
+
 import React from 'react';
 import styles from './styles';
 
@@ -15,17 +17,20 @@ import Drawer from '@material-ui/core/Drawer';
 
 import SideMenu from '../SideMenu';
 
-export default function InfoIconButton({
+import useSignal from '../../hooks/useSignal';
+
+export default function MoreOptionsButton({
   classes,
   participants,
   room,
   localParticipant
 }) {
-  const titleToolTip = 'Meeting Info';
+  const { listOfMessages } = useSignal({ room });
+  const titleToolTip = 'Chat';
   const localClasses = styles();
   const [state, setState] = React.useState(false);
 
-  const toggleDrawer = () => (event) => {
+  const toggleDrawer = () => event => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
@@ -45,14 +50,20 @@ export default function InfoIconButton({
           aria-label="mic"
           className={localClasses.infoButton}
         >
-          <InfoIcon fontSize="inherit" />
+          <ChatIcon fontSize="inherit" />
         </IconButton>
       </Tooltip>
-      <Drawer open={state} onClose={toggleDrawer(false)}>
+      <Drawer
+        open={state}
+        onClose={toggleDrawer(false)}
+        classes={{ paper: localClasses.paper }}
+      >
         <SideMenu
+          className={localClasses.root}
           room={room}
           participants={participants}
           localParticipant={localParticipant}
+          listOfMessages={listOfMessages}
         ></SideMenu>
       </Drawer>
     </div>

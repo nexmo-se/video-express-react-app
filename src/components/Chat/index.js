@@ -2,24 +2,26 @@ import React from 'react';
 import ChatInput from '../ChatInput';
 import styles from './styles';
 import useSignal from '../../hooks/useSignal';
-import useRoom from '../../hooks/useRoom';
-import { StylesContext } from '@material-ui/styles';
+import ChatMessages from '../ChatMessages';
 
-const Chat = ({ room }) => {
-  const [chatMessages, setChatMessages] = React.useState([]);
-  React.useEffect(() => {}, [room]);
+const Chat = ({ room, listOfMessages }) => {
   const { sendSignal } = useSignal({ room });
 
-  const sendMessage = text => {
-    console.log('sending signal');
+  const sendMessage = (text) => {
     if (room) sendSignal(text, 'text');
-    // setText('');
   };
 
   const classes = styles();
+
   return (
-    <div className={classes.chatInput}>
-      <ChatInput sendMessage={sendMessage}></ChatInput>
+    <div className={classes.chatContainer}>
+      <ChatMessages
+        chatClass={classes.chatMessages}
+        chatMessages={listOfMessages}
+      ></ChatMessages>
+      <div className={classes.chatInput}>
+        <ChatInput sendMessage={sendMessage}></ChatInput>
+      </div>
     </div>
   );
 };
