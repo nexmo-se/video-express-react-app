@@ -5,7 +5,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
-import LayOutButton from 'components/LayOutButton';
+import LayOutButton from 'components/LayoutButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
