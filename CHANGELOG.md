@@ -1,6 +1,10 @@
+# 0.1.7 (Sep 09, 2021)
+
+- Update `@vonage/multiparty` to `0.1.6`
+
 # 0.1.6 (Sep 08, 2021)
 
-- Update `@vonage/multiparty` to `0.15.0`
+- Update `@vonage/multiparty` to `0.1.5`
 - Add Chat feature
 - Fixed an issue with the recording icon 
 - Redirect to HTTPS by default

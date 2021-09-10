@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import _ from 'lodash';
-/* import * as MP from '@vonage/multiparty'; */ //todo temporary fix for 0.1.5
+import * as MP from '@vonage/multiparty';
 
 export default function useRoom() {
   let roomRef = useRef(null);
@@ -113,7 +113,7 @@ export default function useRoom() {
         throw new Error('Check your credentials');
       }
 
-      roomRef.current = new window.MP.Room({
+      roomRef.current = new MP.Room({
         apiKey: apikey,
         sessionId: sessionId,
         token: token,
