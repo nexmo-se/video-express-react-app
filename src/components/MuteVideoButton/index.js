@@ -40,7 +40,7 @@ export default function MuteVideoButton({
       const currentDeviceId = getVideoSource()?.deviceId;
 
       const IndexOfSelectedElement = devicesAvailable.indexOf(
-        devicesAvailable.find(e => e.deviceId === currentDeviceId)
+        devicesAvailable.find((e) => e.deviceId === currentDeviceId)
       );
       setSelectedIndex(IndexOfSelectedElement);
     }
@@ -48,7 +48,7 @@ export default function MuteVideoButton({
 
   React.useEffect(() => {
     if (devicesAvailable) {
-      const videoDevicesAvailable = devicesAvailable.map(e => {
+      const videoDevicesAvailable = devicesAvailable.map((e) => {
         return e.label;
       });
       setOptions(videoDevicesAvailable);
@@ -59,16 +59,16 @@ export default function MuteVideoButton({
     setSelectedIndex(index);
     setOpen(false);
     const videoDeviceId = devicesAvailable.find(
-      device => device.label === event.target.textContent
+      (device) => device.label === event.target.textContent
     ).deviceId;
     changeVideoSource(videoDeviceId);
   };
 
-  const handleToggle = e => {
-    setOpen(prevOpen => !prevOpen);
+  const handleToggle = (e) => {
+    setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = event => {
+  const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -116,6 +116,7 @@ export default function MuteVideoButton({
         role={undefined}
         transition
         disablePortal
+        style={{ zIndex: 101 }} // todo temporary fix for a bug in MP 0.1.5
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -132,7 +133,7 @@ export default function MuteVideoButton({
                     <MenuItem
                       key={option}
                       selected={index === selectedIndex}
-                      onClick={event => handleChangeVideoSource(event, index)}
+                      onClick={(event) => handleChangeVideoSource(event, index)}
                       classes={{
                         selected: localClasses.selected,
                         root: localClasses.root

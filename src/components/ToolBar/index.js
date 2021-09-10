@@ -117,13 +117,14 @@ export default function ToolBar({
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}
         classes={classes}
-        /* publisherIsSpeaking={publisherIsSpeaking} */
+        changeAudioSource={changeAudioSource}
       />
       <EndCallButton classes={classes} handleEndCall={endCall} />
       <MuteVideoButton
         toggleVideo={toggleVideo}
         hasVideo={hasVideo}
         classes={classes}
+        changeVideoSource={changeVideoSource}
       />
     </div>
   ) : (
