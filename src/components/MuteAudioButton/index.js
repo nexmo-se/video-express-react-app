@@ -39,19 +39,25 @@ export default function MuteAudioButton({
     setDevicesAvailable(deviceInfo.audioInputDevices);
 
     if (cameraPublishing && devicesAvailable) {
-      getAudioSource().then(id => setAudioDeviceId(id));
+      getAudioSource().then((id) => setAudioDeviceId(id));
 
       const indexOfSelectedElement = devicesAvailable.indexOf(
-        devicesAvailable.find(e => e.deviceId === audioDeviceId)
+        devicesAvailable.find((e) => e.deviceId === audioDeviceId)
       );
 
       setSelectedIndex(indexOfSelectedElement);
     }
-  }, [cameraPublishing, getAudioSource, deviceInfo, audioDeviceId, devicesAvailable]);
+  }, [
+    cameraPublishing,
+    getAudioSource,
+    deviceInfo,
+    audioDeviceId,
+    devicesAvailable
+  ]);
 
   React.useEffect(() => {
     if (devicesAvailable) {
-      const audioDevicesAvailable = devicesAvailable.map(e => {
+      const audioDevicesAvailable = devicesAvailable.map((e) => {
         return e.label;
       });
       setOptions(audioDevicesAvailable);
@@ -63,16 +69,16 @@ export default function MuteAudioButton({
     console.log(index);
     setOpen(false);
     const audioDeviceId = devicesAvailable.find(
-      device => device.label === event.target.textContent
+      (device) => device.label === event.target.textContent
     ).deviceId;
     changeAudioSource(audioDeviceId);
   };
 
-  const handleToggle = e => {
-    setOpen(prevOpen => !prevOpen);
+  const handleToggle = (e) => {
+    setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = event => {
+  const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -126,6 +132,7 @@ export default function MuteAudioButton({
         role={undefined}
         transition
         disablePortal
+        style={{ zIndex: 101 }} // todo temporary fix for a bug in MP 0.1.5
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -142,7 +149,7 @@ export default function MuteAudioButton({
                     <MenuItem
                       key={option}
                       selected={index === selectedIndex}
-                      onClick={event => handleChangeAudioSource(event, index)}
+                      onClick={(event) => handleChangeAudioSource(event, index)}
                       classes={{ selected: localClasses.selected }}
                     >
                       {option}

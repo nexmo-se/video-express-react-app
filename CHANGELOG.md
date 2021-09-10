@@ -1,3 +1,7 @@
+# 0.1.8 (Sep 10, 2021)
+
+- Fix a bug in the audio and video selector with zIndex
+
 # 0.1.7 (Sep 09, 2021)
 
 - Update `@vonage/multiparty` to `0.1.6`
