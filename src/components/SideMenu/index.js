@@ -83,7 +83,6 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
         <List>
           {localParticipant && (
             <>
-              {console.log(localParticipant)}
               <ListItem key={localParticipant.id}>
                 <ListItemIcon>
                   <PersonIcon variant="contained" color="primary" />
