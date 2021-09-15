@@ -60,9 +60,6 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
     };
   }
 
-  React.useEffect(() => {
-    console.log(room.participants);
-  }, [room]);
   return (
     <div>
       <AppBar position="static">
@@ -77,7 +74,6 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        {/* <div>Not active </div> */}
         <Chat room={room} listOfMessages={listOfMessages} />
       </TabPanel>
       <TabPanel value={value} index={2}>
@@ -87,48 +83,27 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
         <List>
           {localParticipant && (
             <>
-              <ListItem>
+              <ListItem key={localParticipant.id}>
                 <ListItemIcon>
                   <PersonIcon variant="contained" color="primary" />
                 </ListItemIcon>
-                <ListItemText
-                  primary={`Participant Id: ${localParticipant.id} `}
-                />
+                <ListItemText primary={localParticipant.name} />
               </ListItem>
-              {/* <ListItem>
-               <ListItemIcon>
-                 <TimerIcon variant="contained" color="primary" />
-               </ListItemIcon>
-               <ListItemText
-                 primary={`Active Time: ${localParticipantsMinutesSinceJoin()} minutes ${localParticipantsSecondsSinceJoin()} seconds`}
-               />
-             </ListItem> */}
+              <Divider />
             </>
           )}
           {participants &&
             participants?.length > 0 &&
-            participants.map((e) => {
-              /*  const minutesSinceJoin = Math.floor(
-               (new Date().getTime() / 1000 - e.startTime) / 60
-             );
-             const secondsSinceJoin =
-               Math.floor(new Date().getTime() / 1000 - e.startTime) % 60; */
+            participants.map(e => {
               return (
                 <>
-                  <ListItem>
+                  <ListItem key={e.id}>
                     <ListItemIcon>
                       <PersonIcon variant="contained" color="primary" />
                     </ListItemIcon>
-                    <ListItemText primary={`Participant Id: ${e.id} `} />
+                    <ListItemText primary={e.name} />
                   </ListItem>
-                  {/* <ListItem>
-                   <ListItemIcon>
-                     <TimerIcon variant="contained" color="primary" />
-                   </ListItemIcon>
-                   <ListItemText
-                     primary={`Active Time: ${minutesSinceJoin} minutes ${secondsSinceJoin} seconds`}
-                   />
-                 </ListItem> */}
+
                   <Divider />
                 </>
               );
