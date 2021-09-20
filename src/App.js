@@ -15,7 +15,7 @@ import UserNameRoute from './components/UserNameRoute';
 
 // Theme Configuration
 
-import { createTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { useMemo, useState } from 'react';
 
@@ -23,7 +23,7 @@ let primary = process.env.REACT_APP_PALETTE_PRIMARY || '#b779ff';
 let secondary = process.env.REACT_APP_PALETTE_SECONDARY || '#d6219c';
 
 const theme = () => {
-  return createTheme({
+  return createMuiTheme({
     palette: {
       type: 'light',
       primary: {
