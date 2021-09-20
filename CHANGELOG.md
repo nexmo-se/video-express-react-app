@@ -1,3 +1,8 @@
+# 0.1.9 (Sep 20, 2021)
+
+- Replace participant ID with participant name in the Participants List
+- Update `@vonage/multiparty` to `0.1.7`
+
 # 0.1.8 (Sep 10, 2021)
 
 - Fix a bug in the audio and video selector with zIndex
