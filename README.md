@@ -1,6 +1,6 @@
-# Video API Multiparty SDK Sample App
+# Vonage Video Express Demo App 
 
-This application shows how to build a multi-party video app with [Vonage Multiparty Toolkit](https://tokbox.com/developer/multiparty/) and [Create React App](https://reactjs.org/docs/create-a-new-react-app.html). It's a library that is built on top of the [Vonage Video API for Javascript](https://tokbox.com/developer/sdks/js/). The Multiparty Toolkit provides by default the following features:
+This application shows how to build a multi-party video app with [Vonage Video Express](https://tokbox.com/developer/multiparty/) and [Create React App](https://reactjs.org/docs/create-a-new-react-app.html). It's a library that is built on top of the [Vonage Video API for Javascript](https://tokbox.com/developer/sdks/js/). The Vonage Video Express provides by default the following features:
 
 - Layout Management. Out of the box responsive UI and Layout Manager with customizable components
 - Video Quality Optimization (framerate and resolution) based on the number of participants, rendering sizes, CPU and network conditions.
@@ -55,9 +55,9 @@ This project uses React Hooks, in particular it uses React Hooks and Contexts:
 
 ##### UseRoom
 
-The src/hooks/useRoom.js hook handles the Room object of the MultiParty Toolkit. The main functions are:
+The src/hooks/useRoom.js hook handles the Room object of the Vonage Video Express. The main functions are:
 
-- createCall: given the credentials (APIKeys, SessionId and Token), the function connects to the Opentok servers, add the event listeners (onStreamCreated and onStreamDestroyed). The function calls `new MP.Room({})` function from the Multiparty Toolkit: [https://tokbox.com/developer/multiparty/reference/room.html](https://tokbox.com/developer/multiparty/reference/room.html).
+- createCall: given the credentials (APIKeys, SessionId and Token), the function connects to the Opentok servers, add the event listeners (onStreamCreated and onStreamDestroyed). The function calls `new MP.Room({})` function from the Vonage Video Express: [https://tokbox.com/developer/multiparty/reference/room.html](https://tokbox.com/developer/multiparty/reference/room.html).
 - addParticipants: adds the participants in the local `participants` state.
 - removeParticipants: removes the participants in the local `participants` state.
 
