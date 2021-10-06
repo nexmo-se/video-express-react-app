@@ -1,3 +1,7 @@
+# 0.1.10 (Oct 06, 2021)
+
+- Update `@vonage/multiparty` to `0.1.9`
+
 # 0.1.9 (Sep 20, 2021)
 
 - Replace participant ID with participant name in the Participants List
