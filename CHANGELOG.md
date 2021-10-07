@@ -1,3 +1,8 @@
+# 0.1.11 (Oct 06, 2021)
+
+- Use new NPM namespace `@vonage/video-express: 0.1.10`
+
+
 # 0.1.10 (Oct 06, 2021)
 
 - Update `@vonage/multiparty` to `0.1.9`

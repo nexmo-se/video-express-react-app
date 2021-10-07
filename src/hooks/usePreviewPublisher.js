@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useContext } from 'react';
 import { DEVICE_ACCESS_STATUS } from './../components/constants';
 import useDevices from '../hooks/useDevices';
-import * as MP from '@vonage/multiparty';
+import * as VideoExpress from '@vonage/video-express';
 
 export default function usePreviewPublisher() {
   let previewPublisher = useRef();
@@ -29,7 +29,7 @@ export default function usePreviewPublisher() {
       try {
         const publisherProperties = Object.assign({}, publisherOptions);
         console.log('[createPreview]', publisherProperties);
-        previewPublisher.current = new MP.PreviewPublisher(targetEl);
+        previewPublisher.current = new VideoExpress.PreviewPublisher(targetEl);
         previewPublisher.current.on('audioLevelUpdated', (audioLevel) => {
           calculateAudioLevel(audioLevel);
         });

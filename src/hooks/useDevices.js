@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import * as MP from '@vonage/multiparty';
+import * as VideoExpress from "@vonage/video-express";
 
 export default function useDevices() {
   const [deviceInfo, setDeviceInfo] = useState({
@@ -14,7 +14,7 @@ export default function useDevices() {
       return;
     }
     try {
-      const devices = await MP.getDevices();
+      const devices = await VideoExpress.getDevices();
       const audioInputDevices = devices.filter(
         (d) => d.kind.toLowerCase() === 'audioinput'
       );
