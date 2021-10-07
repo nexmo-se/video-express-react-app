@@ -89,10 +89,10 @@ const MeetingInfo = () => {
             <ChildFriendlyIcon variant="contained" color="primary" />
           </ListItemIcon>
           <ListItemLink
-            href="https://www.npmjs.com/package/@vonage/multiparty"
+            href="https://www.npmjs.com/package/@vonage/video-express"
             target="_blank"
           >
-            <ListItemText primary="npm Toolkit" />
+            <ListItemText primary="Video Express" />
           </ListItemLink>
         </ListItem>
         <Divider />

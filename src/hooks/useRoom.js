@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import _ from 'lodash';
-import * as MP from '@vonage/multiparty';
+import * as VideoExpress from '@vonage/video-express';
 
 export default function useRoom() {
   let roomRef = useRef(null);
@@ -112,7 +112,7 @@ export default function useRoom() {
         throw new Error('Check your credentials');
       }
 
-      roomRef.current = new MP.Room({
+      roomRef.current = new VideoExpress.Room({
         apiKey: apikey,
         sessionId: sessionId,
         token: token,
