@@ -6,10 +6,10 @@ export default function useCopyMeetingUrl() {
     const url = window.location.href;
     navigator.clipboard.writeText(url).then(
       () => {
-        console.log('Meeting URL copied');
+        // console.log('Meeting URL copied');
       },
       () => {
-        console.log('Copy failed');
+        // console.log('Copy failed');
       }
     );
   }, []);
