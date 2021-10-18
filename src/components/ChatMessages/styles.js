@@ -2,19 +2,27 @@ import { makeStyles } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 export default makeStyles((theme) => ({
   mine: {
-    left: '0'
+    left: '0',
     // position: 'absolute'
   },
   others: {
-    right: '0'
+    right: '0',
     // position: 'absolute'
   },
   chatContainer: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   chatAvatar: {
-    display: 'flex'
+    display: 'flex',
+  },
+  chatContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '20vw',
+
+    // : 0;
+    // white-space: pre-line;
   },
   messageContainer: {
     display: 'flex',
@@ -23,17 +31,17 @@ export default makeStyles((theme) => ({
     padding: '10px',
     margin: '5px',
     backgroundColor: theme.palette.primary.main,
-    overflowY: 'scroll'
+    overflowY: 'scroll',
   },
   myMessage: {
     background: '#fff',
-    border: `2px solid ${theme.palette.primary.main}`
+    border: `2px solid ${theme.palette.primary.main}`,
   },
 
   iconChat: {
-    marginRight: '5px'
+    marginRight: '5px',
   },
   time: {
-    marginLeft: 'auto'
-  }
+    marginLeft: 'auto',
+  },
 }));
