@@ -43,7 +43,7 @@ export default function WaitingRoom({ location }) {
     logLevel,
     previewMediaCreated,
     deviceInfo,
-    accessAllowed
+    accessAllowed,
   } = usePreviewPublisher();
 
   const handleVideoSource = React.useCallback(
@@ -83,6 +83,7 @@ export default function WaitingRoom({ location }) {
   const handleJoinClick = () => {
     if (validateForm()) {
       push(`room/${roomName}`);
+      localStorage.setItem('username', userName);
     }
   };
 
@@ -135,6 +136,9 @@ export default function WaitingRoom({ location }) {
 
   useEffect(() => {
     redirectHttps();
+    if (localStorage.getItem('username')) {
+      setUserName(localStorage.getItem('username'));
+    }
   }, []);
 
   useEffect(() => {
@@ -150,8 +154,8 @@ export default function WaitingRoom({ location }) {
           publishAudio: localAudio,
           publishVideo: localVideo,
           audioSource: localAudioSource,
-          videoSource: localVideoSource
-        }
+          videoSource: localVideoSource,
+        },
       });
     }
   }, [
@@ -160,7 +164,7 @@ export default function WaitingRoom({ location }) {
     user,
     setUser,
     localAudioSource,
-    localVideoSource
+    localVideoSource,
   ]);
 
   useEffect(() => {
@@ -182,7 +186,7 @@ export default function WaitingRoom({ location }) {
     previewPublisher,
     setAudioDevice,
     setVideoDevice,
-    previewMediaCreated
+    previewMediaCreated,
   ]);
 
   useEffect(() => {
