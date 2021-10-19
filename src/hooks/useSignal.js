@@ -5,13 +5,9 @@ export default function useSignal({ room }) {
   const [listOfMessages, setListOfMessages] = React.useState([]);
 
   const sendSignal = React.useCallback((data, type) => {
-    console.log('[useSignal] - sendSignal');
     if (room) {
       room
         .signal({ type: type, data: data })
-        .then(() => {
-          console.log('signal sent');
-        })
         .catch(e => e);
     }
   }, []);

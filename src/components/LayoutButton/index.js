@@ -26,7 +26,6 @@ export default function LayoutButton({ classes, room }) {
   };
 
   const handleLayOutChange = () => {
-    console.log(layOut);
     if (room) {
       if (layOut === 'grid') {
         room.setLayoutMode('active-speaker');

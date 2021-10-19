@@ -24,7 +24,6 @@ export default function MuteVideoButton({
   changeVideoSource
 }) {
   const title = hasVideo ? 'Disable Camera' : 'Enable Camera';
-  console.log('[MuteVideoButton] - hasVideo', hasVideo);
   const { deviceInfo } = useDevices();
   const [devicesAvailable, setDevicesAvailable] = React.useState(null);
   const [options, setOptions] = React.useState([]);

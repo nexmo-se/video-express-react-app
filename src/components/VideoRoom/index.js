@@ -46,7 +46,6 @@ export default function VideoRoom() {
 
   useEffect(() => {
     if (credentials) {
-      console.log(user);
       createCall(credentials, roomContainer.current, user.userName, {
         ...user.defaultSettings
       });

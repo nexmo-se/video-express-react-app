@@ -8,7 +8,6 @@ const deniedDeviceMessage =
 
 export default function DeviceAccessAlert({ accessStatus }) {
   const classes = useStyles();
-  console.log('DeviceAccessAlert1', accessStatus);
   const messageToDisplay =
     accessStatus === DEVICE_ACCESS_STATUS.PENDING
       ? askDeviceMessage
@@ -17,7 +16,6 @@ export default function DeviceAccessAlert({ accessStatus }) {
     accessStatus === DEVICE_ACCESS_STATUS.PENDING
       ? '/images/access-dialog-pending.png'
       : '/images/access-dialog-rejected.png';
-  console.log('DeviceAccessAlert2', messageToDisplay);
   return (
     <div className={classes.centeredContent}>
       <div className={classes.centeredText}>
