@@ -1,3 +1,8 @@
+# 0.1.13 (Oct 06, 2021)
+
+- Add username to local storage
+- Fix bug in chat width, set maxWidth
+
 # 0.1.12 (Oct 06, 2021)
 
 - Use new NPM namespace `@vonage/video-express: 0.1.11`
