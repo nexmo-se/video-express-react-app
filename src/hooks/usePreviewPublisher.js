@@ -28,18 +28,18 @@ export default function usePreviewPublisher() {
     async (targetEl, publisherOptions) => {
       try {
         const publisherProperties = Object.assign({}, publisherOptions);
-        console.log('[createPreview]', publisherProperties);
+        // console.log('[createPreview]', publisherProperties);
         previewPublisher.current = new VideoExpress.PreviewPublisher(targetEl);
         previewPublisher.current.on('audioLevelUpdated', (audioLevel) => {
           calculateAudioLevel(audioLevel);
         });
         previewPublisher.current.on('accessAllowed', (audioLevel) => {
-          console.log('[createPreview] - accessAllowed');
+          // console.log('[createPreview] - accessAllowed');
           setAccessAllowed(DEVICE_ACCESS_STATUS.ACCEPTED);
           getDevices();
         });
         previewPublisher.current.on('accessDenied', (audioLevel) => {
-          console.log('[createPreview] - accessDenied');
+          // console.log('[createPreview] - accessDenied');
           setAccessAllowed(DEVICE_ACCESS_STATUS.REJECTED);
         });
         await previewPublisher.current.previewMedia({
@@ -48,12 +48,12 @@ export default function usePreviewPublisher() {
         });
 
         setPreviewMediaCreated(true);
-        console.log(
+        /* console.log(
           '[Preview Created] - ',
           previewPublisher.current.getVideoDevice()
-        );
+        ); */
       } catch (err) {
-        console.log('[createPreview]', err);
+        // console.log('[createPreview]', err);
       }
     },
     [calculateAudioLevel, getDevices]

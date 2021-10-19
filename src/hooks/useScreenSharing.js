@@ -8,35 +8,33 @@ export default function useScreenSharing({ room }) {
     if (room) {
       try {
         const { screen } = room;
-        /* setIsScreenSharing(true); */
         screen.on('started', () => {
-          console.log('[useScreensharing] -  The screen sharing has started!');
           setScreen(screen);
           setIsScreenSharing(true);
         });
-        screen.on('stopped', reason => {
-          console.log(
+        screen.on('stopped', (reason) => {
+          console.warn(
             '[useScreensharing] - The screen sharing stopped because: ',
             reason
           );
           setScreen(null);
           setIsScreenSharing(false);
         });
-        screen.on('accessDenied', reason => {
-          console.log('[useScreensharing] - Access Denied', reason);
+        screen.on('accessDenied', (reason) => {
+          // console.log('[useScreensharing] - Access Denied', reason);
           setScreen(null);
           setIsScreenSharing(false);
         });
         await room.startScreensharing();
-        console.log('[startScreensharing]- ', screen);
+        // console.log('[startScreensharing]- ', screen);
       } catch (e) {
-        console.log('[useScreensharing] - startScreenSharing error:', e);
+        console.error('[useScreensharing] - startScreenSharing error:', e);
       }
     }
   }, [room]);
 
   const stopScreenSharing = useCallback(async () => {
-    console.log('[startScreensharing]- ', room);
+    // console.log('[startScreensharing]- ', room);
     if (room) {
       room.stopScreensharing();
       setIsScreenSharing(false); // todo this is a temporary fix because the event are not being triggered

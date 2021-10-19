@@ -82,6 +82,7 @@ export default function WaitingRoom({ location }) {
 
   const handleJoinClick = () => {
     if (validateForm()) {
+      localStorage.setItem('username', userName);
       push(`room/${roomName}`);
     }
   };
@@ -135,6 +136,9 @@ export default function WaitingRoom({ location }) {
 
   useEffect(() => {
     redirectHttps();
+    if (localStorage.getItem('username')) {
+      setUserName(localStorage.getItem('username'));
+    }
   }, []);
 
   useEffect(() => {

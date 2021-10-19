@@ -10,7 +10,7 @@ export default function useDevices() {
 
   const getDevices = useCallback(async () => {
     if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
-      console.log('enumerateDevices() not supported.');
+      console.warn('enumerateDevices() not supported.');
       return;
     }
     try {

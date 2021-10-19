@@ -99,7 +99,6 @@ export default function ToolBar({
   };
 
   useEffect(() => {
-    console.log('[toolbar] useEffect - Connected', connected);
     if (connected) {
       const isAudioEnabled =
         room && room.camera && room.camera.isAudioEnabled() ? true : false;
