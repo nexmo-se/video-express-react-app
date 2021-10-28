@@ -15,7 +15,7 @@ This application shows how to build a multi-party video app with [Vonage Video E
 ## Installation
 
 1. Run `npm install` to install all dependencies from NPM.
-2. Copy the `env.example` file to `.env` and fill the variables needed
+2. Copy the `env.example` file to `.env.development` or `.env.production` and fill the variables needed
 
 For local development, you can run `npm run server-dev` to run the server and `npm start` to run the client side of the application.
 
