@@ -21,7 +21,7 @@ export default function VideoRoom() {
     connected,
     networkStatus,
     cameraPublishing,
-    localParticipant
+    localParticipant,
   } = useRoom();
   const { isScreenSharing, startScreenSharing, stopScreenSharing } =
     useScreenSharing({ room });
@@ -35,7 +35,7 @@ export default function VideoRoom() {
         setCredentials({
           apikey: data.apiKey,
           sessionId: data.sessionId,
-          token: data.token
+          token: data.token,
         });
       })
       .catch((err) => {
@@ -46,9 +46,15 @@ export default function VideoRoom() {
 
   useEffect(() => {
     if (credentials) {
-      createCall(credentials, roomContainer.current, user.userName, {
-        ...user.defaultSettings
-      });
+      createCall(
+        credentials,
+        roomContainer.current,
+        user.userName,
+        user.backgroundBlur,
+        {
+          ...user.defaultSettings,
+        }
+      );
     }
   }, [createCall, credentials, user]);
 

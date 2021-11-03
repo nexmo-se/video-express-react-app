@@ -1,6 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Grid, TextField } from '@material-ui/core';
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  TextField,
+} from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import useStyles from './styles';
@@ -35,7 +41,7 @@ export default function WaitingRoom({ location }) {
   /* const [devices, setDevices] = useState(null); */
   let [audioDevice, setAudioDevice] = useState('');
   let [videoDevice, setVideoDevice] = useState('');
-
+  const [backgroundBlur, setBackgroundBlur] = useState(user.backgroundBlur);
   const {
     createPreview,
     destroyPreview,
@@ -43,7 +49,7 @@ export default function WaitingRoom({ location }) {
     logLevel,
     previewMediaCreated,
     deviceInfo,
-    accessAllowed
+    accessAllowed,
   } = usePreviewPublisher();
 
   const handleVideoSource = React.useCallback(
@@ -134,6 +140,10 @@ export default function WaitingRoom({ location }) {
     setLocalVideo(e.target.checked);
   }, []);
 
+  const handleChangeBackgroundBlur = React.useCallback(() => {
+    setBackgroundBlur(!backgroundBlur);
+  });
+
   useEffect(() => {
     redirectHttps();
     if (localStorage.getItem('username')) {
@@ -146,16 +156,18 @@ export default function WaitingRoom({ location }) {
       localAudio !== user.defaultSettings.publishAudio ||
       localVideo !== user.defaultSettings.publishVideo ||
       localAudioSource !== user.defaultSettings.audioSource ||
-      localVideoSource !== user.defaultSettings.videoSource
+      localVideoSource !== user.defaultSettings.videoSource ||
+      backgroundBlur !== user.backgroundBlur
     ) {
       setUser({
         ...user,
+        backgroundBlur: backgroundBlur,
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo,
           audioSource: localAudioSource,
-          videoSource: localVideoSource
-        }
+          videoSource: localVideoSource,
+        },
       });
     }
   }, [
@@ -164,7 +176,8 @@ export default function WaitingRoom({ location }) {
     user,
     setUser,
     localAudioSource,
-    localVideoSource
+    localVideoSource,
+    backgroundBlur,
   ]);
 
   useEffect(() => {
@@ -186,7 +199,7 @@ export default function WaitingRoom({ location }) {
     previewPublisher,
     setAudioDevice,
     setVideoDevice,
-    previewMediaCreated
+    previewMediaCreated,
   ]);
 
   useEffect(() => {
@@ -218,6 +231,10 @@ export default function WaitingRoom({ location }) {
       destroyPreview();
     };
   }, [createPreview, destroyPreview]);
+
+  // useEffect(() => {
+  //   setBackgroundBlur(!backgroundBlur);
+  // }, [backgroundBlur]);
 
   return (
     <>
@@ -321,6 +338,15 @@ export default function WaitingRoom({ location }) {
               onVideoChange={handleVideoChange}
             />
           </div>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={backgroundBlur}
+                onChange={handleChangeBackgroundBlur}
+              />
+            }
+            label="Background Blur"
+          />
         </Grid>
         <Grid
           container
