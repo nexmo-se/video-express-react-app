@@ -25,6 +25,8 @@ export default function useRoom() {
   const [publisherIsSpeaking, setPublisherIsSpeaking] = useState(false);
   const [cameraPublishing, setCameraPublishing] = useState(false);
 
+  // const [finalPublisherOptions, setFinalPublisherOptions] = useState();
+
   const addParticipants = ({ participant }) => {
     // const participantWithTime = Object.assign({}, participant, {
     //   startTime: new Date().getTime() / 1000
@@ -143,28 +145,8 @@ export default function useRoom() {
       });
       startRoomListeners();
 
-      // await getUserMedia();
-
-      // if (backgroundBlur) {
-      //   // console.log('this video has backgroundblur');
-      //   try {
-      //     const track = await navigator.mediaDevices.getUserMedia({
-      //       audio: true,
-      //       video: true,
-      //     });
-      //     mediaTrack = track;
-      //     backgroundBlur = new BackgroundBlurEffect({
-      //       assetsPath: process.env.REACT_APP_ASSETS_PATH,
-      //     });
-      //     console.log(process.env.REACT_APP_ASSETS_PATH);
-      //     await backgroundBlur.loadModel();
-      //     outputVideoStream = backgroundBlur.startEffect(mediaTrack);
-      //   } catch (e) {
-      //     console.log('OT get user media error ' + e);
-      //   }
-      // }
-
       if (backgroundBlur) {
+        console.log('blurring background');
         const mediaTrack = await getUserMedia();
         const backgroundBlur = new BackgroundBlurEffect({
           assetsPath: process.env.REACT_APP_ASSETS_PATH,
@@ -172,18 +154,16 @@ export default function useRoom() {
         const outputVideoStream = backgroundBlur.startEffect(mediaTrack);
 
         await backgroundBlur.loadModel();
+
+        //setFinalPublisherOptions(
         finalPublisherOptions = Object.assign({}, publisherOptions, {
           style: {
             buttonDisplayMode: 'off',
             nameDisplayMode: 'auto',
             audioLevelDisplayMode: 'off',
           },
-          audioSource: backgroundBlur
-            ? mediaTrack.getAudioTracks()[0]
-            : undefined,
-          videoSource: backgroundBlur
-            ? outputVideoStream.getVideoTracks()[0]
-            : undefined,
+          audioSource: mediaTrack.getAudioTracks()[0],
+          videoSource: outputVideoStream.getVideoTracks()[0],
           name: userName,
           showControls: true,
         });
@@ -194,16 +174,12 @@ export default function useRoom() {
             nameDisplayMode: 'auto',
             audioLevelDisplayMode: 'off',
           },
-          // audioSource: backgroundBlur
-          //   ? mediaTrack.getAudioTracks()[0]
-          //   : undefined,
-          // videoSource: backgroundBlur
-          //   ? outputVideoStream.getVideoTracks()[0]
-          //   : undefined,
+
           name: userName,
           showControls: true,
         });
       }
+
       console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
       roomRef.current
         .join({ publisherProperties: finalPublisherOptions })
@@ -214,6 +190,22 @@ export default function useRoom() {
           addLocalParticipant({ room: roomRef.current });
         })
         .catch((e) => console.log(e));
+
+      // Object.assign({}, finalPublisherOptions, {
+      //   style: {
+      //     buttonDisplayMode: 'off',
+      //     nameDisplayMode: 'auto',
+      //     audioLevelDisplayMode: 'off',
+      //   },
+      //   audioSource: backgroundBlur
+      //     ? mediaTrack.getAudioTracks()[0]
+      //     : undefined,
+      //   videoSource: backgroundBlur
+      //     ? outputVideoStream.getVideoTracks()[0]
+      //     : undefined,
+      //   name: userName,
+      //   showControls: true,
+      // })
     },
     [startRoomListeners, getUserMedia]
   );

@@ -40,6 +40,26 @@ app.get('/session/:room', async (req, res) => {
   }
 });
 
+app.post('/api', (req, res) => {
+  console.log(req.body);
+  console.log(req.headers);
+
+  if (req.body?.action === 'LOGIN') {
+    res.send({
+      sessionId: req.body.sessionId,
+      status: 'OK',
+      statusMessage: 'Session Created',
+    });
+  } else {
+    res.send({
+      sessionId: req.body.sessionId,
+      reply: 'yey ye',
+      status: 'OK',
+      statusMessage: 'Reply Sent',
+    });
+  }
+});
+
 app.post('/archive/start', async (req, res) => {
   const { session_id } = req.body;
   try {

@@ -12,25 +12,25 @@ export default function useBackgroundBlur() {
     try {
       console.log('getting user media');
       const track = await navigator.mediaDevices.getUserMedia({
-        audio: true,
+        audio: false,
         video: true,
       });
       return track;
-      //setMediaTrack(track);
-      //   const backgroundBlur = new BackgroundBlurEffect({
-      //     assetsPath: process.env.REACT_APP_ASSETS_PATH,
-      //   });
+      // setMediaTrack(track);
+      // const backgroundBlur = new BackgroundBlurEffect({
+      //   assetsPath: process.env.REACT_APP_ASSETS_PATH,
+      // });
 
-      //   await backgroundBlur.loadModel();
-      //   setOutputVideoStream(backgroundBlur.startEffect(mediaTrack));
+      // await backgroundBlur.loadModel();
+      // setOutputVideoStream(backgroundBlur.startEffect(mediaTrack));
     } catch (e) {
       console.log('OT get user media error ' + e);
     }
   }, []);
 
-  //   useEffect(() => {
-  //     getUserMedia();
-  //   }, [getUserMedia]);
+  // useEffect(() => {
+  //   getUserMedia();
+  // }, [getUserMedia]);
 
   return {
     mediaTrack,
