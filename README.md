@@ -110,3 +110,11 @@ It's the main component of the application. It contains the ToolBar and the netw
 ## Deploy to Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/nexmo-se/video-api-multiparty-toolkit-sample-app.git)
+
+## Deploy to Mia-Platform
+
+In order to deploy the service using Mia-Platform Console search for this service in the Marketplace,
+complete the configuration file with your API Key and API Secret and deploy it in your project.
+
+Please make sure, when configuring the ConfigMap, to mount it in the `/home/node/app` directory and to check
+the _Preserve files_ checkbox to prevent overwriting the whole directory content.
