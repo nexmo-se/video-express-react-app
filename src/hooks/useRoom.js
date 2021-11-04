@@ -174,7 +174,6 @@ export default function useRoom() {
             nameDisplayMode: 'auto',
             audioLevelDisplayMode: 'off',
           },
-
           name: userName,
           showControls: true,
         });
