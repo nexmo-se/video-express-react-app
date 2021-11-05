@@ -19,8 +19,13 @@ import DeviceAccessAlert from '../DeviceAccessAlert';
 import { UserContext } from '../../context/UserContext';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { DEVICE_ACCESS_STATUS } from './../constants';
+import useBackgroundBlur from '../../hooks/useBackgroundBlur';
+import * as VideoEffects from '@vonage/video-effects';
 
 export default function WaitingRoom({ location }) {
+  const track = useRef(null);
+  const { BackgroundBlurEffect } = VideoEffects;
+  const { getUserMedia, destroyTracks } = useBackgroundBlur();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
@@ -140,16 +145,52 @@ export default function WaitingRoom({ location }) {
     setLocalVideo(e.target.checked);
   }, []);
 
-  const handleChangeBackgroundBlur = React.useCallback(() => {
-    setBackgroundBlur(!backgroundBlur);
-  });
+  const handleChangeBackgroundBlur = React.useCallback(async () => {
+    if (backgroundBlur) {
+      setBackgroundBlur(false);
+
+      destroyPreview();
+      destroyTracks(track.current);
+      createPreview(waitingRoomVideoContainer.current);
+    } else {
+      setBackgroundBlur(true);
+      destroyPreview();
+      const mediaTrack = await getUserMedia();
+      track.current = mediaTrack;
+      const backgroundBlurObject = new BackgroundBlurEffect({
+        assetsPath: process.env.REACT_APP_ASSETS_PATH,
+      });
+      const outputVideoStream = backgroundBlurObject.startEffect(mediaTrack);
+      await backgroundBlurObject.loadModel();
+      createPreview(waitingRoomVideoContainer.current, {
+        videoSource: outputVideoStream.getVideoTracks()[0],
+      });
+    }
+  }, [
+    BackgroundBlurEffect,
+    backgroundBlur,
+    createPreview,
+    destroyPreview,
+    getUserMedia,
+  ]);
+
+  // useEffect(async () => {
+  //   if (backgroundBlur) {
+  //   } else {
+  //     destroyPreview();
+  //     createPreview(waitingRoomVideoContainer.current);
+  //   }
+  //   // return () => {
+  //   //   cleanup;
+  //   // };
+  // }, [backgroundBlur]);
 
   useEffect(() => {
     redirectHttps();
     if (localStorage.getItem('username')) {
       setUserName(localStorage.getItem('username'));
     }
-  }, []);
+  }, [redirectHttps]);
 
   useEffect(() => {
     if (

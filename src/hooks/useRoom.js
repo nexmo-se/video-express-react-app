@@ -14,8 +14,15 @@ let finalPublisherOptions;
 const { isSupported, BackgroundBlurEffect } = VideoEffects;
 
 export default function useRoom() {
-  const { getUserMedia } = useBackgroundBlur();
+  const {
+    getUserMedia,
+    backgroundBlurEffectTeta,
+    mediaTrack,
+    startBackgroundBlur,
+    outputThingy,
+  } = useBackgroundBlur();
   let roomRef = useRef(null);
+  let outputVideoStream = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
   const [localParticipant, setLocalParticipant] = useState(null);
@@ -146,23 +153,20 @@ export default function useRoom() {
       startRoomListeners();
 
       if (backgroundBlur) {
-        console.log('blurring background');
         const mediaTrack = await getUserMedia();
-        const backgroundBlur = new BackgroundBlurEffect({
+        const backgroundBlurObject = new BackgroundBlurEffect({
           assetsPath: process.env.REACT_APP_ASSETS_PATH,
         });
-        const outputVideoStream = backgroundBlur.startEffect(mediaTrack);
+        const outputVideoStream = backgroundBlurObject.startEffect(mediaTrack);
+        await backgroundBlurObject.loadModel();
 
-        await backgroundBlur.loadModel();
-
-        //setFinalPublisherOptions(
         finalPublisherOptions = Object.assign({}, publisherOptions, {
           style: {
             buttonDisplayMode: 'off',
             nameDisplayMode: 'auto',
             audioLevelDisplayMode: 'off',
           },
-          audioSource: mediaTrack.getAudioTracks()[0],
+
           videoSource: outputVideoStream.getVideoTracks()[0],
           name: userName,
           showControls: true,
@@ -206,7 +210,7 @@ export default function useRoom() {
       //   showControls: true,
       // })
     },
-    [startRoomListeners, getUserMedia]
+    [startRoomListeners, backgroundBlurEffectTeta, mediaTrack]
   );
 
   return {
