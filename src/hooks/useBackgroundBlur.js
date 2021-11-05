@@ -17,7 +17,6 @@ export default function useBackgroundBlur() {
     try {
       console.log('getting user media');
       const track = await navigator.mediaDevices.getUserMedia({
-        audio: null,
         video: true,
       });
       return track;
