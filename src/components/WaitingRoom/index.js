@@ -148,8 +148,8 @@ export default function WaitingRoom({ location }) {
   const handleChangeBackgroundBlur = React.useCallback(async () => {
     if (backgroundBlur) {
       setBackgroundBlur(false);
-
       destroyPreview();
+      console.log(track.current);
       destroyTracks(track.current);
       createPreview(waitingRoomVideoContainer.current);
     } else {
@@ -171,19 +171,9 @@ export default function WaitingRoom({ location }) {
     backgroundBlur,
     createPreview,
     destroyPreview,
+    destroyTracks,
     getUserMedia,
   ]);
-
-  // useEffect(async () => {
-  //   if (backgroundBlur) {
-  //   } else {
-  //     destroyPreview();
-  //     createPreview(waitingRoomVideoContainer.current);
-  //   }
-  //   // return () => {
-  //   //   cleanup;
-  //   // };
-  // }, [backgroundBlur]);
 
   useEffect(() => {
     redirectHttps();
@@ -272,10 +262,6 @@ export default function WaitingRoom({ location }) {
       destroyPreview();
     };
   }, [createPreview, destroyPreview]);
-
-  // useEffect(() => {
-  //   setBackgroundBlur(!backgroundBlur);
-  // }, [backgroundBlur]);
 
   return (
     <>

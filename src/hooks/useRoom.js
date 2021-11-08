@@ -9,19 +9,14 @@ import useBackgroundBlur from '../hooks/useBackgroundBlur';
 // let mediaTrack;
 // // let backgroundBlur;
 // let outputVideoStream;
-let finalPublisherOptions;
+// let finalPublisherOptions;
 
 const { isSupported, BackgroundBlurEffect } = VideoEffects;
 
 export default function useRoom() {
-  const {
-    getUserMedia,
-    backgroundBlurEffectTeta,
-    mediaTrack,
-    startBackgroundBlur,
-    outputThingy,
-  } = useBackgroundBlur();
+  const { getUserMedia, mediaTrack } = useBackgroundBlur();
   let roomRef = useRef(null);
+  let publisherOptionsRef = useRef(null);
   let outputVideoStream = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
@@ -160,7 +155,7 @@ export default function useRoom() {
         const outputVideoStream = backgroundBlurObject.startEffect(mediaTrack);
         await backgroundBlurObject.loadModel();
 
-        finalPublisherOptions = Object.assign({}, publisherOptions, {
+        publisherOptionsRef.current = Object.assign({}, publisherOptions, {
           style: {
             buttonDisplayMode: 'off',
             nameDisplayMode: 'auto',
@@ -172,7 +167,7 @@ export default function useRoom() {
           showControls: true,
         });
       } else {
-        finalPublisherOptions = Object.assign({}, publisherOptions, {
+        publisherOptionsRef.current = Object.assign({}, publisherOptions, {
           style: {
             buttonDisplayMode: 'off',
             nameDisplayMode: 'auto',
@@ -183,9 +178,12 @@ export default function useRoom() {
         });
       }
 
-      console.log('[useRoom] - finalPublisherOptions', finalPublisherOptions);
+      console.log(
+        '[useRoom] - finalPublisherOptions',
+        publisherOptionsRef.current
+      );
       roomRef.current
-        .join({ publisherProperties: finalPublisherOptions })
+        .join({ publisherProperties: publisherOptionsRef.current })
         .then(() => {
           setConnected(true);
           setCamera(roomRef.current.camera);
