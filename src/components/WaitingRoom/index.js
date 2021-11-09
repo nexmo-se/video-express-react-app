@@ -151,7 +151,6 @@ export default function WaitingRoom({ location }) {
     if (backgroundBlur) {
       setBackgroundBlur(false);
       destroyPreview();
-      console.log(track.current);
       destroyTracks(track.current);
       createPreview(waitingRoomVideoContainer.current);
     } else {
@@ -261,6 +260,7 @@ export default function WaitingRoom({ location }) {
     }
 
     return () => {
+      destroyTracks();
       destroyPreview();
     };
   }, [createPreview, destroyPreview]);
