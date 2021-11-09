@@ -28,7 +28,7 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     margin: '20px 0px',
-    height: '200px',
+    minHeight: '200px',
   },
   deviceContainer: {
     display: 'flex',
