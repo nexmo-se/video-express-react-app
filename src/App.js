@@ -51,7 +51,10 @@ const theme = () => {
 
 function App() {
   const [user, setUser] = useState({
-    backgroundBlur: false,
+    videoEffects: {
+      backgroundBlur: false,
+      virtualBackground: false,
+    },
     defaultSettings: {
       publishAudio: true,
       publishVideo: true,

@@ -188,11 +188,11 @@ export default function WaitingRoom({ location }) {
       localVideo !== user.defaultSettings.publishVideo ||
       localAudioSource !== user.defaultSettings.audioSource ||
       localVideoSource !== user.defaultSettings.videoSource ||
-      backgroundBlur !== user.backgroundBlur
+      backgroundBlur !== user.videoEffects.backgroundBlur
     ) {
       setUser({
         ...user,
-        backgroundBlur: backgroundBlur,
+        ...{ videoEffects: { backgroundBlur: backgroundBlur } },
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo,

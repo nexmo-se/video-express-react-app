@@ -3,13 +3,6 @@ import _ from 'lodash';
 import * as VideoExpress from '@vonage/video-express';
 import * as VideoEffects from '@vonage/video-effects';
 import useBackgroundBlur from '../hooks/useBackgroundBlur';
-// import OT from '../../public/lib/dev'
-// const OT = window.OT;
-
-// let mediaTrack;
-// // let backgroundBlur;
-// let outputVideoStream;
-// let finalPublisherOptions;
 
 const { isSupported, BackgroundBlurEffect } = VideoEffects;
 
@@ -17,7 +10,6 @@ export default function useRoom() {
   const { getUserMedia, mediaTrack } = useBackgroundBlur();
   let roomRef = useRef(null);
   let publisherOptionsRef = useRef(null);
-  let outputVideoStream = useRef(null);
   const [camera, setCamera] = useState(null);
   const [screen, setScreen] = useState(null);
   const [localParticipant, setLocalParticipant] = useState(null);
@@ -26,8 +18,6 @@ export default function useRoom() {
   const [networkStatus, setNetworkStatus] = useState(null);
   const [publisherIsSpeaking, setPublisherIsSpeaking] = useState(false);
   const [cameraPublishing, setCameraPublishing] = useState(false);
-
-  // const [finalPublisherOptions, setFinalPublisherOptions] = useState();
 
   const addParticipants = ({ participant }) => {
     // const participantWithTime = Object.assign({}, participant, {
@@ -117,10 +107,6 @@ export default function useRoom() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   getUserMedia();
-  // }, [mediaTrack, outputVideoStream, getUserMedia]);
-
   const createCall = useCallback(
     async (
       { apikey, sessionId, token },
@@ -191,22 +177,6 @@ export default function useRoom() {
           addLocalParticipant({ room: roomRef.current });
         })
         .catch((e) => console.log(e));
-
-      // Object.assign({}, finalPublisherOptions, {
-      //   style: {
-      //     buttonDisplayMode: 'off',
-      //     nameDisplayMode: 'auto',
-      //     audioLevelDisplayMode: 'off',
-      //   },
-      //   audioSource: backgroundBlur
-      //     ? mediaTrack.getAudioTracks()[0]
-      //     : undefined,
-      //   videoSource: backgroundBlur
-      //     ? outputVideoStream.getVideoTracks()[0]
-      //     : undefined,
-      //   name: userName,
-      //   showControls: true,
-      // })
     },
     [startRoomListeners, backgroundBlurEffectTeta, mediaTrack]
   );
