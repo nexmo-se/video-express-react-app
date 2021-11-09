@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
     padding: '25px',
     borderRadius: 5,
     width: '360px',
-    height: '90%',
+    // height: '90%',
   },
   formControl: {
     width: '100%',
@@ -28,6 +28,7 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     margin: '20px 0px',
+    height: '200px',
   },
   deviceContainer: {
     display: 'flex',
