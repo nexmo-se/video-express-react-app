@@ -22,7 +22,7 @@ export default function useBackgroundBlur() {
   const startBackgroundBlur = async () => {
     await getUserMedia();
     backgroundBlur.current = new BackgroundBlurEffect({
-      assetsPath: 'https://d7ca6333nyzk0.cloudfront.net/',
+      assetsPath: process.env.REACT_APP_ASSETS_PATH,
     });
     await backgroundBlur.current.loadModel();
     const outputStream = backgroundBlur.current.startEffect(

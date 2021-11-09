@@ -148,26 +148,24 @@ export default function WaitingRoom({ location }) {
   }, []);
 
   const handleChangeBackgroundBlur = React.useCallback(async () => {
-    if (backgroundBlur) {
-      setBackgroundBlur(false);
-      destroyPreview();
-      destroyTracks();
-      createPreview(waitingRoomVideoContainer.current);
-    } else {
-      setBackgroundBlur(true);
-      destroyPreview();
-      // const mediaTrack = await getUserMedia();
-      // track.current = mediaTrack;
-      // const backgroundBlurObject = new BackgroundBlurEffect({
-      //   assetsPath: process.env.REACT_APP_ASSETS_PATH,
-      // });
-      // const outputVideoStream = backgroundBlurObject.startEffect(mediaTrack);
-      const outputVideoStream = await startBackgroundBlur();
-      console.log(outputVideoStream);
-      // await backgroundBlurObject.loadModel();
-      createPreview(waitingRoomVideoContainer.current, {
-        videoSource: outputVideoStream.getVideoTracks()[0],
-      });
+    try {
+      if (backgroundBlur) {
+        setBackgroundBlur(false);
+        destroyPreview();
+        destroyTracks();
+        createPreview(waitingRoomVideoContainer.current);
+      } else {
+        setBackgroundBlur(true);
+        destroyPreview();
+        const outputVideoStream = await startBackgroundBlur();
+        console.log(outputVideoStream);
+        // await backgroundBlurObject.loadModel();
+        createPreview(waitingRoomVideoContainer.current, {
+          videoSource: outputVideoStream.getVideoTracks()[0],
+        });
+      }
+    } catch (e) {
+      console.log(`Could not send background blurring - ${e}`);
     }
   }, [
     BackgroundBlurEffect,
