@@ -25,7 +25,7 @@ import * as VideoEffects from '@vonage/video-effects';
 export default function WaitingRoom({ location }) {
   const track = useRef(null);
   const { BackgroundBlurEffect } = VideoEffects;
-  const { getUserMedia, destroyTracks } = useBackgroundBlur();
+  const { destroyTracks, startBackgroundBlur } = useBackgroundBlur();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
@@ -151,18 +151,20 @@ export default function WaitingRoom({ location }) {
     if (backgroundBlur) {
       setBackgroundBlur(false);
       destroyPreview();
-      destroyTracks(track.current);
+      destroyTracks();
       createPreview(waitingRoomVideoContainer.current);
     } else {
       setBackgroundBlur(true);
       destroyPreview();
-      const mediaTrack = await getUserMedia();
-      track.current = mediaTrack;
-      const backgroundBlurObject = new BackgroundBlurEffect({
-        assetsPath: process.env.REACT_APP_ASSETS_PATH,
-      });
-      const outputVideoStream = backgroundBlurObject.startEffect(mediaTrack);
-      await backgroundBlurObject.loadModel();
+      // const mediaTrack = await getUserMedia();
+      // track.current = mediaTrack;
+      // const backgroundBlurObject = new BackgroundBlurEffect({
+      //   assetsPath: process.env.REACT_APP_ASSETS_PATH,
+      // });
+      // const outputVideoStream = backgroundBlurObject.startEffect(mediaTrack);
+      const outputVideoStream = await startBackgroundBlur();
+      console.log(outputVideoStream);
+      // await backgroundBlurObject.loadModel();
       createPreview(waitingRoomVideoContainer.current, {
         videoSource: outputVideoStream.getVideoTracks()[0],
       });
@@ -173,7 +175,7 @@ export default function WaitingRoom({ location }) {
     createPreview,
     destroyPreview,
     destroyTracks,
-    getUserMedia,
+    startBackgroundBlur,
   ]);
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import useBackgroundBlur from '../hooks/useBackgroundBlur';
 const { isSupported, BackgroundBlurEffect } = VideoEffects;
 
 export default function useRoom() {
-  const { getUserMedia, mediaTrack } = useBackgroundBlur();
+  const { startBackgroundBlur } = useBackgroundBlur();
   let roomRef = useRef(null);
   let publisherOptionsRef = useRef(null);
   const [camera, setCamera] = useState(null);
@@ -134,12 +134,7 @@ export default function useRoom() {
       startRoomListeners();
 
       if (videoEffects.backgroundBlur) {
-        const mediaTrack = await getUserMedia();
-        const backgroundBlurObject = new BackgroundBlurEffect({
-          assetsPath: process.env.REACT_APP_ASSETS_PATH,
-        });
-        const outputVideoStream = backgroundBlurObject.startEffect(mediaTrack);
-        await backgroundBlurObject.loadModel();
+        const outputVideoStream = await startBackgroundBlur();
 
         publisherOptionsRef.current = Object.assign({}, publisherOptions, {
           style: {
@@ -178,7 +173,7 @@ export default function useRoom() {
         })
         .catch((e) => console.log(e));
     },
-    [startRoomListeners, getUserMedia]
+    []
   );
 
   return {

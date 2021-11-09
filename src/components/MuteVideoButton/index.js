@@ -21,7 +21,7 @@ export default function MuteVideoButton({
   toggleVideo,
   getVideoSource,
   cameraPublishing,
-  changeVideoSource
+  changeVideoSource,
 }) {
   const title = hasVideo ? 'Disable Camera' : 'Enable Camera';
   const { deviceInfo } = useDevices();
@@ -43,7 +43,7 @@ export default function MuteVideoButton({
       );
       setSelectedIndex(IndexOfSelectedElement);
     }
-  }, [cameraPublishing, getVideoSource, deviceInfo]);
+  }, [cameraPublishing, getVideoSource, deviceInfo, devicesAvailable]);
 
   React.useEffect(() => {
     if (devicesAvailable) {
@@ -122,7 +122,7 @@ export default function MuteVideoButton({
             {...TransitionProps}
             style={{
               transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom'
+                placement === 'bottom' ? 'center top' : 'center bottom',
             }}
           >
             <Paper>
@@ -135,7 +135,7 @@ export default function MuteVideoButton({
                       onClick={(event) => handleChangeVideoSource(event, index)}
                       classes={{
                         selected: localClasses.selected,
-                        root: localClasses.root
+                        root: localClasses.root,
                       }}
                     >
                       {option}

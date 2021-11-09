@@ -23,7 +23,7 @@ export default function ToolBar({
   startScreenSharing,
   stopScreenSharing,
   participants,
-  localParticipant
+  localParticipant,
 }) {
   const { roomName } = useParams();
   const theme = useTheme();
