@@ -112,7 +112,7 @@ export default function useRoom() {
       { apikey, sessionId, token },
       roomContainer,
       userName,
-      backgroundBlur,
+      videoEffects,
       publisherOptions
     ) => {
       if (!apikey || !sessionId || !token) {
@@ -133,7 +133,7 @@ export default function useRoom() {
       });
       startRoomListeners();
 
-      if (backgroundBlur) {
+      if (videoEffects.backgroundBlur) {
         const mediaTrack = await getUserMedia();
         const backgroundBlurObject = new BackgroundBlurEffect({
           assetsPath: process.env.REACT_APP_ASSETS_PATH,
@@ -178,7 +178,7 @@ export default function useRoom() {
         })
         .catch((e) => console.log(e));
     },
-    [startRoomListeners, backgroundBlurEffectTeta, mediaTrack]
+    [startRoomListeners, getUserMedia]
   );
 
   return {

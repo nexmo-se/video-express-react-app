@@ -50,7 +50,7 @@ export default function VideoRoom() {
         credentials,
         roomContainer.current,
         user.userName,
-        user.backgroundBlur,
+        user.videoEffects,
         {
           ...user.defaultSettings,
         }

@@ -46,7 +46,9 @@ export default function WaitingRoom({ location }) {
   /* const [devices, setDevices] = useState(null); */
   let [audioDevice, setAudioDevice] = useState('');
   let [videoDevice, setVideoDevice] = useState('');
-  const [backgroundBlur, setBackgroundBlur] = useState(user.backgroundBlur);
+  const [backgroundBlur, setBackgroundBlur] = useState(
+    user.videoEffects.backgroundBlur
+  );
   const {
     createPreview,
     destroyPreview,
@@ -192,7 +194,7 @@ export default function WaitingRoom({ location }) {
     ) {
       setUser({
         ...user,
-        ...{ videoEffects: { backgroundBlur: backgroundBlur } },
+        videoEffects: { backgroundBlur: backgroundBlur },
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo,
