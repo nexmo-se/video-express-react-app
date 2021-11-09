@@ -5,7 +5,7 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  TextField,
+  TextField
 } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -25,7 +25,8 @@ import * as VideoEffects from '@vonage/video-effects';
 export default function WaitingRoom({ location }) {
   const track = useRef(null);
   const { BackgroundBlurEffect } = VideoEffects;
-  const { destroyTracks, startBackgroundBlur } = useBackgroundBlur();
+  const { destroyTracks, startBackgroundBlur, isSupported } =
+    useBackgroundBlur();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
@@ -56,7 +57,7 @@ export default function WaitingRoom({ location }) {
     logLevel,
     previewMediaCreated,
     deviceInfo,
-    accessAllowed,
+    accessAllowed
   } = usePreviewPublisher();
 
   const handleVideoSource = React.useCallback(
@@ -161,19 +162,18 @@ export default function WaitingRoom({ location }) {
         console.log(outputVideoStream);
         // await backgroundBlurObject.loadModel();
         createPreview(waitingRoomVideoContainer.current, {
-          videoSource: outputVideoStream.getVideoTracks()[0],
+          videoSource: outputVideoStream.getVideoTracks()[0]
         });
       }
     } catch (e) {
       console.log(`Could not send background blurring - ${e}`);
     }
   }, [
-    BackgroundBlurEffect,
     backgroundBlur,
     createPreview,
     destroyPreview,
     destroyTracks,
-    startBackgroundBlur,
+    startBackgroundBlur
   ]);
 
   useEffect(() => {
@@ -198,8 +198,8 @@ export default function WaitingRoom({ location }) {
           publishAudio: localAudio,
           publishVideo: localVideo,
           audioSource: localAudioSource,
-          videoSource: localVideoSource,
-        },
+          videoSource: localVideoSource
+        }
       });
     }
   }, [
@@ -209,7 +209,7 @@ export default function WaitingRoom({ location }) {
     setUser,
     localAudioSource,
     localVideoSource,
-    backgroundBlur,
+    backgroundBlur
   ]);
 
   useEffect(() => {
@@ -231,7 +231,7 @@ export default function WaitingRoom({ location }) {
     previewPublisher,
     setAudioDevice,
     setVideoDevice,
-    previewMediaCreated,
+    previewMediaCreated
   ]);
 
   useEffect(() => {
@@ -328,7 +328,7 @@ export default function WaitingRoom({ location }) {
                 </FormControl>
               )}
 
-              {deviceInfo && previewMediaCreated && (
+              {deviceInfo && previewMediaCreated && !backgroundBlur && (
                 <FormControl>
                   <InputLabel id="video">Select Video Source</InputLabel>
                   {deviceInfo.videoInputDevices && (
@@ -367,15 +367,17 @@ export default function WaitingRoom({ location }) {
               onVideoChange={handleVideoChange}
             />
           </div>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={backgroundBlur}
-                onChange={handleChangeBackgroundBlur}
-              />
-            }
-            label="Background Blur"
-          />
+          {isSupported && (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={backgroundBlur}
+                  onChange={handleChangeBackgroundBlur}
+                />
+              }
+              label="Background Blur"
+            />
+          )}
         </Grid>
         <Grid
           container

@@ -1,10 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import _ from 'lodash';
 import * as VideoExpress from '@vonage/video-express';
-import * as VideoEffects from '@vonage/video-effects';
 import useBackgroundBlur from '../hooks/useBackgroundBlur';
-
-const { isSupported, BackgroundBlurEffect } = VideoEffects;
 
 export default function useRoom() {
   const { startBackgroundBlur } = useBackgroundBlur();

@@ -1,6 +1,6 @@
 import * as VideoEffects from '@vonage/video-effects';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 const { isSupported, BackgroundBlurEffect } = VideoEffects;
 
@@ -10,7 +10,7 @@ export default function useBackgroundBlur() {
   const getUserMedia = useCallback(async () => {
     try {
       const track = await navigator.mediaDevices.getUserMedia({
-        video: true,
+        video: true
       });
       localMediaTrack.current = track;
       // return track;
@@ -22,7 +22,7 @@ export default function useBackgroundBlur() {
   const startBackgroundBlur = async () => {
     await getUserMedia();
     backgroundBlur.current = new BackgroundBlurEffect({
-      assetsPath: process.env.REACT_APP_ASSETS_PATH,
+      assetsPath: process.env.REACT_APP_ASSETS_PATH
     });
     await backgroundBlur.current.loadModel();
     const outputStream = backgroundBlur.current.startEffect(
@@ -37,8 +37,14 @@ export default function useBackgroundBlur() {
     }
   };
 
+  /* const isVideoEffectSupported = () => {
+    console.log('isVideoEffectSupported', isSupported);
+    return isSupported;
+  }; */
+
   return {
     startBackgroundBlur,
     destroyTracks,
+    isSupported
   };
 }
