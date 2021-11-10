@@ -15,10 +15,10 @@ import useCopyMeetingUrl from '../../hooks/useCopyMeetingUrl';
 import QRCode from 'qrcode.react';
 
 import React from 'react';
-const MeetingInfo = () => {
+const MeetingInfo = ({ roomId }) => {
   const { copyUrl } = useCopyMeetingUrl();
   const [title, setTitle] = React.useState('Copy');
-  const ListItemLink = props => {
+  const ListItemLink = (props) => {
     return <ListItem button component="a" {...props} />;
   };
   const titleToolTip = 'Meeting Info';
@@ -96,6 +96,16 @@ const MeetingInfo = () => {
           </ListItemLink>
         </ListItem>
         <Divider />
+        <Typography className={localClasses.header} variant="h5">
+          Session info
+        </Typography>
+
+        <ListItem>
+          <ListItemText
+            className={localClasses.sessionLabel}
+            secondary={`Session Id: ` + roomId}
+          />
+        </ListItem>
       </div>
     </List>
   );
