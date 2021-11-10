@@ -367,7 +367,7 @@ export default function WaitingRoom({ location }) {
               onVideoChange={handleVideoChange}
             />
           </div>
-          {isSupported && (
+          {(
             <FormControlLabel
               control={
                 <Checkbox
