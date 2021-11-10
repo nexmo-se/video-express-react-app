@@ -1,6 +1,6 @@
 {
   "name": "video-express-react-app",
-  "version": "0.1.13",
+  "version": "0.2.0",
   "private": true,
   "engines": {
     "node": "14.x"
