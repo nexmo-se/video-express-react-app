@@ -19,7 +19,7 @@ export default function useBackgroundBlur() {
     }
   }, []);
 
-  const startBackgroundBlur = async () => {
+  const startBackgroundBlur = useCallback(async () => {
     await getUserMedia();
     backgroundBlur.current = new BackgroundBlurEffect({
       assetsPath: process.env.REACT_APP_ASSETS_PATH
@@ -29,7 +29,14 @@ export default function useBackgroundBlur() {
       localMediaTrack.current
     );
     return outputStream;
-  };
+  }, [getUserMedia]);
+
+  const stopEffect = useCallback(async () => {
+    if (backgroundBlur.current) {
+      backgroundBlur.current.stopEffect();
+      destroyTracks();
+    }
+  }, []);
 
   const destroyTracks = () => {
     if (localMediaTrack.current) {
@@ -45,6 +52,7 @@ export default function useBackgroundBlur() {
   return {
     startBackgroundBlur,
     destroyTracks,
+    stopEffect,
     isSupported
   };
 }

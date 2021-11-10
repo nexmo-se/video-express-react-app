@@ -25,8 +25,7 @@ import * as VideoEffects from '@vonage/video-effects';
 export default function WaitingRoom({ location }) {
   const track = useRef(null);
   const { BackgroundBlurEffect } = VideoEffects;
-  const { destroyTracks, startBackgroundBlur, isSupported } =
-    useBackgroundBlur();
+  const { stopEffect, startBackgroundBlur, isSupported } = useBackgroundBlur();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
@@ -153,7 +152,7 @@ export default function WaitingRoom({ location }) {
       if (backgroundBlur) {
         setBackgroundBlur(false);
         destroyPreview();
-        destroyTracks();
+        stopEffect();
         createPreview(waitingRoomVideoContainer.current);
       } else {
         setBackgroundBlur(true);
@@ -172,7 +171,7 @@ export default function WaitingRoom({ location }) {
     backgroundBlur,
     createPreview,
     destroyPreview,
-    destroyTracks,
+    stopEffect,
     startBackgroundBlur
   ]);
 
@@ -260,10 +259,10 @@ export default function WaitingRoom({ location }) {
     }
 
     return () => {
-      destroyTracks();
+      stopEffect();
       destroyPreview();
     };
-  }, [createPreview, destroyPreview]);
+  }, [createPreview, destroyPreview, stopEffect]);
 
   return (
     <>
@@ -367,7 +366,7 @@ export default function WaitingRoom({ location }) {
               onVideoChange={handleVideoChange}
             />
           </div>
-          {(
+          {
             <FormControlLabel
               control={
                 <Checkbox
@@ -377,7 +376,7 @@ export default function WaitingRoom({ location }) {
               }
               label="Background Blur"
             />
-          )}
+          }
         </Grid>
         <Grid
           container
