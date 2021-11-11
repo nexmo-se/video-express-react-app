@@ -57,7 +57,6 @@ const MeetingInfo = ({ roomId }) => {
             className={localClasses.qrCode}
             value={window.location.href}
           />
-          ;
         </ListItem>
 
         <Divider />
