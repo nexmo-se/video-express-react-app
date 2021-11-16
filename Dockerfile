@@ -19,8 +19,6 @@ RUN echo "commit: $COMMIT_SHA" >> ./commit.sha
 FROM node:14-alpine
 
 ENV NODE_ENV=production
-ENV VIDEO_API_API_KEY=$VIDEO_API_API_KEY
-ENV VIDEO_API_API_SECRET=$VIDEO_API_API_SECRET
 
 WORKDIR /home/node/app
 
