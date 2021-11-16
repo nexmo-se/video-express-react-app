@@ -22,8 +22,8 @@ import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 });
 
 function TabPanel(props) {
@@ -56,7 +56,7 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`
+      'aria-controls': `simple-tabpanel-${index}`,
     };
   }
 
@@ -77,7 +77,7 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
         <Chat room={room} listOfMessages={listOfMessages} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <MeetingInfo />
+        <MeetingInfo roomId={room.roomId} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <List>
@@ -94,7 +94,7 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
           )}
           {participants &&
             participants?.length > 0 &&
-            participants.map(e => {
+            participants.map((e) => {
               return (
                 <>
                   <ListItem key={e.id}>
