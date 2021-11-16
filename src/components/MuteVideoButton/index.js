@@ -14,6 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import React from 'react';
 import styles from './styles.js';
+import { UserContext } from '../../context/UserContext';
 
 export default function MuteVideoButton({
   classes,
@@ -21,7 +22,7 @@ export default function MuteVideoButton({
   toggleVideo,
   getVideoSource,
   cameraPublishing,
-  changeVideoSource
+  changeVideoSource,
 }) {
   const title = hasVideo ? 'Disable Camera' : 'Enable Camera';
   const { deviceInfo } = useDevices();
@@ -31,10 +32,10 @@ export default function MuteVideoButton({
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const localClasses = styles();
+  const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
     setDevicesAvailable(deviceInfo.videoInputDevices);
-
     if (cameraPublishing) {
       const currentDeviceId = getVideoSource()?.deviceId;
 
@@ -43,16 +44,18 @@ export default function MuteVideoButton({
       );
       setSelectedIndex(IndexOfSelectedElement);
     }
-  }, [cameraPublishing, getVideoSource, deviceInfo]);
+  }, [cameraPublishing, getVideoSource, deviceInfo, devicesAvailable]);
 
   React.useEffect(() => {
-    if (devicesAvailable) {
+    if (devicesAvailable && !user.videoEffects.backgroundBlur) {
       const videoDevicesAvailable = devicesAvailable.map((e) => {
         return e.label;
       });
       setOptions(videoDevicesAvailable);
     }
-  }, [devicesAvailable]);
+    if (user.videoEffects.backgroundBlur)
+      setOptions(['Not available with Background Blurring']);
+  }, [devicesAvailable, user.videoEffects.backgroundBlur]);
 
   const handleChangeVideoSource = (event, index) => {
     setSelectedIndex(index);
@@ -122,7 +125,7 @@ export default function MuteVideoButton({
             {...TransitionProps}
             style={{
               transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom'
+                placement === 'bottom' ? 'center top' : 'center bottom',
             }}
           >
             <Paper>
@@ -135,8 +138,9 @@ export default function MuteVideoButton({
                       onClick={(event) => handleChangeVideoSource(event, index)}
                       classes={{
                         selected: localClasses.selected,
-                        root: localClasses.root
+                        root: localClasses.root,
                       }}
+                      disabled={user.videoEffects.backgroundBlur}
                     >
                       {option}
                     </MenuItem>

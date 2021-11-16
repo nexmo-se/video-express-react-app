@@ -54,8 +54,6 @@ app.post('/archive/start', async (req, res) => {
   }
 });
 
-// http://localhost:5000/archive/stop?archiveId=b265e5e8-2f95-4d3a-9c8c-a41c66ca7eef
-
 app.get('/archive/stop/:archiveId', async (req, res) => {
   const { archiveId } = req.params;
   try {
