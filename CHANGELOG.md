@@ -1,3 +1,7 @@
+# 0.2.1 (Nov 19, 2021)
+
+- Check isSupported for the background blur option
+  
 # 0.2.0 (Nov 10, 2021)
 
 - Add Background Blur option on the Waiting Room using [VideoEffects](https://www.npmjs.com/package/@vonage/video-effects)

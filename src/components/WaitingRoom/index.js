@@ -366,7 +366,7 @@ export default function WaitingRoom({ location }) {
               onVideoChange={handleVideoChange}
             />
           </div>
-          {
+          {isSupported && (
             <FormControlLabel
               control={
                 <Checkbox
@@ -376,7 +376,7 @@ export default function WaitingRoom({ location }) {
               }
               label="Background Blur"
             />
-          }
+          )}
         </Grid>
         <Grid
           container
