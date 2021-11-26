@@ -1,3 +1,7 @@
+# 0.2.2 (Nov 26, 2021)
+
+- Updated VVE to `@vonage/video-express: 1.1.11`
+  
 # 0.2.1 (Nov 19, 2021)
 
 - Check isSupported for the background blur option
