@@ -42,9 +42,6 @@
   border-radius: 10px;
 }
 
-video:picture-in-picture {
-  /* opacity: 0; */
-}
 /* .OT_root::after {
   transform: scale(-1, 1);
 }
