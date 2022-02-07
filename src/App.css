@@ -7,7 +7,6 @@
   pointer-events: none;
 }
 
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -41,21 +40,29 @@
   position: absolute;
   border-radius: 10px;
 }
+
+/* .OT_root::after {
+  transform: scale(-1, 1);
+}
+video::after {
+  transform: scale(-1, 1);
+} */
+
 /* Temporary Fixes */
 
 @keyframes pulse-red {
-	0% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 rgba(213, 15, 45, 0.7);
-	}
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(213, 15, 45, 0.7);
+  }
 
-	70% {
-		transform: scale(1);
-		box-shadow: 0 0 0 10px rgba(213, 15, 45, 0);
-	}
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(213, 15, 45, 0);
+  }
 
-	100% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 rgba(213, 15, 45, 0);
-	}
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(213, 15, 45, 0);
+  }
 }
