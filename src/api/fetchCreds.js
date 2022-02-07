@@ -6,9 +6,10 @@ if (
   process.env.REACT_APP_API_URL_PRODUCTION
 ) {
   API_URL = `${process.env.REACT_APP_API_URL_PRODUCTION}`;
-} else {
-  API_URL = `${window.location.origin}`;
 }
+// } else {
+//   API_URL = `${window.location.origin}`;
+// }
 
 export const getCredentials = async (roomName) => {
   return axios.get(`${API_URL}/session/${roomName}`);
