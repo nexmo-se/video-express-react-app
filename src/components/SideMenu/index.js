@@ -8,6 +8,7 @@ import MeetingInfo from '../MeetingInfo';
 import Chat from '../Chat';
 import List from '@material-ui/core/List';
 import PersonIcon from '@material-ui/icons/Person';
+import GroupIcon from '@material-ui/icons/Group';
 import Divider from '@material-ui/core/Divider';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -81,6 +82,17 @@ const SideMenu = ({ participants, room, localParticipant, listOfMessages }) => {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <List>
+          {participants && (
+            //Adding +! as currently participants do not include self
+            <>
+              <ListItem key={'participants_counter'}>
+                <ListItemIcon>
+                  <GroupIcon variant="contained" color="primary" />
+                </ListItemIcon>
+                Participants ({participants.length + 1})
+              </ListItem>
+            </>
+          )}
           {localParticipant && (
             <>
               <ListItem key={localParticipant.id}>
