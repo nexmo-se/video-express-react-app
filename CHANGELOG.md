@@ -1,3 +1,19 @@
+# 0.2.3 (Jan 13, 2022)
+
+- Updated VVE to `@vonage/video-express: 1.1.4`
+  
+# 0.2.2 (Nov 26, 2021)
+
+- Updated VVE to `@vonage/video-express: 1.1.11`
+  
+# 0.2.1 (Nov 19, 2021)
+
+- Check isSupported for the background blur option
+  
+# 0.2.0 (Nov 10, 2021)
+
+- Add Background Blur option on the Waiting Room using [VideoEffects](https://www.npmjs.com/package/@vonage/video-effects)
+  
 # 0.1.13 (Oct 06, 2021)
 
 - Add username to local storage
