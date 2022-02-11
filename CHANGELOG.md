@@ -1,3 +1,9 @@
+# 0.2.4 (Feb 11, 2022)
+
+- Added emoji 
+- Added number of participants on the Sidenav
+
+
 # 0.2.3 (Jan 13, 2022)
 
 - Updated VVE to `@vonage/video-express: 1.1.4`
