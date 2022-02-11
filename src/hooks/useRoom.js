@@ -139,6 +139,7 @@ export default function useRoom() {
             nameDisplayMode: 'auto',
             audioLevelDisplayMode: 'off',
           },
+          mirror: false,
 
           videoSource: outputVideoStream.getVideoTracks()[0],
           name: userName,
