@@ -7,6 +7,7 @@ import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
 import LayoutButton from 'components/LayoutButton';
 import MuteAll from 'components/MuteAllButton';
+import ReactionsButton from 'components/ReactionsButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
@@ -161,6 +162,12 @@ export default function ToolBar({
         handleMuteAll={handleMuteAll}
         areAllMuted={areAllMuted}
         classes={classes}
+      />
+      <ReactionsButton
+        handleMuteAll={handleMuteAll}
+        areAllMuted={areAllMuted}
+        classes={classes}
+        room={room}
       />
       <LayoutButton classes={classes} room={room} />
       <EndCallButton classes={classes} handleEndCall={endCall} />

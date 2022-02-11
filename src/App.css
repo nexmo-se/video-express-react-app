@@ -41,14 +41,40 @@
   border-radius: 10px;
 }
 
-/* .OT_root::after {
-  transform: scale(-1, 1);
+.emoji {
+  font-size: 80px !important;
+  position: absolute;
+  animation-name: emojis;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  min-width: 96px;
+  min-height: 96px;
+  margin-left: 20px;
 }
-video::after {
-  transform: scale(-1, 1);
-} */
 
-/* Temporary Fixes */
+@keyframes emojis {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+    bottom: -10%;
+  }
+  20% {
+    transform: translateX(-24px) rotate(-8deg);
+  }
+  50% {
+    transform: translateX(36px) rotate(16deg) scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: translateX(-36px) rotate(-20deg) scale(0.3);
+  }
+  100% {
+    transform: translateX(0px) rotate(0deg) scale(0.1);
+    opacity: 0;
+    bottom: 100%;
+  }
+}
 
 @keyframes pulse-red {
   0% {
