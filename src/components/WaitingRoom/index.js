@@ -5,7 +5,7 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  TextField
+  TextField,
 } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -56,7 +56,7 @@ export default function WaitingRoom({ location }) {
     logLevel,
     previewMediaCreated,
     deviceInfo,
-    accessAllowed
+    accessAllowed,
   } = usePreviewPublisher();
 
   const handleVideoSource = React.useCallback(
@@ -156,12 +156,14 @@ export default function WaitingRoom({ location }) {
         createPreview(waitingRoomVideoContainer.current);
       } else {
         setBackgroundBlur(true);
+        const deviceId = previewPublisher.getVideoDevice().deviceId;
         destroyPreview();
-        const outputVideoStream = await startBackgroundBlur();
+        const outputVideoStream = await startBackgroundBlur(deviceId);
         console.log(outputVideoStream);
         // await backgroundBlurObject.loadModel();
         createPreview(waitingRoomVideoContainer.current, {
-          videoSource: outputVideoStream.getVideoTracks()[0]
+          videoSource: outputVideoStream.getVideoTracks()[0],
+          mirror: true,
         });
       }
     } catch (e) {
@@ -169,10 +171,11 @@ export default function WaitingRoom({ location }) {
     }
   }, [
     backgroundBlur,
-    createPreview,
     destroyPreview,
     stopEffect,
-    startBackgroundBlur
+    createPreview,
+    previewPublisher,
+    startBackgroundBlur,
   ]);
 
   useEffect(() => {
@@ -197,8 +200,8 @@ export default function WaitingRoom({ location }) {
           publishAudio: localAudio,
           publishVideo: localVideo,
           audioSource: localAudioSource,
-          videoSource: localVideoSource
-        }
+          videoSource: localVideoSource,
+        },
       });
     }
   }, [
@@ -208,7 +211,7 @@ export default function WaitingRoom({ location }) {
     setUser,
     localAudioSource,
     localVideoSource,
-    backgroundBlur
+    backgroundBlur,
   ]);
 
   useEffect(() => {
@@ -230,7 +233,7 @@ export default function WaitingRoom({ location }) {
     previewPublisher,
     setAudioDevice,
     setVideoDevice,
-    previewMediaCreated
+    previewMediaCreated,
   ]);
 
   useEffect(() => {
