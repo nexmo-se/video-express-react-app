@@ -153,10 +153,12 @@ export default function WaitingRoom({ location }) {
         setBackgroundBlur(false);
         destroyPreview();
         stopEffect();
-        createPreview(waitingRoomVideoContainer.current);
+        createPreview(waitingRoomVideoContainer.current, {
+          videoSource: videoDevice,
+        });
       } else {
-        setBackgroundBlur(true);
         const deviceId = previewPublisher.getVideoDevice().deviceId;
+        setBackgroundBlur(true);
         destroyPreview();
         const outputVideoStream = await startBackgroundBlur(deviceId);
         console.log(outputVideoStream);
