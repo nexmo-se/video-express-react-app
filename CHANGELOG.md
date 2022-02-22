@@ -1,3 +1,7 @@
+# 0.2.5 (Feb 22, 2022)
+
+- Fix background blur selection camera
+
 # 0.2.4 (Feb 11, 2022)
 
 - Added emoji 
