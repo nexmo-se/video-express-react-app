@@ -20,11 +20,8 @@ import { UserContext } from '../../context/UserContext';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { DEVICE_ACCESS_STATUS } from './../constants';
 import useBackgroundBlur from '../../hooks/useBackgroundBlur';
-import * as VideoEffects from '@vonage/video-effects';
 
 export default function WaitingRoom({ location }) {
-  const track = useRef(null);
-  const { BackgroundBlurEffect } = VideoEffects;
   const { stopEffect, startBackgroundBlur, isSupported } = useBackgroundBlur();
   const classes = useStyles();
   const { push } = useHistory();
@@ -153,15 +150,17 @@ export default function WaitingRoom({ location }) {
         setBackgroundBlur(false);
         destroyPreview();
         stopEffect();
-        createPreview(waitingRoomVideoContainer.current);
+        createPreview(waitingRoomVideoContainer.current, {
+          videoSource: localVideoSource
+        });
       } else {
         setBackgroundBlur(true);
         destroyPreview();
-        const outputVideoStream = await startBackgroundBlur();
+        const outputVideoStream = await startBackgroundBlur(videoDevice);
         console.log(outputVideoStream);
-        // await backgroundBlurObject.loadModel();
         createPreview(waitingRoomVideoContainer.current, {
-          videoSource: outputVideoStream.getVideoTracks()[0]
+          videoSource: outputVideoStream.getVideoTracks()[0],
+          mirror: true
         });
       }
     } catch (e) {
@@ -169,9 +168,11 @@ export default function WaitingRoom({ location }) {
     }
   }, [
     backgroundBlur,
-    createPreview,
     destroyPreview,
     stopEffect,
+    createPreview,
+    localVideoSource,
+    videoDevice,
     startBackgroundBlur
   ]);
 
@@ -192,7 +193,10 @@ export default function WaitingRoom({ location }) {
     ) {
       setUser({
         ...user,
-        videoEffects: { backgroundBlur: backgroundBlur },
+        videoEffects: {
+          backgroundBlur: backgroundBlur,
+          videoSourceId: localVideoSource
+        },
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo,

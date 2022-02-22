@@ -7,29 +7,31 @@ const { isSupported, BackgroundBlurEffect } = VideoEffects;
 export default function useBackgroundBlur() {
   const backgroundBlur = useRef(null);
   const localMediaTrack = useRef(null);
-  const getUserMedia = useCallback(async () => {
+  const getUserMedia = useCallback(async (localVideo) => {
     try {
       const track = await navigator.mediaDevices.getUserMedia({
-        video: true
+        video: { deviceId: localVideo },
       });
       localMediaTrack.current = track;
-      // return track;
     } catch (e) {
       console.log('OT get user media error ' + e);
     }
   }, []);
 
-  const startBackgroundBlur = useCallback(async () => {
-    await getUserMedia();
-    backgroundBlur.current = new BackgroundBlurEffect({
-      assetsPath: process.env.REACT_APP_ASSETS_PATH
-    });
-    await backgroundBlur.current.loadModel();
-    const outputStream = backgroundBlur.current.startEffect(
-      localMediaTrack.current
-    );
-    return outputStream;
-  }, [getUserMedia]);
+  const startBackgroundBlur = useCallback(
+    async (deviceId) => {
+      await getUserMedia(deviceId);
+      backgroundBlur.current = new BackgroundBlurEffect({
+        assetsPath: process.env.REACT_APP_ASSETS_PATH,
+      });
+      await backgroundBlur.current.loadModel();
+      const outputStream = backgroundBlur.current.startEffect(
+        localMediaTrack.current
+      );
+      return outputStream;
+    },
+    [getUserMedia]
+  );
 
   const stopEffect = useCallback(async () => {
     if (backgroundBlur.current) {
@@ -53,6 +55,6 @@ export default function useBackgroundBlur() {
     startBackgroundBlur,
     destroyTracks,
     stopEffect,
-    isSupported
+    isSupported,
   };
 }

@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
+  Redirect
 } from 'react-router-dom';
 import { UserContext } from './context/UserContext';
 import VideoRoom from './components/VideoRoom';
@@ -15,7 +15,7 @@ import UserNameRoute from './components/UserNameRoute';
 
 // Theme Configuration
 
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { useMemo, useState } from 'react';
 
@@ -23,29 +23,29 @@ let primary = process.env.REACT_APP_PALETTE_PRIMARY || '#b779ff';
 let secondary = process.env.REACT_APP_PALETTE_SECONDARY || '#d6219c';
 
 const theme = () => {
-  return createMuiTheme({
+  return createTheme({
     palette: {
       type: 'light',
       primary: {
-        main: primary,
+        main: primary
       },
       secondary: {
-        main: secondary,
+        main: secondary
       },
       bodyBackground: {
-        black: '#131415',
+        black: '#131415'
       },
       callBackground: {
-        main: '#20262D',
+        main: '#20262D'
       },
       toolbarBackground: {
-        main: '#41464D',
+        main: '#41464D'
       },
       activeButtons: {
         green: '#1C8731',
-        red: '#D50F2C',
-      },
-    },
+        red: '#D50F2C'
+      }
+    }
   });
 };
 
@@ -53,14 +53,14 @@ function App() {
   const [user, setUser] = useState({
     videoEffects: {
       backgroundBlur: false,
-      virtualBackground: false,
+      virtualBackground: false
     },
     defaultSettings: {
       publishAudio: true,
       publishVideo: true,
       audioSource: undefined,
-      videoSource: undefined,
-    },
+      videoSource: undefined
+    }
   });
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
@@ -78,7 +78,7 @@ function App() {
             <Route path="*">
               <Redirect
                 to={{
-                  pathname: '/',
+                  pathname: '/'
                 }}
               />
             </Route>
