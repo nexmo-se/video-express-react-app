@@ -5,7 +5,7 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  TextField,
+  TextField
 } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -20,11 +20,8 @@ import { UserContext } from '../../context/UserContext';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { DEVICE_ACCESS_STATUS } from './../constants';
 import useBackgroundBlur from '../../hooks/useBackgroundBlur';
-import * as VideoEffects from '@vonage/video-effects';
 
 export default function WaitingRoom({ location }) {
-  const track = useRef(null);
-  const { BackgroundBlurEffect } = VideoEffects;
   const { stopEffect, startBackgroundBlur, isSupported } = useBackgroundBlur();
   const classes = useStyles();
   const { push } = useHistory();
@@ -56,7 +53,7 @@ export default function WaitingRoom({ location }) {
     logLevel,
     previewMediaCreated,
     deviceInfo,
-    accessAllowed,
+    accessAllowed
   } = usePreviewPublisher();
 
   const handleVideoSource = React.useCallback(
@@ -154,7 +151,7 @@ export default function WaitingRoom({ location }) {
         destroyPreview();
         stopEffect();
         createPreview(waitingRoomVideoContainer.current, {
-          videoSource: localVideoSource,
+          videoSource: localVideoSource
         });
       } else {
         setBackgroundBlur(true);
@@ -163,7 +160,7 @@ export default function WaitingRoom({ location }) {
         console.log(outputVideoStream);
         createPreview(waitingRoomVideoContainer.current, {
           videoSource: outputVideoStream.getVideoTracks()[0],
-          mirror: true,
+          mirror: true
         });
       }
     } catch (e) {
@@ -174,9 +171,9 @@ export default function WaitingRoom({ location }) {
     destroyPreview,
     stopEffect,
     createPreview,
+    localVideoSource,
     videoDevice,
-    previewPublisher,
-    startBackgroundBlur,
+    startBackgroundBlur
   ]);
 
   useEffect(() => {
@@ -196,13 +193,16 @@ export default function WaitingRoom({ location }) {
     ) {
       setUser({
         ...user,
-        videoEffects: { backgroundBlur: backgroundBlur },
+        videoEffects: {
+          backgroundBlur: backgroundBlur,
+          videoSourceId: localVideoSource
+        },
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo,
           audioSource: localAudioSource,
-          videoSource: localVideoSource,
-        },
+          videoSource: localVideoSource
+        }
       });
     }
   }, [
@@ -212,7 +212,7 @@ export default function WaitingRoom({ location }) {
     setUser,
     localAudioSource,
     localVideoSource,
-    backgroundBlur,
+    backgroundBlur
   ]);
 
   useEffect(() => {
@@ -234,7 +234,7 @@ export default function WaitingRoom({ location }) {
     previewPublisher,
     setAudioDevice,
     setVideoDevice,
-    previewMediaCreated,
+    previewMediaCreated
   ]);
 
   useEffect(() => {

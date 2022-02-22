@@ -33,7 +33,7 @@ export default function useRoom() {
     if (room) {
       setLocalParticipant({
         id: room.participantId,
-        name: room.participantName,
+        name: room.participantName
       });
     }
   };
@@ -125,35 +125,37 @@ export default function useRoom() {
         participantName: userName,
         managedLayoutOptions: {
           layoutMode: 'grid',
-          screenPublisherContainer: 'screenSharingContainer',
-        },
+          screenPublisherContainer: 'screenSharingContainer'
+        }
       });
       startRoomListeners();
-
+      console.log('videoEffects', videoEffects);
       if (videoEffects.backgroundBlur) {
-        const outputVideoStream = await startBackgroundBlur();
+        const outputVideoStream = await startBackgroundBlur(
+          videoEffects.videoSourceId
+        );
 
         publisherOptionsRef.current = Object.assign({}, publisherOptions, {
           style: {
             buttonDisplayMode: 'off',
             nameDisplayMode: 'auto',
-            audioLevelDisplayMode: 'off',
+            audioLevelDisplayMode: 'off'
           },
-          mirror: false,
+          mirror: true,
 
           videoSource: outputVideoStream.getVideoTracks()[0],
           name: userName,
-          showControls: true,
+          showControls: true
         });
       } else {
         publisherOptionsRef.current = Object.assign({}, publisherOptions, {
           style: {
             buttonDisplayMode: 'off',
             nameDisplayMode: 'auto',
-            audioLevelDisplayMode: 'off',
+            audioLevelDisplayMode: 'off'
           },
           name: userName,
-          showControls: true,
+          showControls: true
         });
       }
 
@@ -184,6 +186,6 @@ export default function useRoom() {
     networkStatus,
     publisherIsSpeaking,
     cameraPublishing,
-    localParticipant,
+    localParticipant
   };
 }
