@@ -129,7 +129,6 @@ export default function useRoom() {
         }
       });
       startRoomListeners();
-      console.log('videoEffects', videoEffects);
       if (videoEffects.backgroundBlur) {
         const outputVideoStream = await startBackgroundBlur(
           videoEffects.videoSourceId
