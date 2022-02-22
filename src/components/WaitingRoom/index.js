@@ -154,15 +154,13 @@ export default function WaitingRoom({ location }) {
         destroyPreview();
         stopEffect();
         createPreview(waitingRoomVideoContainer.current, {
-          videoSource: videoDevice,
+          videoSource: localVideoSource,
         });
       } else {
-        const deviceId = previewPublisher.getVideoDevice().deviceId;
         setBackgroundBlur(true);
         destroyPreview();
-        const outputVideoStream = await startBackgroundBlur(deviceId);
+        const outputVideoStream = await startBackgroundBlur(videoDevice);
         console.log(outputVideoStream);
-        // await backgroundBlurObject.loadModel();
         createPreview(waitingRoomVideoContainer.current, {
           videoSource: outputVideoStream.getVideoTracks()[0],
           mirror: true,
@@ -176,6 +174,7 @@ export default function WaitingRoom({ location }) {
     destroyPreview,
     stopEffect,
     createPreview,
+    videoDevice,
     previewPublisher,
     startBackgroundBlur,
   ]);

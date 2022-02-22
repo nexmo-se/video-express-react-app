@@ -1,7 +1,6 @@
 import * as VideoEffects from '@vonage/video-effects';
 
 import { useCallback, useRef } from 'react';
-import usePreviewPublisher from './usePreviewPublisher';
 
 const { isSupported, BackgroundBlurEffect } = VideoEffects;
 
@@ -14,7 +13,6 @@ export default function useBackgroundBlur() {
         video: { deviceId: localVideo },
       });
       localMediaTrack.current = track;
-      // return track;
     } catch (e) {
       console.log('OT get user media error ' + e);
     }
