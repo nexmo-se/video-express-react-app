@@ -158,12 +158,7 @@ export default function ToolBar({
         getAudioSource={getAudioSource}
         cameraPublishing={cameraPublishing}
       />
-      <SpeakerButton
-        cameraPublishing={cameraPublishing}
-        changeAudioOutput={changeAudioOutput}
-        getCurrentAudioOutput={getCurrentAudioOutput}
-        classes={classes}
-      />
+
       <MuteVideoButton
         toggleVideo={toggleVideo}
         hasVideo={hasVideo}
@@ -171,6 +166,12 @@ export default function ToolBar({
         getVideoSource={getVideoSource}
         cameraPublishing={cameraPublishing}
         changeVideoSource={changeVideoSource}
+      />
+      <SpeakerButton
+        cameraPublishing={cameraPublishing}
+        changeAudioOutput={changeAudioOutput}
+        getCurrentAudioOutput={getCurrentAudioOutput}
+        classes={classes}
       />
       <RecordingButton room={room} classes={classes} />
       <ScreenSharingButton

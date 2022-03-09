@@ -95,6 +95,8 @@ export default function SpeakerButton({
           <IconButton
             edge="start"
             color="inherit"
+            onClick={handleToggle}
+            // disabled
             aria-label="mic"
             className={`${classes.arrowButton}`}
           >
