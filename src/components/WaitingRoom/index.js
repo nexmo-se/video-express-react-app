@@ -5,8 +5,9 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  TextField
+  TextField,
 } from '@material-ui/core';
+import * as VideoExpress from '@vonage/video-express';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import useStyles from './styles';
@@ -40,9 +41,11 @@ export default function WaitingRoom({ location }) {
   );
   const [localVideoSource, setLocalVideoSource] = useState(undefined);
   const [localAudioSource, setLocalAudioSource] = useState(undefined);
+  const [localAudioOutput, setLocalAudioOutput] = useState(undefined);
   /* const [devices, setDevices] = useState(null); */
   let [audioDevice, setAudioDevice] = useState('');
   let [videoDevice, setVideoDevice] = useState('');
+  let [audioOutputDevice, setAudioOutputDevice] = useState('');
   const [backgroundBlur, setBackgroundBlur] = useState(
     user.videoEffects.backgroundBlur
   );
@@ -53,7 +56,7 @@ export default function WaitingRoom({ location }) {
     logLevel,
     previewMediaCreated,
     deviceInfo,
-    accessAllowed
+    accessAllowed,
   } = usePreviewPublisher();
 
   const handleVideoSource = React.useCallback(
@@ -74,6 +77,16 @@ export default function WaitingRoom({ location }) {
       setLocalAudioSource(audioDeviceId);
     },
     [previewPublisher, setAudioDevice, setLocalAudioSource]
+  );
+
+  const handleAudioOutput = React.useCallback(
+    (e) => {
+      const audioOutputId = e.target.value;
+      setAudioOutputDevice(audioOutputId);
+      previewPublisher.setAudioOutput(audioOutputId);
+      setLocalAudioOutput(audioOutputId);
+    },
+    [previewPublisher, setLocalAudioOutput, setAudioOutputDevice]
   );
 
   const redirectHttps = React.useCallback(() => {
@@ -151,7 +164,7 @@ export default function WaitingRoom({ location }) {
         destroyPreview();
         stopEffect();
         createPreview(waitingRoomVideoContainer.current, {
-          videoSource: localVideoSource
+          videoSource: localVideoSource,
         });
       } else {
         setBackgroundBlur(true);
@@ -160,7 +173,7 @@ export default function WaitingRoom({ location }) {
         console.log(outputVideoStream);
         createPreview(waitingRoomVideoContainer.current, {
           videoSource: outputVideoStream.getVideoTracks()[0],
-          mirror: true
+          mirror: true,
         });
       }
     } catch (e) {
@@ -173,7 +186,7 @@ export default function WaitingRoom({ location }) {
     createPreview,
     localVideoSource,
     videoDevice,
-    startBackgroundBlur
+    startBackgroundBlur,
   ]);
 
   useEffect(() => {
@@ -189,20 +202,22 @@ export default function WaitingRoom({ location }) {
       localVideo !== user.defaultSettings.publishVideo ||
       localAudioSource !== user.defaultSettings.audioSource ||
       localVideoSource !== user.defaultSettings.videoSource ||
-      backgroundBlur !== user.videoEffects.backgroundBlur
+      backgroundBlur !== user.videoEffects.backgroundBlur ||
+      localAudioOutput !== user.defaultSettings.audioOutput
     ) {
       setUser({
         ...user,
         videoEffects: {
           backgroundBlur: backgroundBlur,
-          videoSourceId: localVideoSource
+          videoSourceId: localVideoSource,
         },
         defaultSettings: {
           publishAudio: localAudio,
           publishVideo: localVideo,
           audioSource: localAudioSource,
-          videoSource: localVideoSource
-        }
+          videoSource: localVideoSource,
+          audioOutput: localAudioOutput,
+        },
       });
     }
   }, [
@@ -212,7 +227,8 @@ export default function WaitingRoom({ location }) {
     setUser,
     localAudioSource,
     localVideoSource,
-    backgroundBlur
+    backgroundBlur,
+    localAudioOutput,
   ]);
 
   useEffect(() => {
@@ -228,13 +244,20 @@ export default function WaitingRoom({ location }) {
       });
       const currentVideoDevice = previewPublisher.getVideoDevice();
       setVideoDevice(currentVideoDevice.deviceId);
+
+      VideoExpress.getActiveAudioOutputDevice().then(
+        (currentAudioOutputDevice) => {
+          setAudioOutputDevice(currentAudioOutputDevice.deviceId);
+        }
+      );
     }
   }, [
     deviceInfo,
     previewPublisher,
     setAudioDevice,
     setVideoDevice,
-    previewMediaCreated
+    previewMediaCreated,
+    setAudioOutputDevice,
   ]);
 
   useEffect(() => {
@@ -312,23 +335,46 @@ export default function WaitingRoom({ location }) {
             />
             <div className={classes.mediaSources}>
               {deviceInfo && previewMediaCreated && (
-                <FormControl>
-                  <InputLabel id="demo-simple-select-label">
-                    Select Audio Source
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={audioDevice}
-                    onChange={handleAudioSource}
-                  >
-                    {deviceInfo.audioInputDevices.map((device) => (
-                      <MenuItem key={device.deviceId} value={device.deviceId}>
-                        {device.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <>
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-label">
+                      Select Audio Source
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={audioDevice}
+                      onChange={handleAudioSource}
+                    >
+                      {deviceInfo.audioInputDevices.map((device) => (
+                        <MenuItem key={device.deviceId} value={device.deviceId}>
+                          {device.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <InputLabel id="video">Select Audio Output</InputLabel>
+                    {deviceInfo.audioOutputDevices && (
+                      <Select
+                        labelId="video"
+                        id="demo-simple-select"
+                        value={audioOutputDevice}
+                        onChange={handleAudioOutput}
+                      >
+                        {deviceInfo.audioOutputDevices.map((device) => (
+                          <MenuItem
+                            key={device.deviceId}
+                            value={device.deviceId}
+                          >
+                            {device.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  </FormControl>
+                </>
               )}
 
               {deviceInfo && previewMediaCreated && !backgroundBlur && (

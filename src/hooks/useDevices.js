@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import * as VideoExpress from "@vonage/video-express";
+import * as VideoExpress from '@vonage/video-express';
 
 export default function useDevices() {
   const [deviceInfo, setDeviceInfo] = useState({
     audioInputDevices: [],
     videoInputDevices: [],
-    audioOutputDevices: []
+    audioOutputDevices: [],
   });
 
   const getDevices = useCallback(async () => {
@@ -15,11 +15,9 @@ export default function useDevices() {
     }
     try {
       const devices = await VideoExpress.getDevices();
+      const audioOutputDevices = await VideoExpress.getAudioOutputDevices();
       const audioInputDevices = devices.filter(
         (d) => d.kind.toLowerCase() === 'audioinput'
-      );
-      const audioOutputDevices = devices.filter(
-        (d) => d.kind.toLowerCase() === 'audiooutput'
       );
       const videoInputDevices = devices.filter(
         (d) => d.kind.toLowerCase() === 'videoinput'
@@ -27,7 +25,7 @@ export default function useDevices() {
       setDeviceInfo({
         audioInputDevices,
         videoInputDevices,
-        audioOutputDevices
+        audioOutputDevices,
       });
       // });
     } catch (err) {
