@@ -4,7 +4,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import * as VideoExpress from '@vonage/video-express';
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
-import SpeakerButton from 'components/SpeakerButton';
+// import SpeakerButton from 'components/SpeakerButton';
+import SpeakerSelector from 'components/SpeakerSelector';
 import RecordingButton from 'components/RecordingButton';
 import LayoutButton from 'components/LayoutButton';
 import MuteAll from 'components/MuteAllButton';
@@ -167,12 +168,19 @@ export default function ToolBar({
         cameraPublishing={cameraPublishing}
         changeVideoSource={changeVideoSource}
       />
-      <SpeakerButton
+      {/* <SpeakerButton
+        cameraPublishing={cameraPublishing}
+        changeAudioOutput={changeAudioOutput}
+        getCurrentAudioOutput={getCurrentAudioOutput}
+        classes={classes}
+      /> */}
+      <SpeakerSelector
         cameraPublishing={cameraPublishing}
         changeAudioOutput={changeAudioOutput}
         getCurrentAudioOutput={getCurrentAudioOutput}
         classes={classes}
       />
+
       <RecordingButton room={room} classes={classes} />
       <ScreenSharingButton
         isScreenSharing={isScreenSharing}
