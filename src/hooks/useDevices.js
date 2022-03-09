@@ -16,12 +16,11 @@ export default function useDevices() {
     try {
       const devices = await VideoExpress.getDevices();
       let audioOutputDevices = await VideoExpress.getAudioOutputDevices();
-      const defaultDeviceIndex = audioOutputDevices.findIndex(
-        (device) => device.deviceId === 'default'
+      audioOutputDevices = audioOutputDevices.map((audiooutput) =>
+        audiooutput.deviceId === 'default'
+          ? { ...audiooutput, label: 'System Default' }
+          : audiooutput
       );
-
-      audioOutputDevices[defaultDeviceIndex].label = 'System Default';
-      console.log(audioOutputDevices);
       const audioInputDevices = devices.filter(
         (d) => d.kind.toLowerCase() === 'audioinput'
       );
@@ -33,7 +32,6 @@ export default function useDevices() {
         videoInputDevices,
         audioOutputDevices,
       });
-      // });
     } catch (err) {
       console.log('[loadDevices] - ', err);
     }

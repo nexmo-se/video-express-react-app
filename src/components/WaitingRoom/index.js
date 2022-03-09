@@ -83,10 +83,10 @@ export default function WaitingRoom({ location }) {
     (e) => {
       const audioOutputId = e.target.value;
       setAudioOutputDevice(audioOutputId);
-      previewPublisher.setAudioOutput(audioOutputId);
+      // await VideoExpress.setAudioOutputDevice(audioOutputId);
       setLocalAudioOutput(audioOutputId);
     },
-    [previewPublisher, setLocalAudioOutput, setAudioOutputDevice]
+    [setLocalAudioOutput, setAudioOutputDevice]
   );
 
   const redirectHttps = React.useCallback(() => {
