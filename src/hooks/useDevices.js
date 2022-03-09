@@ -16,7 +16,11 @@ export default function useDevices() {
     try {
       const devices = await VideoExpress.getDevices();
       let audioOutputDevices = await VideoExpress.getAudioOutputDevices();
-      audioOutputDevices[0].label = 'System Default';
+      const defaultDeviceIndex = audioOutputDevices.findIndex(
+        (device) => device.deviceId === 'default'
+      );
+
+      audioOutputDevices[defaultDeviceIndex].label = 'System Default';
       console.log(audioOutputDevices);
       const audioInputDevices = devices.filter(
         (d) => d.kind.toLowerCase() === 'audioinput'
