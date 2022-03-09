@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
+import * as VideoExpress from '@vonage/video-express';
 import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
+import SpeakerButton from 'components/SpeakerButton';
 import RecordingButton from 'components/RecordingButton';
 import LayoutButton from 'components/LayoutButton';
 import MuteAll from 'components/MuteAllButton';
@@ -85,6 +86,20 @@ export default function ToolBar({
     room.camera.setAudioDevice(audioId);
   };
 
+  const changeAudioOutput = async (audioOutputDeviceId) => {
+    await VideoExpress.setAudioOutputDevice(audioOutputDeviceId);
+  };
+
+  const getCurrentAudioOutput = async () => {
+    try {
+      const currentAudioOutput =
+        await VideoExpress.getActiveAudioOutputDevice();
+      return currentAudioOutput.deviceId;
+    } catch (e) {
+      return e;
+    }
+  };
+
   const getAudioSource = async () => {
     if (room && room.camera) {
       const audioDevice = await room.camera.getAudioDevice();
@@ -142,6 +157,12 @@ export default function ToolBar({
         changeAudioSource={changeAudioSource}
         getAudioSource={getAudioSource}
         cameraPublishing={cameraPublishing}
+      />
+      <SpeakerButton
+        cameraPublishing={cameraPublishing}
+        changeAudioOutput={changeAudioOutput}
+        getCurrentAudioOutput={getCurrentAudioOutput}
+        classes={classes}
       />
       <MuteVideoButton
         toggleVideo={toggleVideo}
