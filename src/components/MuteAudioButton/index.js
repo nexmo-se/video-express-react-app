@@ -22,7 +22,7 @@ export default function MuteAudioButton({
   classes,
   getAudioSource,
   cameraPublishing,
-  changeAudioSource
+  changeAudioSource,
 }) {
   const title = hasAudio ? 'Disable Microphone' : 'Enable Microphone';
   const localClasses = styles();
@@ -52,7 +52,7 @@ export default function MuteAudioButton({
     getAudioSource,
     deviceInfo,
     audioDeviceId,
-    devicesAvailable
+    devicesAvailable,
   ]);
 
   React.useEffect(() => {
@@ -66,7 +66,6 @@ export default function MuteAudioButton({
 
   const handleChangeAudioSource = (event, index) => {
     setSelectedIndex(index);
-    console.log(index);
     setOpen(false);
     const audioDeviceId = devicesAvailable.find(
       (device) => device.label === event.target.textContent
@@ -132,14 +131,13 @@ export default function MuteAudioButton({
         role={undefined}
         transition
         disablePortal
-        style={{ zIndex: 101 }} // todo temporary fix for a bug in MP 0.1.5
       >
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
             style={{
               transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom'
+                placement === 'bottom' ? 'center top' : 'center bottom',
             }}
           >
             <Paper>
