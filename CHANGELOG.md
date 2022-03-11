@@ -1,3 +1,8 @@
+# 0.2.6 (March 11, 2022)
+
+- Updated VVE to `@vonage/video-express: 1.1.4`
+- Added Audio Output selection
+
 # 0.2.5 (Feb 22, 2022)
 
 - Fix background blur selection camera
