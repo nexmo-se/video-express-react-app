@@ -1,4 +1,4 @@
-# 0.2.-7 (April 4, 2022)
+# 0.2.7 (April 4, 2022)
 
 - Added Docker support
 
