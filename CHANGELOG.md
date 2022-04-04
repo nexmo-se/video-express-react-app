@@ -1,3 +1,7 @@
+# 0.2.7 (April 4, 2022)
+
+- Added Docker support
+
 # 0.2.6 (March 11, 2022)
 
 - Updated VVE to `@vonage/video-express: 1.1.4`

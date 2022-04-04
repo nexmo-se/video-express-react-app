@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     backgroundColor: blueGrey[100],
     padding: '25px',
     borderRadius: 5,
-    width: '360px',
+    width: '400px'
     // height: '90%',
   },
   formControl: {
