@@ -34,6 +34,7 @@ The app has the following features:
 - [x] Mute All
 - [x] Chat
 - [x] Archiving [Archive API](https://tokbox.com/developer/guides/archiving/)
+- [x] Background Blur
 
 ## App Architecture
 
