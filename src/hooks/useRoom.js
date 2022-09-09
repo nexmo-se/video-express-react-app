@@ -125,8 +125,9 @@ export default function useRoom() {
         participantName: userName,
         managedLayoutOptions: {
           layoutMode: 'grid',
-          screenPublisherContainer: 'screenSharingContainer'
-        }
+          screenPublisherContainer: 'screenSharingContainer',
+          speakerHighlightEnabled: true,
+        },
       });
       startRoomListeners();
       if (videoEffects.backgroundBlur) {
