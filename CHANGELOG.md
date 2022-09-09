@@ -1,3 +1,8 @@
+# 0.2.9 (Sep 9, 2022)
+
+- changed fav icon
+- change website title and description
+
 # 0.2.8 (Sep 9, 2022)
 
 - Updated VVE to `@vonage/video-express: 1.3.3`
