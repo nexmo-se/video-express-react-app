@@ -1,3 +1,7 @@
+# 0.2.8 (Sep 9, 2022)
+
+- Updated VVE to `@vonage/video-express: 1.3.3`
+
 # 0.2.7 (June 6, 2022)
 
 - Updated VVE to `@vonage/video-express: 1.2.3`
