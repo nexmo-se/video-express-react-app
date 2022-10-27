@@ -1,22 +1,23 @@
-import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import * as VideoExpress from '@vonage/video-express';
-import MuteAudioButton from 'components/MuteAudioButton';
-import MuteVideoButton from 'components/MuteVideoButton';
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import * as VideoExpress from "@vonage/video-express";
+import MuteAudioButton from "components/MuteAudioButton";
+import MuteVideoButton from "components/MuteVideoButton";
 // import SpeakerButton from 'components/SpeakerButton';
-import SpeakerSelector from 'components/SpeakerSelector';
-import RecordingButton from 'components/RecordingButton';
-import LayoutButton from 'components/LayoutButton';
-import MuteAll from 'components/MuteAllButton';
-import ReactionsButton from 'components/ReactionsButton';
-import ScreenSharingButton from 'components/ScreenSharingButton';
-import EndCallButton from 'components/EndCallButton';
-import styles from './styles';
-import { useParams } from 'react-router';
-import { useTheme } from '@material-ui/core';
+import SpeakerSelector from "components/SpeakerSelector";
+import RecordingButton from "components/RecordingButton";
+import LayoutButton from "components/LayoutButton";
+import MuteAll from "components/MuteAllButton";
+import ReactionsButton from "components/ReactionsButton";
+import ScreenSharingButton from "components/ScreenSharingButton";
+import EndCallButton from "components/EndCallButton";
+import VideoFilterButton from "components/VideoFilterButton";
+import styles from "./styles";
+import { useParams } from "react-router";
+import { useTheme } from "@material-ui/core";
 
-import MoreOptionsButton from 'components/MoreOptionsButton';
+import MoreOptionsButton from "components/MoreOptionsButton";
 
 export default function ToolBar({
   room,
@@ -35,7 +36,7 @@ export default function ToolBar({
   const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
-  const isMobileWidth = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobileWidth = useMediaQuery(theme.breakpoints.down("xs"));
 
   const handleMuteAll = () => {
     if (!areAllMuted) {
@@ -93,8 +94,7 @@ export default function ToolBar({
 
   const getCurrentAudioOutput = async () => {
     try {
-      const currentAudioOutput =
-        await VideoExpress.getActiveAudioOutputDevice();
+      const currentAudioOutput = await VideoExpress.getActiveAudioOutputDevice();
       return currentAudioOutput.deviceId;
     } catch (e) {
       return e;
@@ -117,10 +117,8 @@ export default function ToolBar({
 
   useEffect(() => {
     if (connected) {
-      const isAudioEnabled =
-        room && room.camera && room.camera.isAudioEnabled() ? true : false;
-      const isVideoEnabled =
-        room && room.camera && room.camera.isVideoEnabled() ? true : false;
+      const isAudioEnabled = room && room.camera && room.camera.isAudioEnabled() ? true : false;
+      const isVideoEnabled = room && room.camera && room.camera.isVideoEnabled() ? true : false;
       setHasAudio(isAudioEnabled);
       setHasVideo(isVideoEnabled);
     }
@@ -129,28 +127,13 @@ export default function ToolBar({
 
   return isMobileWidth ? (
     <div className={classes.toolbarMobileContainer}>
-      <MuteAudioButton
-        toggleAudio={toggleAudio}
-        hasAudio={hasAudio}
-        classes={classes}
-        changeAudioSource={changeAudioSource}
-      />
+      <MuteAudioButton toggleAudio={toggleAudio} hasAudio={hasAudio} classes={classes} changeAudioSource={changeAudioSource} />
       <EndCallButton classes={classes} handleEndCall={endCall} />
-      <MuteVideoButton
-        toggleVideo={toggleVideo}
-        hasVideo={hasVideo}
-        classes={classes}
-        changeVideoSource={changeVideoSource}
-      />
+      <MuteVideoButton toggleVideo={toggleVideo} hasVideo={hasVideo} classes={classes} changeVideoSource={changeVideoSource} />
     </div>
   ) : (
     <div className={classes.toolbarContainer}>
-      <MoreOptionsButton
-        classes={classes}
-        participants={participants}
-        room={room}
-        localParticipant={localParticipant}
-      />
+      <MoreOptionsButton classes={classes} participants={participants} room={room} localParticipant={localParticipant} />
       <MuteAudioButton
         toggleAudio={toggleAudio}
         hasAudio={hasAudio}
@@ -168,18 +151,14 @@ export default function ToolBar({
         cameraPublishing={cameraPublishing}
         changeVideoSource={changeVideoSource}
       />
+      <VideoFilterButton classes={classes} room={room} />
       {/* <SpeakerButton
         cameraPublishing={cameraPublishing}
         changeAudioOutput={changeAudioOutput}
         getCurrentAudioOutput={getCurrentAudioOutput}
         classes={classes}
       /> */}
-      <SpeakerSelector
-        cameraPublishing={cameraPublishing}
-        changeAudioOutput={changeAudioOutput}
-        getCurrentAudioOutput={getCurrentAudioOutput}
-        classes={classes}
-      />
+      <SpeakerSelector room={room} changeAudioOutput={changeAudioOutput} getCurrentAudioOutput={getCurrentAudioOutput} classes={classes} />
 
       <RecordingButton room={room} classes={classes} />
       <ScreenSharingButton
@@ -188,17 +167,8 @@ export default function ToolBar({
         stopScreenSharing={stopScreenSharing}
         classes={classes}
       />
-      <MuteAll
-        handleMuteAll={handleMuteAll}
-        areAllMuted={areAllMuted}
-        classes={classes}
-      />
-      <ReactionsButton
-        handleMuteAll={handleMuteAll}
-        areAllMuted={areAllMuted}
-        classes={classes}
-        room={room}
-      />
+      <MuteAll handleMuteAll={handleMuteAll} areAllMuted={areAllMuted} classes={classes} />
+      <ReactionsButton handleMuteAll={handleMuteAll} areAllMuted={areAllMuted} classes={classes} room={room} />
       <LayoutButton classes={classes} room={room} />
       <EndCallButton classes={classes} handleEndCall={endCall} />
     </div>
