@@ -3,22 +3,26 @@ import IconButton from "@material-ui/core/IconButton";
 import BlurOn from "@material-ui/icons/BlurOn";
 import BlurCircular from "@material-ui/icons/BlurCircular";
 import BlockIcon from "@material-ui/icons/Block";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import useStyles from "./styles";
 
 const backgroundImages = ["vonage_background", "simpson_background"];
 
 function VideoFilter({ handleChangeVideoFilter }) {
   const classes = useStyles();
+  const [loading, setLoading] = React.useState(false);
 
   const applyFilter = async (filterName, filterPayload) => {
+    setLoading(true);
     switch (filterName) {
       case "backgroundImage":
         const imageEl = await loadImage(filterPayload);
-        handleChangeVideoFilter("backgroundImage", imageEl);
+        await handleChangeVideoFilter("backgroundImage", imageEl);
         break;
       default:
-        handleChangeVideoFilter(filterName, filterPayload);
+        await handleChangeVideoFilter(filterName, filterPayload);
     }
+    setLoading(false);
   };
 
   const loadImage = (name) => {
@@ -44,6 +48,11 @@ function VideoFilter({ handleChangeVideoFilter }) {
     <div className={classes.videoFilterContainer}>
       <p>Background Options</p>
       <div className={classes.flex}>
+        {loading && (
+          <div className={classes.backgroundLoading}>
+            <CircularProgress />
+          </div>
+        )}
         <div className={classes.buttonContainer} onClick={() => applyFilter("reset", "")}>
           <BlockIcon style={{ transform: "scale(1.5)", position: "absolute", top: "calc(50% - 10px)", left: "calc(50% - 10px)", fontSize: "21px" }} />
         </div>

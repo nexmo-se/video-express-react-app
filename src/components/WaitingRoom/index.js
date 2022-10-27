@@ -138,15 +138,15 @@ export default function WaitingRoom({ location }) {
       if (previewPublisher && filter) {
         switch (filter) {
           case "reset":
-            previewPublisher.clearVideoFilter();
+            await previewPublisher.clearVideoFilter();
             setVideoFilter({ filterName: "", filterPayload: "" });
             break;
           case "blur":
-            previewPublisher.setVideoFilter({ type: "backgroundBlur", blurStrength: filterPayload });
+            await previewPublisher.setVideoFilter({ type: "backgroundBlur", blurStrength: filterPayload });
             setVideoFilter({ filterName: filter, filterPayload });
             break;
           case "backgroundImage":
-            previewPublisher.setVideoFilter({ type: "backgroundReplacement", backgroundImgUrl: filterPayload });
+            await previewPublisher.setVideoFilter({ type: "backgroundReplacement", backgroundImgUrl: filterPayload });
             setVideoFilter({ filterName: filter, filterPayload });
             break;
           default:

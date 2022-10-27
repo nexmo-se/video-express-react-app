@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles((theme) => ({
   flex: {
     display: "flex",
+    position: "relative",
   },
   videoFilterContainer: {
     display: "flex",
@@ -24,5 +25,18 @@ export default makeStyles((theme) => ({
     borderRadius: "0.75rem",
     margin: "0 5px",
     cursor: "pointer",
+  },
+  backgroundLoading: {
+    position: "absolute",
+    left: 0,
+    // background: "rgba(0,0,0,0.5)",
+    right: 0,
+    textAlign: "center",
+    zIndex: 3,
+    height: "70px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "5px",
   },
 }));

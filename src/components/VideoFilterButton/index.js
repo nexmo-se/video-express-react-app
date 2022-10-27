@@ -43,15 +43,15 @@ export default function VideoFilterButton({ classes, room }) {
       if (camera && filter) {
         switch (filter) {
           case "reset":
-            camera.clearVideoFilter();
+            await camera.clearVideoFilter();
             setVideoFilter({ filterName: "", filterPayload: "" });
             break;
           case "blur":
-            camera.setVideoFilter({ type: "backgroundBlur", blurStrength: filterPayload });
+            await camera.setVideoFilter({ type: "backgroundBlur", blurStrength: filterPayload });
             setVideoFilter({ filterName: filter, filterPayload });
             break;
           case "backgroundImage":
-            camera.setVideoFilter({ type: "backgroundReplacement", backgroundImgUrl: filterPayload });
+            await camera.setVideoFilter({ type: "backgroundReplacement", backgroundImgUrl: filterPayload });
             setVideoFilter({ filterName: filter, filterPayload });
             break;
           default:
