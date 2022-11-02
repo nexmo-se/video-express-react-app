@@ -15,9 +15,6 @@ export default function useRoom() {
   const [cameraPublishing, setCameraPublishing] = useState(false);
 
   const addParticipants = ({ participant }) => {
-    // const participantWithTime = Object.assign({}, participant, {
-    //   startTime: new Date().getTime() / 1000
-    // });
     setParticipants((prev) => [...prev, participant]);
   };
 

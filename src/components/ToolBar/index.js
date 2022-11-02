@@ -151,7 +151,7 @@ export default function ToolBar({
         cameraPublishing={cameraPublishing}
         changeVideoSource={changeVideoSource}
       />
-      <VideoFilterButton classes={classes} room={room} />
+      {VideoExpress.hasMediaProcessorSupport() && <VideoFilterButton classes={classes} room={room} />}
       {/* <SpeakerButton
         cameraPublishing={cameraPublishing}
         changeAudioOutput={changeAudioOutput}

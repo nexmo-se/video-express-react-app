@@ -1,5 +1,5 @@
 import React from "react";
-import IconButton from "@material-ui/core/IconButton";
+import * as VideoExpress from "@vonage/video-express";
 import BlurOn from "@material-ui/icons/BlurOn";
 import BlurCircular from "@material-ui/icons/BlurCircular";
 import BlockIcon from "@material-ui/icons/Block";
@@ -44,38 +44,43 @@ function VideoFilter({ handleChangeVideoFilter }) {
     });
   };
 
-  return (
-    <div className={classes.videoFilterContainer}>
-      <p>Background Options</p>
-      <div className={classes.flex}>
-        {loading && (
-          <div className={classes.backgroundLoading}>
-            <CircularProgress />
+  if (VideoExpress.hasMediaProcessorSupport()) {
+    return (
+      <div className={classes.videoFilterContainer}>
+        <p>Background Options</p>
+        <div className={classes.flex}>
+          {loading && (
+            <div className={classes.backgroundLoading}>
+              <CircularProgress />
+            </div>
+          )}
+          <div className={classes.buttonContainer} onClick={() => applyFilter("reset", "")}>
+            <BlockIcon
+              style={{ transform: "scale(1.5)", position: "absolute", top: "calc(50% - 10px)", left: "calc(50% - 10px)", fontSize: "21px" }}
+            />
           </div>
-        )}
-        <div className={classes.buttonContainer} onClick={() => applyFilter("reset", "")}>
-          <BlockIcon style={{ transform: "scale(1.5)", position: "absolute", top: "calc(50% - 10px)", left: "calc(50% - 10px)", fontSize: "21px" }} />
+          <div className={classes.buttonContainer} onClick={() => applyFilter("blur", "low")}>
+            <BlurOn style={{ transform: "scale(1.5)", position: "absolute", top: "calc(50% - 10px)", left: "calc(50% - 10px)", fontSize: "21px" }} />
+          </div>
+          <div className={classes.buttonContainer} onClick={() => applyFilter("blur", "high")}>
+            <BlurCircular
+              style={{ transform: "scale(1.5)", position: "absolute", top: "calc(50% - 10px)", left: "calc(50% - 10px)", fontSize: "21px" }}
+            />
+          </div>
+          {backgroundImages.map((img) => (
+            <img
+              key={img}
+              onClick={() => applyFilter("backgroundImage", img)}
+              className={classes.backgroundImage}
+              src={`${process.env.PUBLIC_URL}/backgrounds/${img}.jpeg`}
+              alt={`Background ${img}`}
+            />
+          ))}
         </div>
-        <div className={classes.buttonContainer} onClick={() => applyFilter("blur", "low")}>
-          <BlurOn style={{ transform: "scale(1.5)", position: "absolute", top: "calc(50% - 10px)", left: "calc(50% - 10px)", fontSize: "21px" }} />
-        </div>
-        <div className={classes.buttonContainer} onClick={() => applyFilter("blur", "high")}>
-          <BlurCircular
-            style={{ transform: "scale(1.5)", position: "absolute", top: "calc(50% - 10px)", left: "calc(50% - 10px)", fontSize: "21px" }}
-          />
-        </div>
-        {backgroundImages.map((img) => (
-          <img
-            key={img}
-            onClick={() => applyFilter("backgroundImage", img)}
-            className={classes.backgroundImage}
-            src={`${process.env.PUBLIC_URL}/backgrounds/${img}.jpeg`}
-            alt={`Background ${img}`}
-          />
-        ))}
       </div>
-    </div>
-  );
+    );
+  }
+  return null;
 }
 
 export default VideoFilter;
