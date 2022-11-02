@@ -1,10 +1,8 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import _ from "lodash";
 import * as VideoExpress from "@vonage/video-express";
-// import useBackgroundBlur from '../hooks/useBackgroundBlur';
 
 export default function useRoom() {
-  // const { startBackgroundBlur } = useBackgroundBlur();
   let roomRef = useRef(null);
   let publisherOptionsRef = useRef(null);
   const [camera, setCamera] = useState(null);

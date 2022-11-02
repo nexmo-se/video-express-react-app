@@ -17,7 +17,6 @@ import { DEVICE_ACCESS_STATUS } from "./../constants";
 import VideoFilter from "../VideoFilter";
 
 export default function WaitingRoom({ location }) {
-  // const { stopEffect, startBackgroundBlur, isSupported } = useBackgroundBlur();
   const classes = useStyles();
   const { push } = useHistory();
   const { user, setUser } = useContext(UserContext);
