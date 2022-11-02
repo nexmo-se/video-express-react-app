@@ -1,30 +1,23 @@
-import VideoCam from '@material-ui/icons/Videocam';
-import VideocamOff from '@material-ui/icons/VideocamOff';
-import { IconButton } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
-import useDevices from '../../hooks/useDevices';
+import VideoCam from "@material-ui/icons/Videocam";
+import VideocamOff from "@material-ui/icons/VideocamOff";
+import { IconButton } from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
+import useDevices from "../../hooks/useDevices";
 
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import React from 'react';
-import styles from './styles.js';
-import { UserContext } from '../../context/UserContext';
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import React from "react";
+import styles from "./styles.js";
+import { UserContext } from "../../context/UserContext";
 
-export default function MuteVideoButton({
-  classes,
-  hasVideo,
-  toggleVideo,
-  getVideoSource,
-  cameraPublishing,
-  changeVideoSource,
-}) {
-  const title = hasVideo ? 'Disable Camera' : 'Enable Camera';
+export default function MuteVideoButton({ classes, hasVideo, toggleVideo, getVideoSource, cameraPublishing, changeVideoSource }) {
+  const title = hasVideo ? "Disable Camera" : "Enable Camera";
   const { deviceInfo } = useDevices();
   const [devicesAvailable, setDevicesAvailable] = React.useState(null);
   const [options, setOptions] = React.useState([]);
@@ -39,30 +32,26 @@ export default function MuteVideoButton({
     if (cameraPublishing) {
       const currentDeviceId = getVideoSource()?.deviceId;
 
-      const IndexOfSelectedElement = devicesAvailable.indexOf(
-        devicesAvailable.find((e) => e.deviceId === currentDeviceId)
-      );
+      const IndexOfSelectedElement = devicesAvailable.indexOf(devicesAvailable.find((e) => e.deviceId === currentDeviceId));
       setSelectedIndex(IndexOfSelectedElement);
     }
   }, [cameraPublishing, getVideoSource, deviceInfo, devicesAvailable]);
 
   React.useEffect(() => {
-    if (devicesAvailable && !user.videoEffects.backgroundBlur) {
+    if (devicesAvailable) {
       const videoDevicesAvailable = devicesAvailable.map((e) => {
         return e.label;
       });
       setOptions(videoDevicesAvailable);
     }
-    if (user.videoEffects.backgroundBlur)
-      setOptions(['Not available with Background Blurring']);
-  }, [devicesAvailable, user.videoEffects.backgroundBlur]);
+    // if (user.videoEffects.backgroundBlur)
+    //   setOptions(['Not available with Background Blurring']);
+  }, [devicesAvailable]);
 
   const handleChangeVideoSource = (event, index) => {
     setSelectedIndex(index);
     setOpen(false);
-    const videoDeviceId = devicesAvailable.find(
-      (device) => device.label === event.target.textContent
-    ).deviceId;
+    const videoDeviceId = devicesAvailable.find((device) => device.label === event.target.textContent).deviceId;
     changeVideoSource(videoDeviceId);
   };
 
@@ -79,30 +68,22 @@ export default function MuteVideoButton({
 
   return (
     <>
-      <ButtonGroup
-        className={classes.groupButton}
-        disableElevation
-        variant="contained"
-        ref={anchorRef}
-        aria-label="split button"
-      >
+      <ButtonGroup className={classes.groupButton} disableElevation variant="contained" ref={anchorRef} aria-label="split button">
         <Tooltip title={title} aria-label="add">
           <IconButton
             onClick={toggleVideo}
             edge="start"
             aria-label="videoCamera"
             size="small"
-            className={`${classes.arrowButton} ${
-              !hasVideo ? classes.disabledButton : ''
-            }`}
+            className={`${classes.arrowButton} ${!hasVideo ? classes.disabledButton : ""}`}
           >
             {!hasVideo ? <VideocamOff /> : <VideoCam />}
           </IconButton>
         </Tooltip>
         <IconButton
           size="small"
-          aria-controls={open ? 'split-button-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
+          aria-controls={open ? "split-button-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
@@ -124,8 +105,7 @@ export default function MuteVideoButton({
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom',
+              transformOrigin: placement === "bottom" ? "center top" : "center bottom",
             }}
           >
             <Paper>
@@ -140,7 +120,7 @@ export default function MuteVideoButton({
                         selected: localClasses.selected,
                         root: localClasses.root,
                       }}
-                      disabled={user.videoEffects.backgroundBlur}
+                      // disabled={user.videoEffects.backgroundBlur}
                     >
                       {option}
                     </MenuItem>

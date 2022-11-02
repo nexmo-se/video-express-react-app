@@ -16,9 +16,6 @@
     },
     "VIDEO_API_API_SECRET": {
       "description": "Video API - API SECRET"
-    },
-    "REACT_APP_ASSETS_PATH": {
-      "description": "Assets path for the background effects library"
     }
   }
 }
