@@ -1,3 +1,8 @@
+# 0.3.0 (Nov 2, 2022)
+
+- added official background blur and replacement
+- Updated VVE to `@vonage/video-express: 1.3.6`
+
 # 0.2.9 (Sep 9, 2022)
 
 - changed fav icon
@@ -26,26 +31,25 @@
 
 # 0.2.4 (Feb 11, 2022)
 
-- Added emoji 
+- Added emoji
 - Added number of participants on the Sidenav
-
 
 # 0.2.3 (Jan 13, 2022)
 
 - Updated VVE to `@vonage/video-express: 1.1.4`
-  
+
 # 0.2.2 (Nov 26, 2021)
 
 - Updated VVE to `@vonage/video-express: 1.1.11`
-  
+
 # 0.2.1 (Nov 19, 2021)
 
 - Check isSupported for the background blur option
-  
+
 # 0.2.0 (Nov 10, 2021)
 
 - Add Background Blur option on the Waiting Room using [VideoEffects](https://www.npmjs.com/package/@vonage/video-effects)
-  
+
 # 0.1.13 (Oct 06, 2021)
 
 - Add username to local storage
@@ -54,7 +58,7 @@
 # 0.1.12 (Oct 06, 2021)
 
 - Use new NPM namespace `@vonage/video-express: 0.1.11`
-  
+
 # 0.1.11 (Oct 06, 2021)
 
 - Use new NPM namespace `@vonage/video-express: 0.1.10`
@@ -80,18 +84,18 @@
 
 - Update `@vonage/multiparty` to `0.1.5`
 - Add Chat feature
-- Fixed an issue with the recording icon 
+- Fixed an issue with the recording icon
 - Redirect to HTTPS by default
 
 # 0.1.5 (Aug 10, 2021)
 
 - Feature: added mobile support for the toolbar.
 - add screen sharing priority on the archiving
-- add participant list on the SideNav panel 
+- add participant list on the SideNav panel
 
 # 0.1.4 (Jul 30, 2021)
 
-- Fixed: screensharing events were not triggered because of wrong order of the screen initialising. 
+- Fixed: screensharing events were not triggered because of wrong order of the screen initialising.
 
 # 0.1.3 (Jul 29, 2021)
 
