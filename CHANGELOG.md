@@ -1,3 +1,7 @@
+# 0.3.1 (Nov 2, 2022)
+
+- update opentok server side version
+
 # 0.3.0 (Nov 2, 2022)
 
 - added official background blur and replacement
