@@ -1,11 +1,11 @@
-import SpeakerIcon from '@material-ui/icons/Speaker';
-import { IconButton } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import SpeakerIcon from '@mui/icons-material/Speaker';
+import { IconButton } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 import useDevices from '../../hooks/useDevices';
 
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import React from 'react';
 import styles from './styles.js';
@@ -82,7 +82,7 @@ export default function SpeakerSelector({
           aria-haspopup="true"
           className={classes.toolbarButtons}
           onClick={handleClick}
-        >
+          size="large">
           <SpeakerIcon />
         </IconButton>
       </Tooltip>

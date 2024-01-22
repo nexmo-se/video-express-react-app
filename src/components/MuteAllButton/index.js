@@ -1,7 +1,7 @@
-import VoiceOverOffIcon from '@material-ui/icons/VoiceOverOff';
-import { IconButton } from '@material-ui/core';
-import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
-import Tooltip from '@material-ui/core/Tooltip';
+import VoiceOverOffIcon from '@mui/icons-material/VoiceOverOff';
+import { IconButton } from '@mui/material';
+import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function muteAllButton({ handleMuteAll, areAllMuted, classes }) {
   const title = areAllMuted ? 'Unmute Participants' : 'Mute Participants';
@@ -13,7 +13,7 @@ export default function muteAllButton({ handleMuteAll, areAllMuted, classes }) {
         aria-label="videoCamera"
         onClick={handleMuteAll}
         className={classes.toolbarButtons}
-      >
+        size="large">
         {areAllMuted ? (
           <RecordVoiceOverIcon fontSize="inherit" />
         ) : (

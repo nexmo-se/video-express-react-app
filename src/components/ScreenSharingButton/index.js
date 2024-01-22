@@ -1,7 +1,7 @@
-import ScreenShare from '@material-ui/icons/ScreenShare';
-import StopScreenShare from '@material-ui/icons/StopScreenShare';
-import { IconButton } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import ScreenShare from '@mui/icons-material/ScreenShare';
+import StopScreenShare from '@mui/icons-material/StopScreenShare';
+import { IconButton } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function ScreenSharingButton({
   classes,
@@ -26,7 +26,7 @@ export default function ScreenSharingButton({
         className={`${classes.toolbarButtons} ${
           isScreenSharing ? classes.activeButton : ''
         }`}
-      >
+        size="large">
         {isScreenSharing ? (
           <StopScreenShare fontSize="inherit" />
         ) : (

@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors';
+import makeStyles from '@mui/styles/makeStyles';
+import { purple } from '@mui/material/colors';
 export default makeStyles((theme) => ({
   mine: {
     left: '0',

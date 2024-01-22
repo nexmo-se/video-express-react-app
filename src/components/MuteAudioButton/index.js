@@ -1,18 +1,18 @@
-import MicIcon from '@material-ui/icons/Mic';
-import MicOffIcon from '@material-ui/icons/MicOff';
-import { IconButton } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import MicIcon from '@mui/icons-material/Mic';
+import MicOffIcon from '@mui/icons-material/MicOff';
+import { IconButton } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 import useDevices from '../../hooks/useDevices';
 
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Grow from '@mui/material/Grow';
+import Paper from '@mui/material/Paper';
+import Popper from '@mui/material/Popper';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
 import React from 'react';
 import styles from './styles.js';
 
@@ -84,81 +84,79 @@ export default function MuteAudioButton({
     setOpen(false);
   };
 
-  return (
-    <>
-      <ButtonGroup
-        disableElevation
-        className={classes.groupButton}
-        variant="contained"
-        ref={anchorRef}
-        aria-label="split button"
-      >
-        <Tooltip title={title} aria-label="add">
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="mic"
-            onClick={toggleAudio}
-            className={`${classes.arrowButton} ${
-              !hasAudio ? classes.disabledButton : ''
-            }
-        `}
-          >
-            {!hasAudio ? (
-              <MicOffIcon fontSize="inherit" />
-            ) : (
-              <MicIcon fontSize="inherit" />
-            )}
-          </IconButton>
-        </Tooltip>
+  return <>
+    <ButtonGroup
+      disableElevation
+      className={classes.groupButton}
+      variant="contained"
+      ref={anchorRef}
+      aria-label="split button"
+    >
+      <Tooltip title={title} aria-label="add">
         <IconButton
-          // color="secondary"
-          size="small"
-          aria-controls={open ? 'split-button-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-label="select merge strategy"
-          aria-haspopup="menu"
-          onClick={handleToggle}
-          className={classes.arrowButton}
-        >
-          <ArrowDropDownIcon />
+          edge="start"
+          color="inherit"
+          aria-label="mic"
+          onClick={toggleAudio}
+          className={`${classes.arrowButton} ${
+            !hasAudio ? classes.disabledButton : ''
+          }
+      `}
+          size="large">
+          {!hasAudio ? (
+            <MicOffIcon fontSize="inherit" />
+          ) : (
+            <MicIcon fontSize="inherit" />
+          )}
         </IconButton>
-      </ButtonGroup>
-
-      <Popper
-        open={open}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        transition
-        disablePortal
+      </Tooltip>
+      <IconButton
+        // color="secondary"
+        size="small"
+        aria-controls={open ? 'split-button-menu' : undefined}
+        aria-expanded={open ? 'true' : undefined}
+        aria-label="select merge strategy"
+        aria-haspopup="menu"
+        onClick={handleToggle}
+        className={classes.arrowButton}
       >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom',
-            }}
-          >
-            <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList id="split-button-menu">
-                  {options.map((option, index) => (
-                    <MenuItem
-                      key={option}
-                      selected={index === selectedIndex}
-                      onClick={(event) => handleChangeAudioSource(event, index)}
-                      classes={{ selected: localClasses.selected }}
-                    >
-                      {option}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-    </>
-  );
+        <ArrowDropDownIcon />
+      </IconButton>
+    </ButtonGroup>
+
+    <Popper
+      open={open}
+      anchorEl={anchorRef.current}
+      role={undefined}
+      transition
+      disablePortal
+    >
+      {({ TransitionProps, placement }) => (
+        <Grow
+          {...TransitionProps}
+          style={{
+            transformOrigin:
+              placement === 'bottom' ? 'center top' : 'center bottom',
+          }}
+        >
+          <Paper>
+            <ClickAwayListener onClickAway={handleClose}>
+              <MenuList id="split-button-menu">
+                {options.map((option, index) => (
+                  <MenuItem
+                    key={option}
+                    selected={index === selectedIndex}
+                    onClick={(event) => handleChangeAudioSource(event, index)}
+                    classes={{ selected: localClasses.selected }}
+                  >
+                    {option}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </ClickAwayListener>
+          </Paper>
+        </Grow>
+      )}
+    </Popper>
+  </>;
 }

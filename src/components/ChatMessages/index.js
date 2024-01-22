@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './styles';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 
-import ContactsIcon from '@material-ui/icons/Contacts';
+import ContactsIcon from '@mui/icons-material/Contacts';
 
 const ChatMessages = ({ chatMessages, chatClass }) => {
   const messagesEndRef = React.useRef(null);

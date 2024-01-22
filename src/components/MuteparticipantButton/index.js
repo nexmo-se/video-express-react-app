@@ -1,4 +1,4 @@
-import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
+import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
 
 export default function MuteParticipantsButton() {
   return (

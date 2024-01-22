@@ -1,6 +1,6 @@
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { IconButton } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { IconButton } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function EndCallIcon({ classes, handleEndCall }) {
   return (
@@ -12,7 +12,7 @@ export default function EndCallIcon({ classes, handleEndCall }) {
         className={classes.toolbarButtons}
         style={{ backgroundColor: '#D50F2C' }}
         onClick={handleEndCall}
-      >
+        size="large">
         <ExitToAppIcon fontSize="inherit" />
       </IconButton>
     </Tooltip>

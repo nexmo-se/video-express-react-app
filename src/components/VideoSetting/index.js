@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Videocam from '@material-ui/icons/Videocam';
-import Switch from '@material-ui/core/Switch';
+import Videocam from '@mui/icons-material/Videocam';
+import Switch from '@mui/material/Switch';
 
 const VideoSettings = React.memo(({ hasVideo, onVideoChange, className }) => {
   return (

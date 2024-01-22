@@ -1,19 +1,19 @@
-import { IconButton } from '@material-ui/core';
+import { IconButton } from '@mui/material';
 
-import Tooltip from '@material-ui/core/Tooltip';
-import InfoIcon from '@material-ui/icons/Info';
-import Typography from '@material-ui/core/Typography';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import MoreIcon from '@material-ui/icons/More';
-import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
-import HouseIcon from '@material-ui/icons/House';
+import Tooltip from '@mui/material/Tooltip';
+import InfoIcon from '@mui/icons-material/Info';
+import Typography from '@mui/material/Typography';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import MoreIcon from '@mui/icons-material/More';
+import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
+import HouseIcon from '@mui/icons-material/House';
 
-import ChatIcon from '@material-ui/icons/Chat';
+import ChatIcon from '@mui/icons-material/Chat';
 
 import React from 'react';
 import styles from './styles';
 
-import Drawer from '@material-ui/core/Drawer';
+import Drawer from '@mui/material/Drawer';
 
 import SideMenu from '../SideMenu';
 
@@ -49,7 +49,7 @@ export default function MoreOptionsButton({
           color="inherit"
           aria-label="mic"
           className={localClasses.infoButton}
-        >
+          size="large">
           <ChatIcon fontSize="inherit" />
         </IconButton>
       </Tooltip>

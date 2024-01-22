@@ -1,24 +1,24 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Button, Checkbox, FormControlLabel, Grid, TextField } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
+import { Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
 import * as VideoExpress from "@vonage/video-express";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import useStyles from "./styles";
 import usePreviewPublisher from "../../hooks/usePreviewPublisher";
 import AudioSettings from "../AudioSetting";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 import VideoSettings from "../VideoSetting";
 import DeviceAccessAlert from "../DeviceAccessAlert";
 import { UserContext } from "../../context/UserContext";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import LinearProgress from "@mui/material/LinearProgress";
 import { DEVICE_ACCESS_STATUS } from "./../constants";
 import VideoFilter from "../VideoFilter";
 
 export default function WaitingRoom({ location }) {
   const classes = useStyles();
-  const { push } = useHistory();
+  const { push } = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
   const roomToJoin = location?.state?.room || "";
@@ -274,7 +274,7 @@ export default function WaitingRoom({ location }) {
   }, [createPreview, destroyPreview]);
 
   return (
-    <>
+    <React.Fragment>
       <div className={classes.waitingRoomContainer}>
         <Grid container direction="column" justifyContent="center" alignItems="center">
           <form className={classes.form} noValidate>
@@ -370,6 +370,6 @@ export default function WaitingRoom({ location }) {
         </Grid>
       </div>
       {accessAllowed !== DEVICE_ACCESS_STATUS.ACCEPTED && <DeviceAccessAlert accessStatus={accessAllowed}></DeviceAccessAlert>}
-    </>
+    </React.Fragment>
   );
 }

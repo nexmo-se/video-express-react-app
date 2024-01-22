@@ -1,14 +1,14 @@
-import { IconButton } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import { IconButton } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import { useState } from 'react';
 import useSignal from '../../hooks/useSignal';
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
-import EmojiEmotions from '@material-ui/icons/EmojiEmotions';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Typography from '@material-ui/core/Typography';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import EmojiEmotions from '@mui/icons-material/EmojiEmotions';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 
 export default function ReactionsButton({ classes, room }) {
   const ITEM_HEIGHT = 48;
@@ -33,7 +33,7 @@ export default function ReactionsButton({ classes, room }) {
           aria-haspopup="true"
           className={classes.toolbarButtons}
           onClick={handleClick}
-        >
+          size="large">
           <EmojiEmotions />
         </IconButton>
       </Tooltip>

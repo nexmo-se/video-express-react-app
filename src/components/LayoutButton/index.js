@@ -1,12 +1,12 @@
-import { IconButton } from '@material-ui/core';
+import { IconButton } from '@mui/material';
 import { useState } from 'react';
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 import styles from './styles';
 
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import Typography from '@material-ui/core/Typography';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import Typography from '@mui/material/Typography';
 
 const ITEM_HEIGHT = 48;
 
@@ -46,7 +46,7 @@ export default function LayoutButton({ classes, room }) {
           aria-haspopup="true"
           className={classes.toolbarButtons}
           onClick={handleClick}
-        >
+          size="large">
           <DashboardIcon />
         </IconButton>
       </Tooltip>

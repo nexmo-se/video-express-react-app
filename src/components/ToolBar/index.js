@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useNavigate } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import * as VideoExpress from "@vonage/video-express";
 import MuteAudioButton from "components/MuteAudioButton";
 import MuteVideoButton from "components/MuteVideoButton";
@@ -15,7 +15,7 @@ import EndCallButton from "components/EndCallButton";
 import VideoFilterButton from "components/VideoFilterButton";
 import styles from "./styles";
 import { useParams } from "react-router";
-import { useTheme } from "@material-ui/core";
+import { useTheme } from "@mui/material";
 
 import MoreOptionsButton from "components/MoreOptionsButton";
 
@@ -31,12 +31,12 @@ export default function ToolBar({
 }) {
   const { roomName } = useParams();
   const theme = useTheme();
-  const { push } = useHistory();
+  const { push } = useNavigate();
   const [hasAudio, setHasAudio] = useState(true);
   const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
   const classes = styles();
-  const isMobileWidth = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobileWidth = useMediaQuery(theme.breakpoints.down('lg'));
 
   const handleMuteAll = () => {
     if (!areAllMuted) {

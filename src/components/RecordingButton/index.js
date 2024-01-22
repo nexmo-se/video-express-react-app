@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { startRecording, stopRecording } from '../../api/fetchRecording';
 
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import { IconButton } from '@material-ui/core';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { IconButton } from '@mui/material';
 import styles from './styles';
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function RecordingButton({ classes, room }) {
   const [isRecording, setRecording] = useState(false);
@@ -57,7 +57,7 @@ export default function RecordingButton({ classes, room }) {
         aria-label="mic"
         onClick={handleRecordingAction}
         className={classes.toolbarButtons}
-      >
+        size="large">
         {isRecording ? (
           <FiberManualRecordIcon
             fontSize="inherit"

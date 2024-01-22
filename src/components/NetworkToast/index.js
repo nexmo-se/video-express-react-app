@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './styles';
 import { useEffect } from 'react';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
-import SignalWifiOffIcon from '@material-ui/icons/SignalWifiOff';
-import RouterIcon from '@material-ui/icons/Router';
-import Snackbar from '@material-ui/core/Snackbar';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import SignalWifiOffIcon from '@mui/icons-material/SignalWifiOff';
+import RouterIcon from '@mui/icons-material/Router';
+import Snackbar from '@mui/material/Snackbar';
 
 export default function NetworkToast({ networkStatus }) {
   const [open, setOpen] = React.useState(Boolean(networkStatus));

@@ -1,9 +1,9 @@
 import React from "react";
 import * as VideoExpress from "@vonage/video-express";
-import BlurOn from "@material-ui/icons/BlurOn";
-import BlurCircular from "@material-ui/icons/BlurCircular";
-import BlockIcon from "@material-ui/icons/Block";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import BlurOn from "@mui/icons-material/BlurOn";
+import BlurCircular from "@mui/icons-material/BlurCircular";
+import BlockIcon from "@mui/icons-material/Block";
+import CircularProgress from "@mui/material/CircularProgress";
 import useStyles from "./styles";
 
 const backgroundImages = ["vonage_background", "simpson_background"];

@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import { getCredentials } from "../../api/fetchCreds";
 import styles from "./styles.js";
@@ -20,7 +21,16 @@ export default function VideoRoom() {
   const classes = styles();
   let { roomName } = useParams();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (!user.userName) {
+      navigate({
+        pathname: '/',
+        state: { room: roomName },
+      });
+    }
+
     getCredentials(roomName)
       .then(({ data }) => {
         setCredentials({

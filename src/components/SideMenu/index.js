@@ -1,25 +1,25 @@
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Paper from '@mui/material/Paper';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import MeetingInfo from '../MeetingInfo';
 import Chat from '../Chat';
-import List from '@material-ui/core/List';
-import PersonIcon from '@material-ui/icons/Person';
-import GroupIcon from '@material-ui/icons/Group';
-import Divider from '@material-ui/core/Divider';
+import List from '@mui/material/List';
+import PersonIcon from '@mui/icons-material/Person';
+import GroupIcon from '@mui/icons-material/Group';
+import Divider from '@mui/material/Divider';
 
-import AppBar from '@material-ui/core/AppBar';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import TimerIcon from '@material-ui/icons/Timer';
+import AppBar from '@mui/material/AppBar';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import TimerIcon from '@mui/icons-material/Timer';
 
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { Container } from '@material-ui/core';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import { Container } from '@mui/material';
 
 const useStyles = makeStyles({
   root: {

@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { fetchRecordings } from '../../api/fetchRecording';
 import { useParams } from 'react-router';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import { IconButton } from '@material-ui/core';
+import GetAppIcon from '@mui/icons-material/GetApp';
+import { IconButton } from '@mui/material';
 
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import { useHistory } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 import styles from './styles';
 
 export default function EndCall() {
-  const { push } = useHistory();
+  const { push } = useNavigate();
   const [recordings, setRecordings] = useState(null);
   const classes = styles();
   const { sessionId } = useParams();
@@ -42,7 +42,7 @@ export default function EndCall() {
         <IconButton
           onClick={redirectNewMeeting}
           className={classes.new__meeting}
-        >
+          size="large">
           Start new meeting
         </IconButton>
       </div>

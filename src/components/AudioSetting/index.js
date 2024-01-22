@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Mic from '@material-ui/icons/Mic';
-import Switch from '@material-ui/core/Switch';
+import Mic from '@mui/icons-material/Mic';
+import Switch from '@mui/material/Switch';
 
 const AudioSettings = ({ hasAudio, onAudioChange, className }) => {
   return (

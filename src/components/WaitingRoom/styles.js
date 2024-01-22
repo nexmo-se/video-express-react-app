@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { blueGrey } from '@material-ui/core/colors';
-import { Height } from '@material-ui/icons';
+import makeStyles from '@mui/styles/makeStyles';
+import { blueGrey } from '@mui/material/colors';
+import { Height } from '@mui/icons-material';
 export default makeStyles((theme) => ({
   waitingRoomContainer: {
     position: 'absolute',

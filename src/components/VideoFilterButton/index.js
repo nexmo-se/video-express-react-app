@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
 import { startRecording, stopRecording } from "../../api/fetchRecording";
 
-import CameraEnhanceIcon from "@material-ui/icons/CameraEnhance";
-import { IconButton } from "@material-ui/core";
+import CameraEnhanceIcon from "@mui/icons-material/CameraEnhance";
+import { IconButton } from "@mui/material";
 import styles from "./styles";
-import Tooltip from "@material-ui/core/Tooltip";
-import Modal from "@material-ui/core/Modal";
+import Tooltip from "@mui/material/Tooltip";
+import Modal from "@mui/material/Modal";
 import VideoFilter from "../VideoFilter";
 
 export default function VideoFilterButton({ classes, room }) {
@@ -68,16 +68,20 @@ export default function VideoFilterButton({ classes, room }) {
       <VideoFilter handleChangeVideoFilter={handleChangeVideoFilter} />
     </div>
   );
-  return (
-    <>
-      <Tooltip title={"Apply Video Filter"} aria-label="add">
-        <IconButton edge="start" color="inherit" aria-label="mic" onClick={handleOpen} className={classes.toolbarButtons}>
-          <CameraEnhanceIcon fontSize="inherit" />
-        </IconButton>
-      </Tooltip>
-      <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
-        {body}
-      </Modal>
-    </>
-  );
+  return <>
+    <Tooltip title={"Apply Video Filter"} aria-label="add">
+      <IconButton
+        edge="start"
+        color="inherit"
+        aria-label="mic"
+        onClick={handleOpen}
+        className={classes.toolbarButtons}
+        size="large">
+        <CameraEnhanceIcon fontSize="inherit" />
+      </IconButton>
+    </Tooltip>
+    <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
+      {body}
+    </Modal>
+  </>;
 }
