@@ -18,7 +18,7 @@ import VideoFilter from "../VideoFilter";
 
 export default function WaitingRoom({ location }) {
   const classes = useStyles();
-  const { push } = useNavigate();
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const waitingRoomVideoContainer = useRef();
   const roomToJoin = location?.state?.room || "";
@@ -81,7 +81,7 @@ export default function WaitingRoom({ location }) {
   const handleJoinClick = () => {
     if (validateForm()) {
       localStorage.setItem("username", userName);
-      push(`room/${roomName}`);
+      navigate(`room/${roomName}`);
     }
   };
 

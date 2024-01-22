@@ -40,6 +40,12 @@ export default function SpeakerSelector({
 
       setSelectedIndex(indexOfSelectedElement);
     }
+
+    return () => {
+      setDevicesAvailable(null);
+      setAudioOutputId('');
+      setSelectedIndex(0);
+    };
   }, [
     cameraPublishing,
     deviceInfo,
@@ -55,6 +61,10 @@ export default function SpeakerSelector({
       });
       setOptions(audioOutputsAvailable);
     }
+
+    return () => {
+      setOptions([]);
+    };
   }, [devicesAvailable]);
 
   const handleChangeAudioOutput = (event, index) => {

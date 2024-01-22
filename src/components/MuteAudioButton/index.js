@@ -47,6 +47,12 @@ export default function MuteAudioButton({
 
       setSelectedIndex(indexOfSelectedElement);
     }
+
+    return () => {
+      setDevicesAvailable(null);
+      setAudioDeviceId('');
+      setSelectedIndex(0);
+    };
   }, [
     cameraPublishing,
     getAudioSource,
@@ -62,6 +68,10 @@ export default function MuteAudioButton({
       });
       setOptions(audioDevicesAvailable);
     }
+
+    return () => {
+      setOptions([]);
+    };
   }, [devicesAvailable]);
 
   const handleChangeAudioSource = (event, index) => {

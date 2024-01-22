@@ -35,6 +35,10 @@ export default function MuteVideoButton({ classes, hasVideo, toggleVideo, getVid
       const IndexOfSelectedElement = devicesAvailable.indexOf(devicesAvailable.find((e) => e.deviceId === currentDeviceId));
       setSelectedIndex(IndexOfSelectedElement);
     }
+    return () => {
+      setDevicesAvailable(null);
+      setSelectedIndex(0);
+    };
   }, [cameraPublishing, getVideoSource, deviceInfo, devicesAvailable]);
 
   React.useEffect(() => {
@@ -46,6 +50,9 @@ export default function MuteVideoButton({ classes, hasVideo, toggleVideo, getVid
     }
     // if (user.videoEffects.backgroundBlur)
     //   setOptions(['Not available with Background Blurring']);
+    return () => {
+      setOptions([]);
+    };
   }, [devicesAvailable]);
 
   const handleChangeVideoSource = (event, index) => {

@@ -31,7 +31,7 @@ export default function ToolBar({
 }) {
   const { roomName } = useParams();
   const theme = useTheme();
-  const { push } = useNavigate();
+  const navigate = useNavigate();
   const [hasAudio, setHasAudio] = useState(true);
   const [hasVideo, setHasVideo] = useState(true);
   const [areAllMuted, setAllMuted] = useState(false);
@@ -110,8 +110,8 @@ export default function ToolBar({
 
   const endCall = () => {
     if (room) {
-      push(`${roomName}/${room.roomId}/end`);
       room.leave();
+      navigate(`${roomName}/${room.roomId}/end`, {replace: true});
     }
   };
 

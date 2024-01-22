@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import { getCredentials } from "../../api/fetchCreds";
 import styles from "./styles.js";
@@ -26,8 +26,10 @@ export default function VideoRoom() {
   useEffect(() => {
     if (!user.userName) {
       navigate({
-        pathname: '/',
-        state: { room: roomName },
+        pathname: "/",
+        search: createSearchParams({
+          room: roomName
+        }).toString()
       });
     }
 
@@ -43,6 +45,10 @@ export default function VideoRoom() {
         setError(err);
         console.log(err);
       });
+    
+    return (() => {
+      setCredentials(null);
+    });
   }, [roomName]);
 
   useEffect(() => {

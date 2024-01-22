@@ -13,13 +13,13 @@ import Button from '@mui/material/Button';
 import styles from './styles';
 
 export default function EndCall() {
-  const { push } = useNavigate();
+  const navigate = useNavigate();
   const [recordings, setRecordings] = useState(null);
   const classes = styles();
   const { sessionId } = useParams();
 
   const redirectNewMeeting = () => {
-    push('/');
+    navigate('/');
   };
   useEffect(() => {
     fetchRecordings(sessionId)
